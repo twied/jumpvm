@@ -19,6 +19,14 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.PointerObject;
+import jumpvm.memory.objects.PointerObject.Type;
+import jumpvm.memory.objects.StackObject;
+import jumpvm.vm.WiMa;
 
 /**
  * Unification with unbound variable.
@@ -53,6 +61,24 @@ public class UVarInstruction extends WiMaInstruction {
         super(sourceNode);
         this.i = i;
         this.identifier = identifier;
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Heap heap = vm.getHeap();
+        final Register fp = vm.getFramePointer();
+        final Register hp = vm.getHeapPointer();
+        final Register modus = vm.getModus();
+        final StackObject stackObject = stack.pop();
+
+        if (modus.getValue() == WiMa.MODUS_READ) {
+            stack.setElementAt(fp.getValue() + i, new PointerObject(deref(vm, stackObject.getIntValue()), Type.POINTER_HEAP, "→" + identifier, "Reference to " + identifier));
+        } else {
+            final PointerObject p = heap.allocate(new PointerObject(hp.getValue(), Type.POINTER_HEAP, "→" + identifier, "Reference to " + identifier), "→" + identifier, "Reference to " + identifier);
+            stack.setElementAt(fp.getValue() + i, p);
+            heap.setElementAt(stackObject, p);
+        }
     }
 
     @Override

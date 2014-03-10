@@ -19,6 +19,10 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.NilPointerObject;
 import jumpvm.vm.WiMa;
 
 /**
@@ -41,6 +45,20 @@ public class PushEnvInstruction extends WiMaInstruction {
     public PushEnvInstruction(final WiMaAstNode sourceNode, final int k) {
         super(sourceNode);
         this.k = k;
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Register sp = vm.getStackPointer();
+        final Register fp = vm.getFramePointer();
+
+        while (sp.getValue() < (fp.getValue() + k)) {
+            stack.push(new NilPointerObject("↛", "Reserved space for " + (k - (WiMa.FRAME_SIZE - 1)) + " arguments and globals"));
+        }
+        while (sp.getValue() > (fp.getValue() + k)) {
+            stack.pop();
+        }
     }
 
     @Override

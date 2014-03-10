@@ -19,7 +19,13 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
 import jumpvm.memory.Label;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.BasicValueObject;
+import jumpvm.memory.objects.PointerObject;
+import jumpvm.vm.WiMa;
 
 /**
  * Create back track point.
@@ -45,6 +51,21 @@ public class SetBtpInstruction extends WiMaInstruction {
     public SetBtpInstruction(final WiMaAstNode sourceNode, final Label label) {
         super(sourceNode);
         this.label = label;
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Register btp = vm.getBackTrackPointer();
+        final Register hp = vm.getHeapPointer();
+        final Register tp = vm.getTrailPointer();
+
+        final int fp = vm.getFramePointer().getValue();
+        stack.setElementAt(fp + WiMa.OFFSET_REG_BTP, new BasicValueObject(btp));
+        stack.setElementAt(fp + WiMa.OFFSET_REG_TP, new BasicValueObject(tp));
+        stack.setElementAt(fp + WiMa.OFFSET_REG_HP, new BasicValueObject(hp));
+        stack.setElementAt(fp + WiMa.OFFSET_ADDR_NEG, new PointerObject(label));
+        btp.setValue(fp);
     }
 
     @Override

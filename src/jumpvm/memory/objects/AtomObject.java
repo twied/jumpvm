@@ -16,52 +16,50 @@
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 
-package jumpvm.code.wima;
-
-import jumpvm.ast.wima.WiMaAstNode;
-import jumpvm.exception.ExecutionException;
-import jumpvm.vm.WiMa;
+package jumpvm.memory.objects;
 
 /**
- * Atom.
- * 
- * <pre>
- * SP := SP + 1;
- * ST[SP] := new(ATOM : a);
- * </pre>
+ * WiMa Atom.
  */
-public class PutAtomInstruction extends WiMaInstruction {
+public class AtomObject implements MemoryObject {
     /** Identifier. */
     private final String identifier;
 
     /**
-     * Create new PutAtom instruction.
+     * Create a new AtomObject.
      * 
-     * @param sourceNode AstNode that is responsible for this instruction's creation
-     * @param identifier Identifier
+     * @param identifier identifier
      */
-    public PutAtomInstruction(final WiMaAstNode sourceNode, final String identifier) {
-        super(sourceNode);
+    public AtomObject(final String identifier) {
         this.identifier = identifier;
     }
 
     @Override
-    public final void execute(final WiMa vm) throws ExecutionException {
-        vm.getStack().push(allocateAtomObject(vm, identifier));
+    public final String getDisplayDescription() {
+        return null;
     }
 
     @Override
     public final String getDisplayHoverText() {
-        return "Put atom " + identifier + " on the stack";
+        return identifier;
     }
 
     @Override
-    public final String getMnemonic() {
-        return "putatom";
+    public final String getDisplayType() {
+        return " ○ ";
     }
 
     @Override
-    public final String getParameter() {
+    public final String getDisplayValue() {
+        return identifier;
+    }
+
+    /**
+     * Returns the identifier.
+     * 
+     * @return the identifier
+     */
+    public final String getIdentifier() {
         return identifier;
     }
 }

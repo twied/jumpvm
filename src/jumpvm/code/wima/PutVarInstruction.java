@@ -19,6 +19,13 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.NilPointerObject;
+import jumpvm.memory.objects.PointerObject;
+import jumpvm.vm.WiMa;
 
 /**
  * Create free variable reference on stack.
@@ -47,6 +54,20 @@ public class PutVarInstruction extends WiMaInstruction {
         super(sourceNode);
         this.offset = offset;
         this.identifier = identifier;
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Heap heap = vm.getHeap();
+        final Register fp = vm.getFramePointer();
+
+        /* pointer to itself. */
+        final PointerObject object = heap.allocate(new NilPointerObject(), "↺" + identifier, "Reference to unbound variable " + identifier);
+        heap.setElementAt(object.getIntValue(), object);
+
+        stack.push(object);
+        stack.setElementAt(fp.getValue() + offset, object);
     }
 
     @Override

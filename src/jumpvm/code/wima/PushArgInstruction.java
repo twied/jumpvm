@@ -19,6 +19,10 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.vm.WiMa;
 
 /**
  * Copy reference to local stack frame.
@@ -46,6 +50,14 @@ public class PushArgInstruction extends WiMaInstruction {
         super(sourceNode);
         this.i = i;
         this.identifier = identifier;
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Register fp = vm.getFramePointer();
+
+        stack.push(stack.getElementAt(fp.getValue() + WiMa.OFFSET_ADDR_NEG + i));
     }
 
     @Override

@@ -19,6 +19,17 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.BasicValueObject;
+import jumpvm.memory.objects.MemoryObject;
+import jumpvm.memory.objects.NilPointerObject;
+import jumpvm.memory.objects.PointerObject;
+import jumpvm.memory.objects.PointerObject.Type;
+import jumpvm.memory.objects.StructureObject;
+import jumpvm.vm.WiMa;
 
 /**
  * Unification with structure.
@@ -66,6 +77,55 @@ public class UStructInstruction extends WiMaInstruction {
         super(sourceNode);
         this.f = f;
         this.n = n;
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Heap heap = vm.getHeap();
+        final Register modus = vm.getModus();
+
+        if (modus.getValue() == WiMa.MODUS_READ) {
+            final int v = deref(vm, stack.pop().getIntValue());
+            final MemoryObject o = heap.getElementAt(v);
+            final String name = o.getDisplayDescription();
+
+            if (o instanceof StructureObject) {
+                /* _same_ structure. */
+                final StructureObject s = (StructureObject) o;
+                if (f.equals(s.getIdentifier()) && (s.getArity() == n)) {
+                    stack.push(new PointerObject(v, Type.POINTER_HEAP, "→" + f + "/" + n, "Reference to structure " + f + "/" + n));
+                } else {
+                    backtrack(vm);
+                    return;
+                }
+            } else if (o instanceof PointerObject) {
+                if (v == ((PointerObject) o).getIntValue()) {
+                    stack.push(new BasicValueObject(modus));
+                    final PointerObject pointer = allocateStructureObject(vm, f, n);
+                    for (int i = 0; i < n; ++i) {
+                        heap.allocate(new NilPointerObject(), "→" + String.valueOf(i), "Reference to element # " + i + " of structure " + f + "/" + n);
+                    }
+                    stack.push(pointer);
+                    heap.setElementAt(v, pointer);
+                    modus.setValue(WiMa.MODUS_WRITE);
+                    trail(vm, v, name);
+                } else {
+                    backtrack(vm);
+                    return;
+                }
+            } else {
+                backtrack(vm);
+                return;
+            }
+        } else {
+            final PointerObject pointer = allocateStructureObject(vm, f, n);
+            for (int i = 0; i < n; ++i) {
+                heap.allocate(new NilPointerObject(), "→" + String.valueOf(i), "Reference to element # " + i + " of structure " + f + "/" + n);
+            }
+            heap.setElementAt(stack.peek(), pointer);
+            stack.push(pointer);
+        }
     }
 
     @Override

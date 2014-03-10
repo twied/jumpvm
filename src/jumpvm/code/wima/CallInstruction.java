@@ -19,7 +19,13 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
 import jumpvm.memory.Label;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.PointerObject;
+import jumpvm.memory.objects.PointerObject.Type;
+import jumpvm.vm.WiMa;
 
 /**
  * Jump to code for procedure.
@@ -48,6 +54,18 @@ public class CallInstruction extends WiMaInstruction {
         super(sourceNode);
         this.address = address;
         this.arity = arity;
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Register pc = vm.getProgramCounter();
+        final Register sp = vm.getStackPointer();
+        final Register fp = vm.getFramePointer();
+
+        fp.setValue(sp.getValue() - arity - (WiMa.FRAME_SIZE - 1));
+        stack.setElementAt(fp.getValue() + WiMa.OFFSET_ADDR_POS, new PointerObject(pc.getValue(), Type.POINTER_PROGRAM, "+PC", "positive return address"));
+        pc.setValue(address);
     }
 
     @Override

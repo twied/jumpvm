@@ -19,7 +19,12 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
 import jumpvm.memory.Label;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.PointerObject;
+import jumpvm.vm.WiMa;
 
 /**
  * Continue with next alternative.
@@ -41,6 +46,14 @@ public class NextAltInstruction extends WiMaInstruction {
     public NextAltInstruction(final WiMaAstNode sourceNode, final Label label) {
         super(sourceNode);
         this.label = label;
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Register fp = vm.getFramePointer();
+
+        stack.setElementAt(fp.getValue() + WiMa.OFFSET_ADDR_NEG, new PointerObject(label));
     }
 
     @Override

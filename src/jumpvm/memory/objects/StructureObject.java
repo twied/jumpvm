@@ -16,52 +16,64 @@
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 
-package jumpvm.code.wima;
-
-import jumpvm.ast.wima.WiMaAstNode;
-import jumpvm.exception.ExecutionException;
-import jumpvm.vm.WiMa;
+package jumpvm.memory.objects;
 
 /**
- * Atom.
- * 
- * <pre>
- * SP := SP + 1;
- * ST[SP] := new(ATOM : a);
- * </pre>
+ * WiMa Structure.
  */
-public class PutAtomInstruction extends WiMaInstruction {
+public class StructureObject implements MemoryObject {
     /** Identifier. */
     private final String identifier;
 
+    /** Arity. */
+    private final int arity;
+
     /**
-     * Create new PutAtom instruction.
+     * Create a new StructureObject.
      * 
-     * @param sourceNode AstNode that is responsible for this instruction's creation
-     * @param identifier Identifier
+     * @param identifier identifier
+     * @param arity arity
      */
-    public PutAtomInstruction(final WiMaAstNode sourceNode, final String identifier) {
-        super(sourceNode);
+    public StructureObject(final String identifier, final int arity) {
         this.identifier = identifier;
+        this.arity = arity;
+    }
+
+    /**
+     * Returns the arity.
+     * 
+     * @return the arity
+     */
+    public final int getArity() {
+        return arity;
     }
 
     @Override
-    public final void execute(final WiMa vm) throws ExecutionException {
-        vm.getStack().push(allocateAtomObject(vm, identifier));
+    public final String getDisplayDescription() {
+        return getDisplayValue();
     }
 
     @Override
     public final String getDisplayHoverText() {
-        return "Put atom " + identifier + " on the stack";
+        return getDisplayValue();
     }
 
     @Override
-    public final String getMnemonic() {
-        return "putatom";
+    public final String getDisplayType() {
+        return " Σ ";
     }
 
     @Override
-    public final String getParameter() {
+    public final String getDisplayValue() {
+        return identifier + "/" + arity;
+    }
+
+    /**
+     * Returns the identifier.
+     * 
+     * @return the identifier
+     */
+    public final String getIdentifier() {
         return identifier;
     }
 }

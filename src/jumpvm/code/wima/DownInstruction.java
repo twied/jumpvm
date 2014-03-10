@@ -19,6 +19,12 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.BasicValueObject;
+import jumpvm.memory.objects.StackObject;
+import jumpvm.vm.WiMa;
 
 /**
  * Unify children.
@@ -49,6 +55,19 @@ public class DownInstruction extends WiMaInstruction {
     }
 
     @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Heap heap = vm.getHeap();
+        final int value = stack.peek().getIntValue() + 1;
+
+        if (vm.getModus().getValue() == WiMa.MODUS_READ) {
+            stack.push((StackObject) heap.getElementAt(value));
+        } else {
+            stack.push(new BasicValueObject(value, "element 1", "Unify with element 1 of " + name));
+        }
+    }
+
+    @Override
     public final String getDisplayHoverText() {
         return "Unify children";
     }
@@ -62,5 +81,4 @@ public class DownInstruction extends WiMaInstruction {
     public final String getParameter() {
         return null;
     }
-
 }

@@ -19,6 +19,10 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.vm.WiMa;
 
 /**
  * Delete back track point.
@@ -35,6 +39,15 @@ public class DelBtpInstruction extends WiMaInstruction {
      */
     public DelBtpInstruction(final WiMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Register fp = vm.getFramePointer();
+        final Register btp = vm.getBackTrackPointer();
+
+        btp.setValue(stack.getElementAt(fp.getValue() + WiMa.OFFSET_REG_BTP));
     }
 
     @Override

@@ -19,6 +19,13 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.BasicValueObject;
+import jumpvm.memory.objects.StackObject;
+import jumpvm.vm.WiMa;
 
 /**
  * Unify next term in Structure.
@@ -53,6 +60,21 @@ public class BrotherInstruction extends WiMaInstruction {
         super(sourceNode);
         this.i = i;
         this.name = name;
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Heap heap = vm.getHeap();
+        final Register modus = vm.getModus();
+
+        final int value = stack.peek().getIntValue() + i;
+
+        if (modus.getValue() == WiMa.MODUS_READ) {
+            stack.push((StackObject) heap.getElementAt(value));
+        } else {
+            stack.push(new BasicValueObject(value, "element " + value, "Unify with element " + value + " of " + name));
+        }
     }
 
     @Override

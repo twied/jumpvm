@@ -19,6 +19,10 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.vm.WiMa;
 
 /**
  * Restore modus.
@@ -39,6 +43,17 @@ public class UpInstruction extends WiMaInstruction {
      */
     public UpInstruction(final WiMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Register modus = vm.getModus();
+
+        stack.pop();
+        if (modus.getValue() == WiMa.MODUS_WRITE) {
+            modus.setValue(stack.pop().getIntValue());
+        }
     }
 
     @Override

@@ -19,6 +19,13 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.BasicValueObject;
+import jumpvm.memory.objects.PointerObject;
+import jumpvm.memory.objects.PointerObject.Type;
+import jumpvm.vm.WiMa;
 
 /**
  * Initialize the VM.
@@ -42,6 +49,28 @@ public class InitInstruction extends WiMaInstruction {
      */
     public InitInstruction(final WiMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Register fp = vm.getFramePointer();
+        final Register btp = vm.getBackTrackPointer();
+        final Register hp = vm.getHeapPointer();
+        final Register tp = vm.getTrailPointer();
+
+        fp.setValue(1);
+        hp.setValue(0);
+        tp.setValue(-1);
+        btp.setValue(1);
+
+        stack.startFrame(WiMa.FRAME_SIZE + 1);
+        stack.push(new PointerObject(0, Type.POINTER_PROGRAM, "+PC", "positive return address"));
+        stack.push(new BasicValueObject(fp, 0));
+        stack.push(new BasicValueObject(btp, 0));
+        stack.push(new BasicValueObject(tp, -1));
+        stack.push(new BasicValueObject(hp, -1));
+        stack.push(new PointerObject(0, Type.POINTER_PROGRAM, "-PC", "negative return address"));
     }
 
     @Override

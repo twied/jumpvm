@@ -18,7 +18,20 @@
 
 package jumpvm.code.wima;
 
+import java.io.PrintWriter;
+
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.MemoryObject;
+import jumpvm.memory.objects.PointerObject;
+import jumpvm.memory.objects.PointerObject.Type;
+import jumpvm.memory.objects.StackObject;
+import jumpvm.memory.objects.StructureObject;
+import jumpvm.vm.JumpVM;
+import jumpvm.vm.WiMa;
 
 /**
  * Start backtracking or halt the virtual machine.
@@ -42,6 +55,46 @@ public class HaltInstruction extends WiMaInstruction {
     }
 
     @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Register fp = vm.getFramePointer();
+        final Register btp = vm.getBackTrackPointer();
+        final PrintWriter writer = vm.getWriter();
+
+        boolean yes = true;
+
+        for (int i = WiMa.FRAME_SIZE + 1; i < stack.getSize(); ++i) {
+            final StackObject stackObject = stack.getElementAt(i);
+
+            if (!(stackObject instanceof PointerObject)) {
+                break;
+            }
+
+            if (((PointerObject) stackObject).getType() != Type.POINTER_HEAP) {
+                break;
+            }
+
+            yes = false;
+            final int address = deref(vm, stackObject.getIntValue());
+            writer.print(getName(vm, address));
+            writer.print(" ");
+            writer.print(getType(vm, address));
+            writer.println();
+        }
+
+        if (yes) {
+            writer.println("yes");
+        }
+
+        if (btp.getValue() > fp.getValue()) {
+            backtrack(vm);
+            return;
+        } else {
+            vm.getStatus().setValue(JumpVM.STATUS_STOP);
+        }
+    }
+
+    @Override
     public final String getDisplayHoverText() {
         return "Start backtracking or halt the virtual machine";
     }
@@ -51,8 +104,54 @@ public class HaltInstruction extends WiMaInstruction {
         return "halt";
     }
 
+    /**
+     * Returns the name of a cell.
+     * 
+     * @param vm WiMa
+     * @param value address
+     * @return the name of the cell
+     */
+    private String getName(final WiMa vm, final int value) {
+        final Heap heap = vm.getHeap();
+        final int address = deref(vm, value);
+        final MemoryObject o = heap.getElementAt(address);
+
+        if (!(o instanceof StructureObject)) {
+            return o.getDisplayValue();
+        }
+
+        final StructureObject s = (StructureObject) o;
+        if (s.getArity() == 0) {
+            return s.getIdentifier() + "()";
+        }
+
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(s.getIdentifier());
+        stringBuilder.append("(");
+
+        for (int i = 0; i < (s.getArity() - 1); ++i) {
+            stringBuilder.append(getName(vm, address + i + 1));
+            stringBuilder.append(", ");
+        }
+
+        stringBuilder.append(getName(vm, address + s.getArity()));
+        stringBuilder.append(")");
+        return stringBuilder.toString();
+    }
+
     @Override
     public final String getParameter() {
         return null;
+    }
+
+    /**
+     * Returns the type of a cell.
+     * 
+     * @param vm WiMa
+     * @param address address
+     * @return the type of the cell
+     */
+    private String getType(final WiMa vm, final int address) {
+        return "[" + vm.getHeap().getElementAt(deref(vm, address)).getDisplayType() + "]";
     }
 }

@@ -19,6 +19,14 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.AtomObject;
+import jumpvm.memory.objects.MemoryObject;
+import jumpvm.memory.objects.PointerObject;
+import jumpvm.vm.WiMa;
 
 /**
  * Unification with atom.
@@ -56,6 +64,40 @@ public class UAtomInstruction extends WiMaInstruction {
     public UAtomInstruction(final WiMaAstNode sourceNode, final String atom) {
         super(sourceNode);
         this.atom = atom;
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Heap heap = vm.getHeap();
+        final Register modus = vm.getModus();
+
+        if (modus.getValue() == WiMa.MODUS_READ) {
+            final int v = deref(vm, stack.pop().getIntValue());
+            final MemoryObject o = heap.getElementAt(v);
+            if (o instanceof AtomObject) {
+                /* _same_ atom. */
+                if (!atom.equals(((AtomObject) o).getIdentifier())) {
+                    backtrack(vm);
+                }
+                return;
+            } else if (o instanceof PointerObject) {
+                if (v == ((PointerObject) o).getIntValue()) {
+                    final String name = heap.getElementAt(v).getDisplayDescription();
+                    /* _unbound_ variable. */
+                    heap.setElementAt(v, allocateAtomObject(vm, atom));
+                    trail(vm, v, name);
+                } else {
+                    backtrack(vm);
+                    return;
+                }
+            } else {
+                backtrack(vm);
+                return;
+            }
+        } else {
+            heap.setElementAt(stack.pop(), allocateAtomObject(vm, atom));
+        }
     }
 
     @Override

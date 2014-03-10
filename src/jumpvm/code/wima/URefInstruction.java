@@ -19,6 +19,12 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.StackObject;
+import jumpvm.vm.WiMa;
 
 /**
  * Unification with bound variable.
@@ -51,6 +57,22 @@ public class URefInstruction extends WiMaInstruction {
         super(sourceNode);
         this.i = i;
         this.identifier = identifier;
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Heap heap = vm.getHeap();
+        final Register fp = vm.getFramePointer();
+        final Register modus = vm.getModus();
+
+        final StackObject stackObject = stack.peek();
+        if (modus.getValue() == WiMa.MODUS_READ) {
+            unify(vm, stackObject.getIntValue(), stack.getElementAt(fp.getValue() + i).getIntValue());
+        } else {
+            heap.setElementAt(stackObject, stack.getElementAt(fp.getValue() + i));
+        }
+        stack.pop();
     }
 
     @Override

@@ -18,7 +18,15 @@
 
 package jumpvm.code.wima;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.MemoryObject;
+import jumpvm.vm.WiMa;
 
 /**
  * Structure.
@@ -46,6 +54,23 @@ public class PutStructInstruction extends WiMaInstruction {
         super(sourceNode);
         this.f = f;
         this.n = n;
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Heap heap = vm.getHeap();
+        final ArrayList<MemoryObject> elements = new ArrayList<MemoryObject>();
+        for (int i = 0; i < n; ++i) {
+            elements.add(stack.pop());
+        }
+
+        Collections.reverse(elements);
+        stack.push(allocateStructureObject(vm, f, n));
+
+        for (final MemoryObject object : elements) {
+            heap.allocate(object, null, null);
+        }
     }
 
     @Override

@@ -19,6 +19,10 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.vm.WiMa;
 
 /**
  * Drop stack frame if last alternative.
@@ -39,6 +43,24 @@ public class PopEnvInstruction extends WiMaInstruction {
      */
     public PopEnvInstruction(final WiMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Register pc = vm.getProgramCounter();
+        final Register sp = vm.getStackPointer();
+        final Register fp = vm.getFramePointer();
+        final Register btp = vm.getBackTrackPointer();
+
+        final int newPC = stack.getElementAt(fp.getValue() + WiMa.OFFSET_ADDR_POS).getIntValue();
+        final int newFP = stack.getElementAt(fp.getValue() + WiMa.OFFSET_REG_FP).getIntValue();
+
+        if (fp.getValue() > btp.getValue()) {
+            sp.setValue(fp.getValue() - 2);
+        }
+        pc.setValue(newPC);
+        fp.setValue(newFP);
     }
 
     @Override

@@ -19,6 +19,10 @@
 package jumpvm.code.wima;
 
 import jumpvm.ast.wima.WiMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.vm.WiMa;
 
 /**
  * Create bound variable reference on stack.
@@ -46,6 +50,14 @@ public class PutRefInstruction extends WiMaInstruction {
         super(sourceNode);
         this.offset = offset;
         this.identifier = identifier;
+    }
+
+    @Override
+    public final void execute(final WiMa vm) throws ExecutionException {
+        final Stack stack = vm.getStack();
+        final Register fp = vm.getFramePointer();
+
+        stack.push(stack.getElementAt(fp.getValue() + offset));
     }
 
     @Override
