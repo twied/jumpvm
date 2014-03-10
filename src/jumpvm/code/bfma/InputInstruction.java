@@ -19,6 +19,8 @@
 package jumpvm.code.bfma;
 
 import jumpvm.ast.bfma.BfMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.vm.BfMa;
 
 /**
  * Input current cell value.
@@ -35,6 +37,11 @@ public class InputInstruction extends BfMaInstruction {
      */
     public InputInstruction(final BfMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    protected final void execute(final BfMa vm) throws ExecutionException {
+        throw new ExecutionException(this, "BfMa INPUT not implemented yet");
     }
 
     @Override

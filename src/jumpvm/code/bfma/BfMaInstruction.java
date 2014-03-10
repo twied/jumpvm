@@ -21,6 +21,8 @@ package jumpvm.code.bfma;
 import jumpvm.ast.bfma.BfMaAstNode;
 import jumpvm.code.Instruction;
 import jumpvm.exception.ExecutionException;
+import jumpvm.memory.objects.BasicValueObject;
+import jumpvm.vm.BfMa;
 import jumpvm.vm.JumpVM;
 
 /**
@@ -36,7 +38,44 @@ public abstract class BfMaInstruction extends Instruction {
         super(sourceNode);
     }
 
+    /**
+     * Execute the instruction on the given BfMachine.
+     * 
+     * @param vm BfMachine
+     * @throws ExecutionException on failure
+     */
+    protected abstract void execute(final BfMa vm) throws ExecutionException;
+
     @Override
     public final void execute(final JumpVM jumpVM) throws ExecutionException {
+        if (jumpVM instanceof BfMa) {
+            execute((BfMa) jumpVM);
+        } else {
+            throw new ExecutionException(this, "Wrong VM");
+        }
+    }
+
+    /**
+     * Convenience method to get the value in the current cell.
+     * 
+     * @param vm BfMachine
+     * @return value in the current cell
+     */
+    protected final int getValue(final BfMa vm) {
+        try {
+            return vm.getStack().getElementAt(vm.getCellPointer()).getIntValue();
+        } catch (final IndexOutOfBoundsException e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Convenience method to set the value in the current cell.
+     * 
+     * @param vm BfMachine
+     * @param value new value
+     */
+    protected final void setValue(final BfMa vm, final int value) {
+        vm.getStack().setElementAt(vm.getCellPointer(), new BasicValueObject(value, null, null));
     }
 }

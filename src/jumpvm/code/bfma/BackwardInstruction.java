@@ -19,7 +19,9 @@
 package jumpvm.code.bfma;
 
 import jumpvm.ast.bfma.BfMaAstNode;
+import jumpvm.exception.ExecutionException;
 import jumpvm.memory.Label;
+import jumpvm.vm.BfMa;
 
 /**
  * If the current cell is nonzero, jump back to matching "[".
@@ -41,6 +43,13 @@ public class BackwardInstruction extends BfMaInstruction {
     public BackwardInstruction(final BfMaAstNode sourceNode, final Label label) {
         super(sourceNode);
         this.label = label;
+    }
+
+    @Override
+    protected final void execute(final BfMa vm) throws ExecutionException {
+        if (0 != getValue(vm)) {
+            vm.getProgramCounter().setValue(label.getAddress());
+        }
     }
 
     @Override

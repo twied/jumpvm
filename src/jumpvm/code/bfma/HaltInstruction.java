@@ -19,6 +19,9 @@
 package jumpvm.code.bfma;
 
 import jumpvm.ast.bfma.BfMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.vm.BfMa;
+import jumpvm.vm.JumpVM;
 
 /**
  * Halts the virtual machine.
@@ -31,6 +34,11 @@ public class HaltInstruction extends BfMaInstruction {
      */
     public HaltInstruction(final BfMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    protected final void execute(final BfMa vm) throws ExecutionException {
+        vm.getStatus().setValue(JumpVM.STATUS_STOP);
     }
 
     @Override

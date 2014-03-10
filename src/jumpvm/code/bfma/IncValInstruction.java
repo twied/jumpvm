@@ -19,6 +19,8 @@
 package jumpvm.code.bfma;
 
 import jumpvm.ast.bfma.BfMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.vm.BfMa;
 
 /**
  * Increment the value in the current cell.
@@ -35,6 +37,11 @@ public class IncValInstruction extends BfMaInstruction {
      */
     public IncValInstruction(final BfMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    protected final void execute(final BfMa vm) throws ExecutionException {
+        setValue(vm, getValue(vm) + 1);
     }
 
     @Override

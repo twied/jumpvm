@@ -19,6 +19,9 @@
 package jumpvm.code.bfma;
 
 import jumpvm.ast.bfma.BfMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Register;
+import jumpvm.vm.BfMa;
 
 /**
  * Increment the cell pointer.
@@ -35,6 +38,12 @@ public class IncPtrInstruction extends BfMaInstruction {
      */
     public IncPtrInstruction(final BfMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    protected final void execute(final BfMa vm) throws ExecutionException {
+        final Register cellPointer = vm.getCellPointer();
+        cellPointer.setValue(cellPointer.getValue() + 1);
     }
 
     @Override

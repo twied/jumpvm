@@ -19,6 +19,9 @@
 package jumpvm.code.bfma;
 
 import jumpvm.ast.bfma.BfMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Register;
+import jumpvm.vm.BfMa;
 
 /**
  * Decrement the cell pointer.
@@ -35,6 +38,13 @@ public class DecPtrInstruction extends BfMaInstruction {
      */
     public DecPtrInstruction(final BfMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    protected final void execute(final BfMa vm) throws ExecutionException {
+        final Register cellPointer = vm.getCellPointer();
+        final int value = cellPointer.getValue() - 1;
+        cellPointer.setValue(Math.max(0, value));
     }
 
     @Override

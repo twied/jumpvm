@@ -19,6 +19,8 @@
 package jumpvm.code.bfma;
 
 import jumpvm.ast.bfma.BfMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.vm.BfMa;
 
 /**
  * Output current cell value.
@@ -35,6 +37,11 @@ public class OutputInstruction extends BfMaInstruction {
      */
     public OutputInstruction(final BfMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    protected final void execute(final BfMa vm) throws ExecutionException {
+        vm.getWriter().print((char) getValue(vm));
     }
 
     @Override
