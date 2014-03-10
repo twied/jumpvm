@@ -1,0 +1,7 @@
+letrec
+    f == letrec
+        x == 1/y;
+        y == x;
+        g == \v . 1
+    in g x
+in f

@@ -1,0 +1,7 @@
+letrec
+    x == 1
+in letrec
+    h == \y . x + y
+in letrec
+    x == 2
+in h x

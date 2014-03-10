@@ -1,0 +1,5 @@
+letrec
+    inc == \x . x + 1;
+    app == \f x . f (x -1);
+    id  == app inc
+in id 5

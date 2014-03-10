@@ -1,0 +1,6 @@
+letrec
+    f == \xs ys .
+        if isnil xs
+        then ys 
+        else f (tail xs) (head xs : ys)
+in f [1,2] []

@@ -1,0 +1,4 @@
+letrec
+    g == \x y . x + y;
+    h == g 1
+in h 2

@@ -1,0 +1,5 @@
+letrec
+    x == 42;
+    b == 84 / x;
+    a == b
+in a

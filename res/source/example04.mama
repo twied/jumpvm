@@ -1,0 +1,5 @@
+letrec
+    f == \x . x + e;
+    e == 1
+in f 7
+

@@ -1,0 +1,6 @@
+letrec
+    x == 2 + 1;
+    f == \a b . g a + h b;
+    g == \x . x;
+    h == \y . y 
+in f x x

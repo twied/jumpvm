@@ -1,0 +1,5 @@
+letrec
+    f == letrec
+        x == 2
+    in \y . x + y
+in f 5

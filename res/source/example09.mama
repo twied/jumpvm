@@ -1,0 +1,4 @@
+letrec
+    F == \x y . x  y;
+    inc == \ x . x + 1
+in F inc 5

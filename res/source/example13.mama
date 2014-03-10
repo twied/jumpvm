@@ -1,0 +1,4 @@
+letrec
+    f == \y z . if z = 0 then 1 else 1 / y;
+    x == 5
+in f 1 (x + 1)

@@ -1,0 +1,4 @@
+letrec
+    nats == from 1;
+    from == \n . n : from (n + 1)
+in head (tail nats)
