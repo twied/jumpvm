@@ -19,7 +19,9 @@
 package jumpvm.code;
 
 import jumpvm.ast.AstNode;
+import jumpvm.exception.ExecutionException;
 import jumpvm.memory.objects.MemoryObject;
+import jumpvm.vm.JumpVM;
 
 /**
  * Instruction for the JumpVM.
@@ -36,6 +38,14 @@ public abstract class Instruction implements MemoryObject {
     public Instruction(final AstNode<?> sourceNode) {
         this.sourceNode = sourceNode;
     }
+
+    /**
+     * Execute this instruction on the given vm.
+     * 
+     * @param jumpVm virtual machine to execute this instruction on
+     * @throws ExecutionException on failure
+     */
+    public abstract void execute(JumpVM jumpVm) throws ExecutionException;
 
     /**
      * Do not display a description. The description goes in the hoover text.

@@ -20,6 +20,8 @@ package jumpvm.code.bfma;
 
 import jumpvm.ast.bfma.BfMaAstNode;
 import jumpvm.code.Instruction;
+import jumpvm.exception.ExecutionException;
+import jumpvm.vm.JumpVM;
 
 /**
  * BfMa instruction.
@@ -32,5 +34,9 @@ public abstract class BfMaInstruction extends Instruction {
      */
     public BfMaInstruction(final BfMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    public final void execute(final JumpVM jumpVM) throws ExecutionException {
     }
 }

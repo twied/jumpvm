@@ -16,27 +16,21 @@
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 
-package jumpvm.code.wima;
-
-import jumpvm.ast.AstNode;
-import jumpvm.code.Instruction;
-import jumpvm.exception.ExecutionException;
-import jumpvm.vm.JumpVM;
+package jumpvm.memory.objects;
 
 /**
- * WiMa instruction.
+ * A primitive {@link MemoryObject} that has an integer representation.
  */
-public abstract class WiMaInstruction extends Instruction {
-    /**
-     * Create a new WiMaInstruction.
-     * 
-     * @param sourceNode AstNode that is responsible for this instruction's creation
-     */
-    public WiMaInstruction(final AstNode<?> sourceNode) {
-        super(sourceNode);
+public abstract class StackObject implements MemoryObject {
+    @Override
+    public final String getDisplayValue() {
+        return String.valueOf(getIntValue());
     }
 
-    @Override
-    public final void execute(final JumpVM jumpVM) throws ExecutionException {
-    }
+    /**
+     * Returns the value of this object as integer.
+     * 
+     * @return the value of this object as integer
+     */
+    public abstract int getIntValue();
 }

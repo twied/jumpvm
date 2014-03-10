@@ -20,6 +20,8 @@ package jumpvm.code.mama;
 
 import jumpvm.ast.AstNode;
 import jumpvm.code.Instruction;
+import jumpvm.exception.ExecutionException;
+import jumpvm.vm.JumpVM;
 
 /**
  * MaMa instruction.
@@ -32,5 +34,9 @@ public abstract class MaMaInstruction extends Instruction {
      */
     public MaMaInstruction(final AstNode<?> sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    public final void execute(final JumpVM jumpVM) throws ExecutionException {
     }
 }
