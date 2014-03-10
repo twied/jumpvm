@@ -25,7 +25,9 @@ import java.util.List;
 import jumpvm.JumpVMTest;
 import jumpvm.Main.VmType;
 import jumpvm.compiler.Token;
+import jumpvm.compiler.bfma.BfMaDotBackend;
 import jumpvm.compiler.bfma.BfMaLexer;
+import jumpvm.compiler.bfma.BfMaParser;
 import jumpvm.compiler.bfma.BfMaToken;
 import jumpvm.compiler.mama.MaMaToken;
 
@@ -69,6 +71,15 @@ public class BfMaTest {
     }
 
     /**
+     * Create a parser for the given source file.
+     * 
+     * @return the parser
+     */
+    private BfMaParser createParser() {
+        return new BfMaParser(createLexer());
+    }
+
+    /**
      * Returns the name of the expect file for the given source file and test name.
      * 
      * @param testName name of the current test
@@ -76,6 +87,32 @@ public class BfMaTest {
      */
     private File getExpectFile(final String testName) {
         return JumpVMTest.getExpectFile(testName, sourceFile);
+    }
+
+    /**
+     * Test compiler.
+     * 
+     * @throws Exception on failure
+     */
+    @Test(timeout = JumpVMTest.TIMEOUT)
+    public final void testCompiler() throws Exception {
+        final BfMaCompiler compiler = createCompiler();
+
+        JumpVMTest.compare(getExpectFile("compiler"), JumpVMTest.toStrings(compiler));
+    }
+
+    /**
+     * Test dot backend.
+     * 
+     * @throws Exception on failure
+     */
+    @Test(timeout = JumpVMTest.TIMEOUT)
+    public final void testDot() throws Exception {
+        final BfMaParser parser = createParser();
+        final BfMaDotBackend backend = new BfMaDotBackend();
+        backend.process(parser.parse());
+
+        JumpVMTest.compare(getExpectFile("dot"), backend.getContent());
     }
 
     /**

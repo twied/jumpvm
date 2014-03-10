@@ -49,7 +49,7 @@ public final class Main {
     }
 
     /** JumpVM version. */
-    public static final String VERSION = "0.1";
+    public static final String VERSION = "0.2";
 
     /**
      * Convenience method to read an ImageIcon resource.

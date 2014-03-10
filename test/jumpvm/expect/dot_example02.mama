@@ -1,0 +1,15 @@
+digraph G {
+root [label="Program"];
+id_0 [label="letrec"];
+id_1 [label="b"];
+id_2 [label="a"];
+id_2 -> id_1;
+id_0 -> id_2 [label="definition"];
+id_3 [label="3"];
+id_4 [label="b"];
+id_4 -> id_3;
+id_0 -> id_4 [label="definition"];
+id_5 [label="a"];
+id_0 -> id_5 [label="expression"];
+root -> id_0;
+}

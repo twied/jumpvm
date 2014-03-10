@@ -1,0 +1,21 @@
+digraph G {
+root [label="Program"];
+id_0 [label="1"];
+id_1 [label="2"];
+id_2 [label="EQL"];
+id_2 -> id_0 [label="lhs"];
+id_2 -> id_1 [label="rhs"];
+id_3 [label="1"];
+id_4 [label="0"];
+id_5 [label="if"];
+id_5 -> id_2 [label="if"];
+id_5 -> id_3 [label="then"];
+id_5 -> id_4 [label="else"];
+id_6 [label="1"];
+id_7 [label="2"];
+id_8 [label="if"];
+id_8 -> id_5 [label="if"];
+id_8 -> id_6 [label="then"];
+id_8 -> id_7 [label="else"];
+root -> id_8;
+}

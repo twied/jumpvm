@@ -25,7 +25,9 @@ import java.util.List;
 import jumpvm.JumpVMTest;
 import jumpvm.Main.VmType;
 import jumpvm.compiler.Token;
+import jumpvm.compiler.wima.WiMaDotBackend;
 import jumpvm.compiler.wima.WiMaLexer;
+import jumpvm.compiler.wima.WiMaParser;
 import jumpvm.compiler.wima.WiMaToken;
 
 import org.junit.Assert;
@@ -68,6 +70,15 @@ public class WiMaTest {
     }
 
     /**
+     * Create a parser for the given source file.
+     * 
+     * @return the parser
+     */
+    private WiMaParser createParser() {
+        return new WiMaParser(createLexer());
+    }
+
+    /**
      * Returns the name of the expect file for the given source file and test name.
      * 
      * @param testName name of the current test
@@ -75,6 +86,31 @@ public class WiMaTest {
      */
     private File getExpectFile(final String testName) {
         return JumpVMTest.getExpectFile(testName, sourceFile);
+    }
+
+    /**
+     * Test compiler.
+     * 
+     * @throws Exception on failure
+     */
+    @Test(timeout = JumpVMTest.TIMEOUT)
+    public final void testCompiler() throws Exception {
+        final WiMaCompiler compiler = createCompiler();
+        JumpVMTest.compare(getExpectFile("compiler"), JumpVMTest.toStrings(compiler));
+    }
+
+    /**
+     * Test dot backend.
+     * 
+     * @throws Exception on failure
+     */
+    @Test(timeout = JumpVMTest.TIMEOUT)
+    public final void testDot() throws Exception {
+        final WiMaParser parser = createParser();
+        final WiMaDotBackend backend = new WiMaDotBackend();
+        backend.process(parser.parse());
+
+        JumpVMTest.compare(getExpectFile("dot"), backend.getContent());
     }
 
     /**

@@ -1,0 +1,9 @@
+digraph G {
+root [label="Program"];
+id_0 [label="1"];
+id_1 [label="2"];
+id_2 [label="ADD"];
+id_2 -> id_0 [label="lhs"];
+id_2 -> id_1 [label="rhs"];
+root -> id_2;
+}

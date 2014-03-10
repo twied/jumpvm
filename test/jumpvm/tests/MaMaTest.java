@@ -25,7 +25,9 @@ import java.util.List;
 import jumpvm.JumpVMTest;
 import jumpvm.Main.VmType;
 import jumpvm.compiler.Token;
+import jumpvm.compiler.mama.MaMaDotBackend;
 import jumpvm.compiler.mama.MaMaLexer;
+import jumpvm.compiler.mama.MaMaParser;
 import jumpvm.compiler.mama.MaMaToken;
 
 import org.junit.Assert;
@@ -68,6 +70,15 @@ public class MaMaTest {
     }
 
     /**
+     * Create a parser for the given source file.
+     * 
+     * @return the parser
+     */
+    private MaMaParser createParser() {
+        return new MaMaParser(createLexer());
+    }
+
+    /**
      * Returns the name of the expect file for the given source file and test name.
      * 
      * @param testName name of the current test
@@ -75,6 +86,32 @@ public class MaMaTest {
      */
     private File getExpectFile(final String testName) {
         return JumpVMTest.getExpectFile(testName, sourceFile);
+    }
+
+    /**
+     * Test compiler.
+     * 
+     * @throws Exception on failure
+     */
+    @Test(timeout = JumpVMTest.TIMEOUT)
+    public final void testCompiler() throws Exception {
+        final MaMaCompiler compiler = createCompiler();
+
+        JumpVMTest.compare(getExpectFile("compiler"), JumpVMTest.toStrings(compiler));
+    }
+
+    /**
+     * Test dot backend.
+     * 
+     * @throws Exception on failure
+     */
+    @Test(timeout = JumpVMTest.TIMEOUT)
+    public final void testDot() throws Exception {
+        final MaMaParser parser = createParser();
+        final MaMaDotBackend backend = new MaMaDotBackend();
+        backend.process(parser.parse());
+
+        JumpVMTest.compare(getExpectFile("dot"), backend.getContent());
     }
 
     /**

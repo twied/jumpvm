@@ -1,0 +1,27 @@
+digraph G {
+root [label="Program"];
+id_0 [label="letrec"];
+id_1 [label="x"];
+id_2 [label="y"];
+id_3 [label="ADD"];
+id_3 -> id_1 [label="lhs"];
+id_3 -> id_2 [label="rhs"];
+id_4 [label="lambda"];
+id_5 [label="x"];
+id_4 -> id_5 [label="var"];
+id_6 [label="y"];
+id_4 -> id_6 [label="var"];
+id_4 -> id_3 [label="expression"];
+id_7 [label="f"];
+id_7 -> id_4;
+id_0 -> id_7 [label="definition"];
+id_8 [label="f"];
+id_9 [label="call"];
+id_9 -> id_8 [label="function"];
+id_10 [label="7"];
+id_9 -> id_10 [label="argument"];
+id_11 [label="1"];
+id_9 -> id_11 [label="argument"];
+id_0 -> id_9 [label="expression"];
+root -> id_0;
+}
