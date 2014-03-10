@@ -19,6 +19,10 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.vm.MaMa;
 
 /**
  * Copy result.
@@ -41,6 +45,15 @@ public class SlideInstruction extends MaMaInstruction {
     public SlideInstruction(final MaMaAstNode sourceNode, final int m) {
         super(sourceNode);
         this.m = m;
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final Register sp = vm.getStackPointer();
+
+        st.setElementAt(sp.getValue() - m, st.peek());
+        sp.setValue(sp.getValue() - m);
     }
 
     @Override

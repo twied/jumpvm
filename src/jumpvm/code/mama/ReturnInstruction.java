@@ -19,6 +19,16 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.FunValObject;
+import jumpvm.memory.objects.PointerObject;
+import jumpvm.memory.objects.PointerObject.Type;
+import jumpvm.memory.objects.StackObject;
+import jumpvm.memory.objects.VectorObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Finishing treatment of functions and closures.
@@ -59,6 +69,37 @@ public class ReturnInstruction extends MaMaInstruction {
     public ReturnInstruction(final MaMaAstNode sourceNode, final int n) {
         super(sourceNode);
         this.n = n;
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final Heap hp = vm.getHeap();
+        final Register pc = vm.getProgramCounter();
+        final Register sp = vm.getStackPointer();
+        final Register fp = vm.getFramePointer();
+        final Register gp = vm.getGlobalPointer();
+
+        if (sp.getValue() == (fp.getValue() + 1 + n)) {
+            pc.setValue(st.getElementAt(fp.getValue() - 2));
+            gp.setValue(st.getElementAt(fp));
+            st.setElementAt(fp.getValue() - 2, st.peek());
+            /* if sp is decreased too early the fp value is lost. */
+            final StackObject newFP = st.getElementAt(fp.getValue() - 1);
+            sp.setValue(fp.getValue() - 2);
+            fp.setValue(newFP);
+        } else {
+            final FunValObject funval = (FunValObject) hp.getElementAt(st.peek());
+
+            pc.setValue(funval.getCf());
+            gp.setValue(funval.getFgp());
+            sp.setValue(sp.getValue() - n - 1);
+
+            final VectorObject vector = (VectorObject) hp.getElementAt(funval.getFap());
+            for (int i = 0; i < vector.getVector().size(); ++i) {
+                st.push(new PointerObject(vector.getVector().get(i), Type.POINTER_HEAP, "Arg " + i, "Argument " + i));
+            }
+        }
     }
 
     @Override

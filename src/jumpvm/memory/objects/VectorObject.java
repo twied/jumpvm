@@ -16,52 +16,57 @@
  * along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 
-package jumpvm.code.mama;
+package jumpvm.memory.objects;
 
-import jumpvm.ast.mama.MaMaAstNode;
-import jumpvm.exception.ExecutionException;
-import jumpvm.memory.Label;
-import jumpvm.vm.MaMa;
+import java.util.ArrayList;
 
 /**
- * Unconditional jump.
- * 
- * <pre>
- * PC := l;
- * </pre>
+ * MaMa Vector.
  */
-public class UJmpInstruction extends MaMaInstruction {
-    /** Label. */
-    private final Label l;
+public class VectorObject implements MemoryObject {
+    /** Elements. */
+    private final ArrayList<Integer> vector;
+
+    /** Name. */
+    private final String name;
 
     /**
-     * Create new UJmp instruction.
+     * Create a new {@link VectorObject}.
      * 
-     * @param sourceNode AstNode that is responsible for this instruction's creation
-     * @param l label
+     * @param vector elements
+     * @param name name
      */
-    public UJmpInstruction(final MaMaAstNode sourceNode, final Label l) {
-        super(sourceNode);
-        this.l = l;
+    public VectorObject(final ArrayList<Integer> vector, final String name) {
+        this.vector = vector;
+        this.name = name;
     }
 
     @Override
-    public final void execute(final MaMa vm) throws ExecutionException {
-        vm.getProgramCounter().setValue(l);
+    public final String getDisplayDescription() {
+        return name;
     }
 
     @Override
     public final String getDisplayHoverText() {
-        return "Unconditional jump (" + l.getName() + ")";
+        return name;
     }
 
     @Override
-    public final String getMnemonic() {
-        return "ujmp";
+    public final String getDisplayType() {
+        return "vec";
     }
 
     @Override
-    public final String getParameter() {
-        return String.valueOf(l.getAddress());
+    public final String getDisplayValue() {
+        return vector.toString();
+    }
+
+    /**
+     * Returns the elements.
+     * 
+     * @return the elements
+     */
+    public final ArrayList<Integer> getVector() {
+        return vector;
     }
 }

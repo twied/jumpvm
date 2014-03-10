@@ -19,6 +19,14 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.ClosureObject;
+import jumpvm.memory.objects.ConsObject;
+import jumpvm.memory.objects.MemoryObject;
+import jumpvm.memory.objects.NilPointerObject;
+import jumpvm.vm.MaMa;
 
 /**
  * List constructor.
@@ -41,6 +49,21 @@ public class ConsInstruction extends MaMaInstruction {
      */
     public ConsInstruction(final MaMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final Heap hp = vm.getHeap();
+        final int head = st.pop().getIntValue();
+        final int body = st.pop().getIntValue();
+        final MemoryObject object = hp.getElementAt(body);
+
+        if ((object instanceof ConsObject) || (object instanceof ClosureObject) || (object instanceof NilPointerObject)) {
+            st.push(hp.allocate(new ConsObject(head, body), "→cons", "Reference to List link"));
+        } else {
+            throw new ExecutionException(this, "not list object");
+        }
     }
 
     @Override

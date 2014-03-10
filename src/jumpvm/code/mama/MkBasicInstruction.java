@@ -19,6 +19,11 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.StackObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Create basic heap object.
@@ -35,6 +40,15 @@ public class MkBasicInstruction extends MaMaInstruction {
      */
     public MkBasicInstruction(final MaMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final Heap hp = vm.getHeap();
+        final StackObject object = st.pop();
+
+        st.push(hp.allocate(object, "→" + object.getDisplayValue(), "Reference to Value " + object.getDisplayValue()));
     }
 
     @Override

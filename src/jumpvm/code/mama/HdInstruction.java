@@ -19,6 +19,14 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.ConsObject;
+import jumpvm.memory.objects.MemoryObject;
+import jumpvm.memory.objects.PointerObject;
+import jumpvm.memory.objects.PointerObject.Type;
+import jumpvm.vm.MaMa;
 
 /**
  * Returns the head of a nonempty list.
@@ -39,6 +47,19 @@ public class HdInstruction extends MaMaInstruction {
      */
     public HdInstruction(final MaMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final Heap hp = vm.getHeap();
+        final MemoryObject object = hp.getElementAt(st.pop());
+
+        if (object instanceof ConsObject) {
+            st.push(new PointerObject(((ConsObject) object).getHd(), Type.POINTER_HEAP, "→hd", "Reference to head"));
+        } else {
+            throw new ExecutionException(this, "not cons value");
+        }
     }
 
     @Override

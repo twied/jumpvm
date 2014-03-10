@@ -19,6 +19,14 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.BasicValueObject;
+import jumpvm.memory.objects.ClosureObject;
+import jumpvm.memory.objects.MemoryObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Evaluate closure.
@@ -43,6 +51,29 @@ public class EvalInstruction extends MaMaInstruction {
      */
     public EvalInstruction(final MaMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final Heap hp = vm.getHeap();
+        final Register pc = vm.getProgramCounter();
+        final Register sp = vm.getStackPointer();
+        final Register fp = vm.getFramePointer();
+        final Register gp = vm.getGlobalPointer();
+        final MemoryObject object = hp.getElementAt(st.peek());
+        if (object instanceof ClosureObject) {
+            final ClosureObject closure = (ClosureObject) object;
+
+            st.startFrame(MaMa.FRAME_SIZE);
+            st.push(new BasicValueObject(pc));
+            st.push(new BasicValueObject(fp));
+            st.push(new BasicValueObject(gp));
+
+            gp.setValue(closure.getGp());
+            pc.setValue(closure.getCp());
+            fp.setValue(sp);
+        }
     }
 
     @Override

@@ -19,6 +19,9 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.objects.NilPointerObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Create empty list.
@@ -36,6 +39,11 @@ public class NilInstruction extends MaMaInstruction {
      */
     public NilInstruction(final MaMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        pushAlloc(vm, new NilPointerObject("[]", "Empty list"), "→[]", "Reference to an list");
     }
 
     @Override

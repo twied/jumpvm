@@ -19,6 +19,12 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.MemoryObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Overwrite heap object.
@@ -41,6 +47,15 @@ public class RewriteInstruction extends MaMaInstruction {
     public RewriteInstruction(final MaMaAstNode sourceNode, final int m) {
         super(sourceNode);
         this.m = m;
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final Heap hp = vm.getHeap();
+        final Register sp = vm.getStackPointer();
+        final MemoryObject object = hp.getElementAt(st.pop());
+        hp.setElementAt(st.getElementAt(sp.getValue() - (m - 1)), object);
     }
 
     @Override

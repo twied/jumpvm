@@ -19,6 +19,10 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.ClosureObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Create closure.
@@ -41,6 +45,14 @@ public class MkClosInstruction extends MaMaInstruction {
     public MkClosInstruction(final MaMaAstNode sourceNode, final String closureName) {
         super(sourceNode);
         this.closureName = closureName;
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final int cpValue = st.pop().getIntValue();
+        final int gpValue = st.pop().getIntValue();
+        pushAlloc(vm, new ClosureObject(cpValue, gpValue, closureName), "→" + closureName, "Reference to " + closureName);
     }
 
     @Override

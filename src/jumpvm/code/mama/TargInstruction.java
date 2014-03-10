@@ -18,7 +18,17 @@
 
 package jumpvm.code.mama;
 
+import java.util.ArrayList;
+
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.FunValObject;
+import jumpvm.memory.objects.StackObject;
+import jumpvm.memory.objects.VectorObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Test number of arguments.
@@ -53,6 +63,38 @@ public class TargInstruction extends MaMaInstruction {
         super(sourceNode);
         this.n = n;
         this.name = name;
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final Heap hp = vm.getHeap();
+        final Register pc = vm.getProgramCounter();
+        final Register sp = vm.getStackPointer();
+        final Register fp = vm.getFramePointer();
+        final Register gp = vm.getGlobalPointer();
+
+        if ((sp.getValue() - fp.getValue()) >= n) {
+            return;
+        }
+
+        final int h = st.getElementAt(fp.getValue() - 2).getIntValue();
+        final int length = sp.getValue() - fp.getValue();
+        final ArrayList<Integer> values = new ArrayList<Integer>();
+
+        for (int i = 0; i < length; ++i) {
+            values.add(st.getElementAt(fp.getValue() + i + 1).getIntValue());
+        }
+
+        final FunValObject funval = new FunValObject(pc.getValue() - 1, hp.allocate(new VectorObject(values, "Args"), name + " Args", name + " Args").getIntValue(), gp.getValue(), name);
+
+        st.setElementAt(fp.getValue() - 2, hp.allocate(funval, "→" + name, "Reference to " + name));
+        gp.setValue(st.getElementAt(fp));
+
+        final StackObject newFP = st.getElementAt(fp.getValue() - 1);
+        sp.setValue(fp.getValue() - 2);
+        fp.setValue(newFP);
+        pc.setValue(h);
     }
 
     @Override

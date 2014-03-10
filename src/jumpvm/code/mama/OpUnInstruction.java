@@ -20,6 +20,10 @@ package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
 import jumpvm.ast.mama.UnOpExpression.UnaryOperator;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.BasicValueObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Unary operation.
@@ -41,6 +45,14 @@ public class OpUnInstruction extends MaMaInstruction {
     public OpUnInstruction(final MaMaAstNode sourceNode, final UnaryOperator operator) {
         super(sourceNode);
         this.operator = operator;
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final int rhs = st.pop().getIntValue();
+        final int result = unop(rhs);
+        st.push(new BasicValueObject(result, null, null));
     }
 
     @Override

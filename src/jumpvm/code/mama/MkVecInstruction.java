@@ -18,7 +18,14 @@
 
 package jumpvm.code.mama;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.VectorObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Make vector with n components.
@@ -46,6 +53,18 @@ public class MkVecInstruction extends MaMaInstruction {
         super(sourceNode);
         this.n = n;
         this.vectorName = vectorName;
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final ArrayList<Integer> vector = new ArrayList<Integer>();
+        for (int i = 0; i < n; ++i) {
+            vector.add(st.pop().getIntValue());
+        }
+
+        Collections.reverse(vector);
+        pushAlloc(vm, new VectorObject(vector, vectorName), "→" + vectorName, "Reference to " + vectorName + " vector");
     }
 
     @Override

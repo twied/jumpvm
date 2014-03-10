@@ -19,6 +19,10 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.vm.MaMa;
 
 /**
  * Stack pointer to value of formal parameter or local variable.
@@ -42,6 +46,14 @@ public class PushLocInstruction extends MaMaInstruction {
     public PushLocInstruction(final MaMaAstNode sourceNode, final int j) {
         super(sourceNode);
         this.j = j;
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final Register sp = vm.getStackPointer();
+
+        st.push(st.getElementAt((sp.getValue() + 1) - j));
     }
 
     @Override

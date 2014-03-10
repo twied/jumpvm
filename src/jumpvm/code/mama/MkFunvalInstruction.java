@@ -19,6 +19,10 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.FunValObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Create functional heap object.
@@ -41,6 +45,15 @@ public class MkFunvalInstruction extends MaMaInstruction {
     public MkFunvalInstruction(final MaMaAstNode sourceNode, final String name) {
         super(sourceNode);
         this.name = name;
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final int cf = st.pop().getIntValue();
+        final int fap = st.pop().getIntValue();
+        final int fgp = st.pop().getIntValue();
+        pushAlloc(vm, new FunValObject(cf, fap, fgp, name), "→" + name, "Reference to " + name);
     }
 
     @Override

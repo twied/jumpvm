@@ -19,6 +19,9 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.objects.BasicValueObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Load basic value.
@@ -41,6 +44,11 @@ public class LdBInstruction extends MaMaInstruction {
     public LdBInstruction(final MaMaAstNode sourceNode, final int value) {
         super(sourceNode);
         this.value = value;
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        vm.getStack().push(new BasicValueObject(value, null, null));
     }
 
     @Override

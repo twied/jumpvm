@@ -19,7 +19,9 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
 import jumpvm.memory.Label;
+import jumpvm.vm.MaMa;
 
 /**
  * Conditional jump.
@@ -44,6 +46,13 @@ public class JFalseInstruction extends MaMaInstruction {
     public JFalseInstruction(final MaMaAstNode sourceNode, final Label l) {
         super(sourceNode);
         this.l = l;
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        if (vm.getStack().pop().getIntValue() == 0) {
+            vm.getProgramCounter().setValue(l);
+        }
     }
 
     @Override

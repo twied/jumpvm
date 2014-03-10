@@ -20,6 +20,10 @@ package jumpvm.code.mama;
 
 import jumpvm.ast.mama.BinOpExpression.BinaryOperator;
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.BasicValueObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Binary operation.
@@ -90,6 +94,15 @@ public class OpBinInstruction extends MaMaInstruction {
         default:
             throw new RuntimeException();
         }
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final int rhs = st.pop().getIntValue();
+        final int lhs = st.pop().getIntValue();
+        final int result = binop(lhs, rhs);
+        st.push(new BasicValueObject(result, null, null));
     }
 
     @Override

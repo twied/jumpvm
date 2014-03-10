@@ -19,6 +19,16 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.FunValObject;
+import jumpvm.memory.objects.MemoryObject;
+import jumpvm.memory.objects.PointerObject;
+import jumpvm.memory.objects.PointerObject.Type;
+import jumpvm.memory.objects.VectorObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Apply function.
@@ -46,6 +56,33 @@ public class ApplyInstruction extends MaMaInstruction {
      */
     public ApplyInstruction(final MaMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final Heap hp = vm.getHeap();
+        final Register pc = vm.getProgramCounter();
+        final Register gp = vm.getGlobalPointer();
+        final MemoryObject object = hp.getElementAt(st.pop());
+        if (object instanceof FunValObject) {
+            final FunValObject funval = (FunValObject) object;
+
+            pc.setValue(funval.getCf());
+            gp.setValue(funval.getFgp());
+
+            final MemoryObject arguments = hp.getElementAt(funval.getFap());
+            if (arguments instanceof VectorObject) {
+                final VectorObject vector = (VectorObject) arguments;
+                for (int i = 0; i < vector.getVector().size(); ++i) {
+                    st.push(new PointerObject(vector.getVector().get(i), Type.POINTER_HEAP, "Arg " + i, "Argument " + i));
+                }
+            } else {
+                throw new ExecutionException(this, "not vector value");
+            }
+        } else {
+            throw new ExecutionException(this, "not funval value");
+        }
     }
 
     @Override

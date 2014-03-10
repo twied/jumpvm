@@ -18,7 +18,15 @@
 
 package jumpvm.code.mama;
 
+import java.io.PrintWriter;
+
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.MemoryObject;
+import jumpvm.vm.JumpVM;
+import jumpvm.vm.MaMa;
 
 /** Halts the virtual machine. */
 public class HaltInstruction extends MaMaInstruction {
@@ -29,6 +37,21 @@ public class HaltInstruction extends MaMaInstruction {
      */
     public HaltInstruction(final MaMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final Heap hp = vm.getHeap();
+        final MemoryObject heapObject = hp.getElementAt(st.peek());
+        final PrintWriter writer = vm.getWriter();
+
+        vm.getStatus().setValue(JumpVM.STATUS_STOP);
+        writer.print(heapObject.getDisplayValue());
+        writer.print(" [");
+        writer.print(heapObject.getDisplayType());
+        writer.print("]");
+        writer.println();
     }
 
     @Override

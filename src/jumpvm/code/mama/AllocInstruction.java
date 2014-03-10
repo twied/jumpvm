@@ -19,6 +19,9 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.objects.ClosureObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Create empty closure.
@@ -44,6 +47,11 @@ public class AllocInstruction extends MaMaInstruction {
     public AllocInstruction(final MaMaAstNode sourceNode, final String closureName) {
         super(sourceNode);
         this.closureName = closureName;
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        pushAlloc(vm, new ClosureObject(NIL, NIL, closureName), "→" + closureName, "Reference to " + closureName);
     }
 
     @Override

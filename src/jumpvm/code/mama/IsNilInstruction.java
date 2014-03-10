@@ -19,6 +19,12 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.BasicValueObject;
+import jumpvm.memory.objects.NilPointerObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Detect end of list.
@@ -39,6 +45,18 @@ public class IsNilInstruction extends MaMaInstruction {
      */
     public IsNilInstruction(final MaMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final Heap hp = vm.getHeap();
+
+        if (hp.getElementAt(st.pop()) instanceof NilPointerObject) {
+            st.push(new BasicValueObject(1, "true", "true"));
+        } else {
+            st.push(new BasicValueObject(0, "false", "false"));
+        }
     }
 
     @Override

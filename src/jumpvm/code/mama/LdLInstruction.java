@@ -19,7 +19,10 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
 import jumpvm.memory.Label;
+import jumpvm.memory.objects.PointerObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Stack label.
@@ -42,6 +45,11 @@ public class LdLInstruction extends MaMaInstruction {
     public LdLInstruction(final MaMaAstNode sourceNode, final Label l) {
         super(sourceNode);
         this.l = l;
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        vm.getStack().push(new PointerObject(l));
     }
 
     @Override

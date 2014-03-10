@@ -19,7 +19,13 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
 import jumpvm.memory.Label;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.BasicValueObject;
+import jumpvm.memory.objects.PointerObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Create stack frame and fill organizational cells.
@@ -46,6 +52,20 @@ public class MarkInstruction extends MaMaInstruction {
     public MarkInstruction(final MaMaAstNode sourceNode, final Label l) {
         super(sourceNode);
         this.l = l;
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final Register sp = vm.getStackPointer();
+        final Register fp = vm.getFramePointer();
+        final Register gp = vm.getGlobalPointer();
+
+        st.startFrame(MaMa.FRAME_SIZE);
+        st.push(new PointerObject(l));
+        st.push(new BasicValueObject(fp));
+        st.push(new BasicValueObject(gp));
+        fp.setValue(sp);
     }
 
     @Override

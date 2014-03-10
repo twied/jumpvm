@@ -21,12 +21,31 @@ package jumpvm.code.mama;
 import jumpvm.ast.AstNode;
 import jumpvm.code.Instruction;
 import jumpvm.exception.ExecutionException;
+import jumpvm.memory.objects.MemoryObject;
 import jumpvm.vm.JumpVM;
+import jumpvm.vm.MaMa;
 
 /**
  * MaMa instruction.
  */
 public abstract class MaMaInstruction extends Instruction {
+    /**
+     * Convenience method to allocate an object on the heap an push the pointer to that object on the stack.
+     * 
+     * <pre>
+     * SP := SP + 1;
+     * ST[SP] := new(object);
+     * </pre>
+     * 
+     * @param vm MaMa
+     * @param object object to allocate on the heap
+     * @param descriptionShort short description for the pointer
+     * @param descriptionLong long description for the pointer
+     */
+    protected static void pushAlloc(final MaMa vm, final MemoryObject object, final String descriptionShort, final String descriptionLong) {
+        vm.getStack().push(vm.getHeap().allocate(object, descriptionShort, descriptionLong));
+    }
+
     /**
      * Create a new MaMaInstruction.
      * 
@@ -38,5 +57,18 @@ public abstract class MaMaInstruction extends Instruction {
 
     @Override
     public final void execute(final JumpVM jumpVM) throws ExecutionException {
+        if (!(jumpVM instanceof MaMa)) {
+            throw new ExecutionException(this, "wrong VM");
+        }
+
+        execute((MaMa) jumpVM);
     }
+
+    /**
+     * Execute a MaMa instruction.
+     * 
+     * @param vm MaMa
+     * @throws ExecutionException on failure
+     */
+    public abstract void execute(final MaMa vm) throws ExecutionException;
 }

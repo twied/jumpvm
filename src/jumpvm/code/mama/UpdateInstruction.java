@@ -19,6 +19,13 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.MemoryObject;
+import jumpvm.memory.objects.StackObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Transfer result.
@@ -39,6 +46,25 @@ public class UpdateInstruction extends MaMaInstruction {
      */
     public UpdateInstruction(final MaMaAstNode sourceNode) {
         super(sourceNode);
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final Heap hp = vm.getHeap();
+        final Register pc = vm.getProgramCounter();
+        final Register sp = vm.getStackPointer();
+        final Register fp = vm.getFramePointer();
+        final Register gp = vm.getGlobalPointer();
+        final MemoryObject object = hp.getElementAt(st.peek());
+        hp.setElementAt(st.getElementAt(sp.getValue() - MaMa.FRAME_SIZE - 1), object);
+
+        pc.setValue(st.getElementAt(fp.getValue() - 2));
+        gp.setValue(st.getElementAt(fp));
+        /* if sp is decreased too early the fp value is lost. */
+        final StackObject newFP = st.getElementAt(fp.getValue() - 1);
+        sp.setValue(fp.getValue() - MaMa.FRAME_SIZE);
+        fp.setValue(newFP);
     }
 
     @Override

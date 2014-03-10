@@ -18,10 +18,89 @@
 
 package jumpvm.vm;
 
+import jumpvm.memory.Heap;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+
 /**
  * MaMachine - a functional language similar to Haskell.
  */
-public class MaMa {
+public class MaMa extends JumpVM {
     /** Number of organizational cells in a stack frame. */
     public static final int FRAME_SIZE = 3;
+
+    /** Stack pointer register. */
+    private final Register stackPointer;
+
+    /** Frame pointer register. */
+    private final Register framePointer;
+
+    /** Global pointer register. */
+    private final Register globalPointer;
+
+    /** Stack memory. */
+    private final Stack stack;
+
+    /** Heap memory. */
+    private final Heap heap;
+
+    /** Create a new MaMa VM. */
+    public MaMa() {
+        this.stackPointer = new Register("SP", "Stack Pointer", -1);
+        this.framePointer = new Register("FP", "Frame Pointer", -1);
+        this.globalPointer = new Register("GP", "Global Pointer", -1);
+        addDisplayRegister(stackPointer);
+        addDisplayRegister(framePointer);
+        addDisplayRegister(globalPointer);
+
+        this.stack = new Stack(stackPointer);
+        this.heap = new Heap();
+        addDisplayMemory(stack);
+        addDisplayMemory(heap);
+    }
+
+    /**
+     * Returns the frame pointer register.
+     * 
+     * @return the frame pointer register
+     */
+    public final Register getFramePointer() {
+        return framePointer;
+    }
+
+    /**
+     * Returns the global pointer register.
+     * 
+     * @return the global pointer register
+     */
+    public final Register getGlobalPointer() {
+        return globalPointer;
+    }
+
+    /**
+     * Returns the heap memory.
+     * 
+     * @return the heap memory
+     */
+    public final Heap getHeap() {
+        return heap;
+    }
+
+    /**
+     * Returns the stack memory.
+     * 
+     * @return the stack memory
+     */
+    public final Stack getStack() {
+        return stack;
+    }
+
+    /**
+     * Returns the stack pointer register.
+     * 
+     * @return the stack pointer register
+     */
+    public final Register getStackPointer() {
+        return stackPointer;
+    }
 }

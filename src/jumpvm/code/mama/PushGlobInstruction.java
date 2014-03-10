@@ -19,6 +19,15 @@
 package jumpvm.code.mama;
 
 import jumpvm.ast.mama.MaMaAstNode;
+import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Heap;
+import jumpvm.memory.Register;
+import jumpvm.memory.Stack;
+import jumpvm.memory.objects.MemoryObject;
+import jumpvm.memory.objects.PointerObject;
+import jumpvm.memory.objects.PointerObject.Type;
+import jumpvm.memory.objects.VectorObject;
+import jumpvm.vm.MaMa;
 
 /**
  * Put reference to global on the stack.
@@ -46,6 +55,22 @@ public class PushGlobInstruction extends MaMaInstruction {
         super(sourceNode);
         this.j = j;
         this.name = name;
+    }
+
+    @Override
+    public final void execute(final MaMa vm) throws ExecutionException {
+        final Stack st = vm.getStack();
+        final Heap hp = vm.getHeap();
+        final Register gp = vm.getGlobalPointer();
+        final MemoryObject object = hp.getElementAt(gp);
+
+        if (object instanceof VectorObject) {
+            /* "j - 1": index starts at 0, not at 1! */
+            final int address = ((VectorObject) object).getVector().get(j - 1);
+            st.push(new PointerObject(address, Type.POINTER_HEAP, "→" + name, "Reference to global " + name));
+        } else {
+            throw new ExecutionException(this, "not vector value");
+        }
     }
 
     @Override
