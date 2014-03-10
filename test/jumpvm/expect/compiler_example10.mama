@@ -1,0 +1,5 @@
+ldb 1
+ldb 2
+opbin ADD
+mkbasic
+halt

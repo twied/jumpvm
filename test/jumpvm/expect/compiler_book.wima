@@ -1,0 +1,48 @@
+init
+pushenv 4
+enter
+call 5 / 0
+halt
+pushenv 5
+enter
+putvar 5
+call 13 / 1
+enter
+putref 5
+call 20 / 1
+popenv
+pushenv 6
+pusharg 1
+uvar 6
+enter
+putref 6
+call 24 / 1
+popenv
+pushenv 5
+pusharg 1
+uatom a
+popenv
+pushenv 6
+setbtp 32
+pusharg 1
+uvar 6
+enter
+putref 6
+call 40 / 1
+restore
+pushenv 6
+delbtp
+pusharg 1
+uvar 6
+enter
+putref 6
+call 44 / 1
+popenv
+pushenv 5
+pusharg 1
+uatom b
+popenv
+pushenv 5
+pusharg 1
+uatom a
+popenv

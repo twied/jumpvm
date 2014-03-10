@@ -1,0 +1,28 @@
+alloc
+alloc
+pushloc 1
+mkvec 1
+ldl 7
+mkclos
+ujmp 12
+pushglob 1
+ldb 1
+mkbasic
+cons
+update
+rewrite 2
+pushloc 2
+mkvec 1
+ldl 18
+mkclos
+ujmp 23
+pushglob 1
+ldb 2
+mkbasic
+cons
+update
+rewrite 1
+pushloc 2
+eval
+slide 2
+halt

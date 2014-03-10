@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import jumpvm.Main.VmType;
+import jumpvm.code.Instruction;
+import jumpvm.compiler.Compiler;
 import jumpvm.compiler.LocatedReader;
 import jumpvm.tests.BfMaTest;
 import jumpvm.tests.MaMaTest;
@@ -150,6 +152,25 @@ public final class JumpVMTest {
         final ArrayList<String> strings = new ArrayList<String>();
         for (final Object o : list) {
             strings.add(String.valueOf(o));
+        }
+        return strings;
+    }
+
+    /**
+     * Returns the compiler's stream of instruction as an ArrayList of Strings.
+     * 
+     * @param compiler compiler
+     * @return the compiler's stream of instruction as an ArrayList of Strings
+     */
+    public static ArrayList<String> toStrings(final Compiler compiler) {
+        final ArrayList<String> strings = new ArrayList<String>();
+        for (final Instruction instruction : compiler.getInstructions()) {
+            final String parameter = instruction.getParameter();
+            if (parameter == null) {
+                strings.add(instruction.getMnemonic());
+            } else {
+                strings.add(instruction.getMnemonic() + " " + parameter);
+            }
         }
         return strings;
     }

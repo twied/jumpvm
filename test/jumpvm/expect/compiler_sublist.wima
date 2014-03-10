@@ -1,0 +1,66 @@
+init
+pushenv 4
+enter
+putatom 1
+putatom 2
+putatom nil
+putstruct cons / 2
+putstruct cons / 2
+putatom 1
+putatom 2
+putatom 3
+putatom nil
+putstruct cons / 2
+putstruct cons / 2
+putstruct cons / 2
+call 50 / 2
+halt
+pushenv 8
+setbtp 26
+pusharg 1
+uatom nil
+pusharg 2
+uvar 8
+pusharg 3
+uref 8
+restore
+pushenv 11
+delbtp
+pusharg 1
+ustruct cons / 2
+down
+uvar 8
+brother 2
+uvar 9
+up
+pusharg 2
+uvar 10
+pusharg 3
+ustruct cons / 2
+down
+uref 8
+brother 2
+uvar 11
+up
+enter
+putref 9
+putref 10
+putref 11
+call 17 / 3
+popenv
+pushenv 11
+pusharg 1
+uvar 7
+pusharg 2
+uvar 8
+enter
+putvar 9
+putvar 10
+putref 8
+call 17 / 3
+enter
+putvar 11
+putref 7
+putref 9
+call 17 / 3
+popenv

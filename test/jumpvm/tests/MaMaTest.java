@@ -25,10 +25,13 @@ import java.util.List;
 import jumpvm.JumpVMTest;
 import jumpvm.Main.VmType;
 import jumpvm.compiler.Token;
+import jumpvm.compiler.mama.MaMaCompiler;
 import jumpvm.compiler.mama.MaMaDotBackend;
 import jumpvm.compiler.mama.MaMaLexer;
 import jumpvm.compiler.mama.MaMaParser;
 import jumpvm.compiler.mama.MaMaToken;
+import jumpvm.exception.CompileException;
+import jumpvm.exception.ParseException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -58,6 +61,21 @@ public class MaMaTest {
      */
     public MaMaTest(final String sourceFile) {
         this.sourceFile = sourceFile;
+    }
+
+    /**
+     * Create a compiler for the given source file and compile.
+     * 
+     * @return the compiler
+     * @throws CompileException on failure
+     * @throws ParseException on failure
+     */
+    private MaMaCompiler createCompiler() throws CompileException, ParseException {
+        final MaMaCompiler compiler = new MaMaCompiler();
+        final MaMaParser parser = createParser();
+        compiler.processProgram(parser.parse());
+
+        return compiler;
     }
 
     /**

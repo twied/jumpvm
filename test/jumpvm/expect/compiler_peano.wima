@@ -1,0 +1,135 @@
+init
+pushenv 5
+enter
+putatom 0
+putstruct s / 1
+putstruct s / 1
+putatom 0
+putstruct s / 1
+putstruct s / 1
+putstruct s / 1
+putvar 5
+call 89 / 3
+halt
+pushenv 5
+setbtp 18
+pusharg 1
+uatom 0
+restore
+pushenv 6
+delbtp
+pusharg 1
+ustruct s / 1
+down
+uvar 6
+up
+enter
+putref 6
+call 13 / 1
+popenv
+pushenv 8
+setbtp 38
+pusharg 1
+uatom 0
+pusharg 2
+uvar 8
+pusharg 3
+uref 8
+restore
+pushenv 10
+delbtp
+pusharg 1
+ustruct s / 1
+down
+uvar 8
+up
+pusharg 2
+uvar 9
+pusharg 3
+ustruct s / 1
+down
+uvar 10
+up
+enter
+putref 8
+putref 9
+putref 10
+call 29 / 3
+popenv
+pushenv 8
+setbtp 67
+pusharg 1
+uatom 0
+pusharg 2
+uvar 8
+pusharg 3
+uatom 0
+restore
+pushenv 11
+delbtp
+pusharg 1
+ustruct s / 1
+down
+uvar 8
+up
+pusharg 2
+uvar 9
+pusharg 3
+uvar 10
+enter
+putref 8
+putref 9
+putvar 11
+call 58 / 3
+enter
+putref 11
+putref 9
+putref 10
+call 29 / 3
+popenv
+pushenv 7
+setbtp 98
+pusharg 1
+uatom 0
+pusharg 2
+uatom 0
+pusharg 3
+uatom 0
+restore
+pushenv 8
+nextalt 113
+pusharg 1
+uatom 0
+pusharg 2
+ustruct s / 1
+down
+uvar 8
+up
+pusharg 3
+ustruct s / 1
+down
+uatom 0
+up
+restore
+pushenv 11
+delbtp
+pusharg 1
+ustruct s / 1
+down
+uvar 8
+up
+pusharg 2
+uvar 9
+pusharg 3
+uvar 10
+enter
+putref 8
+putref 9
+putvar 11
+call 89 / 3
+enter
+putref 11
+putref 9
+putref 10
+call 58 / 3
+popenv

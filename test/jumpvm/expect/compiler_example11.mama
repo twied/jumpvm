@@ -1,0 +1,27 @@
+alloc
+alloc
+alloc
+pushloc 2
+mkvec 1
+ldl 8
+mkclos
+ujmp 15
+ldb 1
+pushglob 1
+eval
+getbasic
+opbin DIV
+mkbasic
+update
+rewrite 3
+ldb 0
+mkbasic
+rewrite 2
+pushloc 3
+rewrite 1
+ldb 1
+ldb 2
+opbin ADD
+mkbasic
+slide 3
+halt

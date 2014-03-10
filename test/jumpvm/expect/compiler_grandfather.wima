@@ -1,0 +1,104 @@
+init
+pushenv 5
+enter
+putvar 5
+putatom jan
+call 64 / 2
+halt
+pushenv 5
+setbtp 12
+pusharg 1
+uatom jan
+restore
+pushenv 5
+nextalt 17
+pusharg 1
+uatom hugo
+restore
+pushenv 5
+nextalt 22
+pusharg 1
+uatom thomas
+restore
+pushenv 5
+delbtp
+pusharg 1
+uatom martin
+popenv
+pushenv 5
+setbtp 32
+pusharg 1
+uatom bertha
+restore
+pushenv 5
+delbtp
+pusharg 1
+uatom else
+popenv
+pushenv 7
+setbtp 46
+pusharg 1
+uatom jan
+pusharg 2
+uatom hugo
+pusharg 3
+uatom bertha
+restore
+pushenv 7
+nextalt 55
+pusharg 1
+uatom hugo
+pusharg 2
+uatom martin
+pusharg 3
+uatom else
+restore
+pushenv 7
+delbtp
+pusharg 1
+uatom bertha
+pusharg 2
+uatom thomas
+pusharg 3
+uatom else
+popenv
+pushenv 11
+setbtp 84
+pusharg 1
+uvar 7
+pusharg 2
+uvar 8
+enter
+putref 8
+putvar 9
+putvar 10
+call 37 / 3
+enter
+putref 9
+putref 7
+putvar 11
+call 37 / 3
+enter
+putref 7
+call 7 / 1
+restore
+pushenv 11
+delbtp
+pusharg 1
+uvar 7
+pusharg 2
+uvar 8
+enter
+putref 8
+putvar 9
+putvar 10
+call 37 / 3
+enter
+putref 10
+putref 7
+putvar 11
+call 37 / 3
+enter
+putref 7
+call 7 / 1
+popenv

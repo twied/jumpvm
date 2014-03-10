@@ -1,0 +1,14 @@
+ldb 1
+ldb 2
+opbin EQL
+jfalse 6
+ldb 1
+ujmp 7
+ldb 0
+jfalse 11
+ldb 1
+mkbasic
+ujmp 13
+ldb 2
+mkbasic
+halt

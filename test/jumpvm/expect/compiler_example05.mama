@@ -1,0 +1,27 @@
+alloc
+mkvec 0
+mkvec 0
+ldl 6
+mkfunval
+ujmp 16
+targ 2
+pushloc 1
+eval
+getbasic
+pushloc 3
+eval
+getbasic
+opbin ADD
+mkbasic
+return 2
+rewrite 1
+mark 25
+ldb 1
+mkbasic
+ldb 7
+mkbasic
+pushloc 6
+eval
+apply
+slide 1
+halt

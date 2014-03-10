@@ -25,11 +25,14 @@ import java.util.List;
 import jumpvm.JumpVMTest;
 import jumpvm.Main.VmType;
 import jumpvm.compiler.Token;
+import jumpvm.compiler.bfma.BfMaCompiler;
 import jumpvm.compiler.bfma.BfMaDotBackend;
 import jumpvm.compiler.bfma.BfMaLexer;
 import jumpvm.compiler.bfma.BfMaParser;
 import jumpvm.compiler.bfma.BfMaToken;
 import jumpvm.compiler.mama.MaMaToken;
+import jumpvm.exception.CompileException;
+import jumpvm.exception.ParseException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -59,6 +62,21 @@ public class BfMaTest {
      */
     public BfMaTest(final String sourceFile) {
         this.sourceFile = sourceFile;
+    }
+
+    /**
+     * Create a compiler for the given source file and compile.
+     * 
+     * @return the compiler
+     * @throws CompileException on failure
+     * @throws ParseException on failure
+     */
+    private BfMaCompiler createCompiler() throws CompileException, ParseException {
+        final BfMaCompiler compiler = new BfMaCompiler();
+        final BfMaParser parser = createParser();
+        compiler.processProgram(parser.parse());
+
+        return compiler;
     }
 
     /**

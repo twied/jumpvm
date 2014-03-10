@@ -25,10 +25,13 @@ import java.util.List;
 import jumpvm.JumpVMTest;
 import jumpvm.Main.VmType;
 import jumpvm.compiler.Token;
+import jumpvm.compiler.wima.WiMaCompiler;
 import jumpvm.compiler.wima.WiMaDotBackend;
 import jumpvm.compiler.wima.WiMaLexer;
 import jumpvm.compiler.wima.WiMaParser;
 import jumpvm.compiler.wima.WiMaToken;
+import jumpvm.exception.CompileException;
+import jumpvm.exception.ParseException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -58,6 +61,21 @@ public class WiMaTest {
      */
     public WiMaTest(final String sourceFile) {
         this.sourceFile = sourceFile;
+    }
+
+    /**
+     * Create a compiler for the given source file and compile.
+     * 
+     * @return the compiler
+     * @throws CompileException on failure
+     * @throws ParseException on failure
+     */
+    private WiMaCompiler createCompiler() throws CompileException, ParseException {
+        final WiMaCompiler compiler = new WiMaCompiler();
+        final WiMaParser parser = createParser();
+        compiler.processProgram(parser.parse());
+
+        return compiler;
     }
 
     /**

@@ -1,0 +1,57 @@
+alloc
+alloc
+pushloc 1
+mkvec 1
+ldl 7
+mkclos
+ujmp 14
+mark 13
+ldb 1
+mkbasic
+pushglob 1
+eval
+apply
+update
+rewrite 2
+pushloc 1
+mkvec 1
+mkvec 0
+ldl 21
+mkfunval
+ujmp 48
+targ 1
+pushglob 1
+pushloc 2
+mkvec 2
+ldl 28
+mkclos
+ujmp 45
+mark 44
+pushglob 2
+mkvec 1
+ldl 34
+mkclos
+ujmp 41
+pushglob 1
+eval
+getbasic
+ldb 1
+opbin ADD
+mkbasic
+update
+pushglob 1
+eval
+apply
+update
+pushloc 2
+cons
+return 1
+rewrite 1
+pushloc 2
+eval
+tl
+eval
+hd
+eval
+slide 2
+halt
