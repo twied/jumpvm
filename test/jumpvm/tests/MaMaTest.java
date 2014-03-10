@@ -19,11 +19,13 @@
 package jumpvm.tests;
 
 import java.io.File;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import jumpvm.JumpVMTest;
 import jumpvm.Main.VmType;
+import jumpvm.code.Instruction;
 import jumpvm.compiler.Token;
 import jumpvm.compiler.mama.MaMaCompiler;
 import jumpvm.compiler.mama.MaMaDotBackend;
@@ -32,6 +34,7 @@ import jumpvm.compiler.mama.MaMaParser;
 import jumpvm.compiler.mama.MaMaToken;
 import jumpvm.exception.CompileException;
 import jumpvm.exception.ParseException;
+import jumpvm.vm.MaMa;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -97,6 +100,22 @@ public class MaMaTest {
     }
 
     /**
+     * Create a vm for the given source file, compile and load.
+     * 
+     * @return the vm
+     * @throws CompileException on failure
+     * @throws ParseException on failure
+     */
+    private MaMa createVM() throws CompileException, ParseException {
+        final ArrayList<Instruction> instructions = createCompiler().getInstructions();
+        Assert.assertNotEquals(instructions.size(), 0);
+
+        final MaMa vm = new MaMa();
+        vm.reset(instructions);
+        return vm;
+    }
+
+    /**
      * Returns the name of the expect file for the given source file and test name.
      * 
      * @param testName name of the current test
@@ -154,5 +173,31 @@ public class MaMaTest {
         Assert.assertFalse(tokenList.contains(MaMaToken.UNKNOWN));
 
         JumpVMTest.compare(getExpectFile("lexer"), JumpVMTest.toStrings(tokenList));
+    }
+
+    /**
+     * Test run.
+     * 
+     * @throws Exception on failure
+     */
+    @Test(timeout = JumpVMTest.TIMEOUT)
+    public final void testRun() throws Exception {
+        if ("example02.mama".equals(sourceFile)) {
+            /*
+             * "example02.mama" crashes the vm. The reason is an invalid optimization, explained in "Übersetzerbau - Theorie, Konstruktion, Generierung" by R. Wilhelm and D. Maurer, pages 104 and 105. The requested reordering of variables is NOT implemented in this compiler.
+             */
+            return;
+        }
+
+        final MaMa vm = createVM();
+
+        final StringWriter stringWriter = new StringWriter();
+        vm.setWriter(stringWriter);
+
+        while (vm.isRunning()) {
+            vm.step();
+        }
+
+        JumpVMTest.compare(getExpectFile("run"), stringWriter.toString());
     }
 }

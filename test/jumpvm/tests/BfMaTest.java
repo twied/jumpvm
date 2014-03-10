@@ -19,11 +19,13 @@
 package jumpvm.tests;
 
 import java.io.File;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import jumpvm.JumpVMTest;
 import jumpvm.Main.VmType;
+import jumpvm.code.Instruction;
 import jumpvm.compiler.Token;
 import jumpvm.compiler.bfma.BfMaCompiler;
 import jumpvm.compiler.bfma.BfMaDotBackend;
@@ -33,6 +35,7 @@ import jumpvm.compiler.bfma.BfMaToken;
 import jumpvm.compiler.mama.MaMaToken;
 import jumpvm.exception.CompileException;
 import jumpvm.exception.ParseException;
+import jumpvm.vm.BfMa;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -98,6 +101,22 @@ public class BfMaTest {
     }
 
     /**
+     * Create a vm for the given source file, compile and load.
+     * 
+     * @return the vm
+     * @throws CompileException on failure
+     * @throws ParseException on failure
+     */
+    private BfMa createVM() throws CompileException, ParseException {
+        final ArrayList<Instruction> instructions = createCompiler().getInstructions();
+        Assert.assertNotEquals(instructions.size(), 0);
+
+        final BfMa vm = new BfMa();
+        vm.reset(instructions);
+        return vm;
+    }
+
+    /**
      * Returns the name of the expect file for the given source file and test name.
      * 
      * @param testName name of the current test
@@ -155,5 +174,24 @@ public class BfMaTest {
         Assert.assertFalse(tokenList.contains(MaMaToken.UNKNOWN));
 
         JumpVMTest.compare(getExpectFile("lexer"), JumpVMTest.toStrings(tokenList));
+    }
+
+    /**
+     * Test run.
+     * 
+     * @throws Exception on failure
+     */
+    @Test(timeout = JumpVMTest.TIMEOUT)
+    public final void testRun() throws Exception {
+        final BfMa vm = createVM();
+
+        final StringWriter stringWriter = new StringWriter();
+        vm.setWriter(stringWriter);
+
+        while (vm.isRunning()) {
+            vm.step();
+        }
+
+        JumpVMTest.compare(getExpectFile("run"), stringWriter.toString());
     }
 }

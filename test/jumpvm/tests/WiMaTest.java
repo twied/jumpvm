@@ -19,11 +19,13 @@
 package jumpvm.tests;
 
 import java.io.File;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import jumpvm.JumpVMTest;
 import jumpvm.Main.VmType;
+import jumpvm.code.Instruction;
 import jumpvm.compiler.Token;
 import jumpvm.compiler.wima.WiMaCompiler;
 import jumpvm.compiler.wima.WiMaDotBackend;
@@ -32,6 +34,7 @@ import jumpvm.compiler.wima.WiMaParser;
 import jumpvm.compiler.wima.WiMaToken;
 import jumpvm.exception.CompileException;
 import jumpvm.exception.ParseException;
+import jumpvm.vm.WiMa;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -97,6 +100,22 @@ public class WiMaTest {
     }
 
     /**
+     * Create a vm for the given source file, compile and load.
+     * 
+     * @return the vm
+     * @throws CompileException on failure
+     * @throws ParseException on failure
+     */
+    private WiMa createVM() throws CompileException, ParseException {
+        final ArrayList<Instruction> instructions = createCompiler().getInstructions();
+        Assert.assertNotEquals(instructions.size(), 0);
+
+        final WiMa vm = new WiMa();
+        vm.reset(instructions);
+        return vm;
+    }
+
+    /**
      * Returns the name of the expect file for the given source file and test name.
      * 
      * @param testName name of the current test
@@ -153,5 +172,24 @@ public class WiMaTest {
         Assert.assertFalse(tokenList.contains(WiMaToken.UNKNOWN));
 
         JumpVMTest.compare(getExpectFile("lexer"), JumpVMTest.toStrings(tokenList));
+    }
+
+    /**
+     * Test run.
+     * 
+     * @throws Exception on failure
+     */
+    @Test(timeout = JumpVMTest.TIMEOUT)
+    public final void testRun() throws Exception {
+        final WiMa vm = createVM();
+
+        final StringWriter stringWriter = new StringWriter();
+        vm.setWriter(stringWriter);
+
+        while (vm.isRunning()) {
+            vm.step();
+        }
+
+        JumpVMTest.compare(getExpectFile("run"), stringWriter.toString());
     }
 }
