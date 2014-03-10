@@ -1,0 +1,20 @@
+male(jan).
+male(hugo).
+male(thomas).
+male(martin).
+
+female(bertha).
+female(else).
+
+parents(jan, hugo, bertha).    % jan's parents are hugo and bertha.
+parents(hugo, martin, else).   % hugos's parents are martin and else.
+parents(bertha, thomas, else). % bertha's parents are thomas and else.
+
+% a grandfather is 
+% - a male parent of your father or
+% - a male parent of your mother
+grandfather(X, Y) :- parents(Y, F, M), parents(F, X, GM), male(X).
+grandfather(X, Y) :- parents(Y, F, M), parents(M, X, GM), male(X).
+
+% who are jan's grandfathers?
+?- grandfather(X, jan).

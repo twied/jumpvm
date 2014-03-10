@@ -1,0 +1,12 @@
+% see "Übersetzerbau - Theorie, Konstruktion, Generierung" by R. Wilhelm and
+% D. Maurer, chapter 4.7.6 pages 158 & 159.
+
+p :- q(X), r(X).
+q(X) :- s(X).
+r(a).
+s(X) :- t(X).
+s(X) :- u(X).
+t(b).
+u(a).
+
+?- p.

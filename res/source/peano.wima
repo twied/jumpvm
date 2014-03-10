@@ -1,0 +1,24 @@
+% 0 is an integer.
+int(0).
+% the successor of an integer is an integer.
+int(s(M)) :- int(M).
+
+% 0 + M = M.
+sum(0, M, M).
+% (N + 1) + M = K + 1.
+sum(s(N), M, s(K)) :- sum(N, M, K).
+
+% 0 * M = 0.
+prod(0, M, 0).
+% (N + 1) * M  = N * M + M
+prod(s(N), M, P) :- prod(N, M, K), sum(K, M, P).
+
+% 0^0 = 0.
+pow(0, 0, 0).
+% X^0 = 1.
+pow(0, s(X), s(0)).
+% M^(N+1) = M * M^N.
+pow(s(N), M, P) :- pow(N, M, K), prod(K, M, P).
+
+% 3^2?
+?- pow(s(s(0)), s(s(s(0))), X).

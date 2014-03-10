@@ -1,0 +1,10 @@
+% nil:X = X
+append(nil, X, X).
+% H:X:Y = H:Z :- X:Y = Z
+append(cons(H, X), Y, cons(H, Z)) :- append(X, Y, Z).
+
+% X is sublist of Y :- Y = A:X:B
+sublist(X, Y) :- append(W, B, Y), append(A, X, W).
+
+% does [1, 2, 3, nil] contain [1, 2, nil]?
+?- sublist(cons(1, cons(2, nil)), cons(1, cons(2, cons(3, nil)))).
