@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<project name="JumpVM" default="jar" basedir=".">
+	<target name="clean">
+		<delete dir="bin" />
+		<delete file="JumpVM.jar" />
+	</target>
+
+	<target name="compile">
+		<mkdir dir="bin" />
+		<javac
+			srcdir="src"
+			destdir="bin"
+			includeantruntime="false"
+			debug="true"
+			debuglevel="lines,vars,source"
+			target="1.6"
+			source="1.6"
+		/>
+		<copy todir="bin">
+			<fileset dir="res" includes="**"/>
+		</copy>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar destfile="JumpVM.jar" basedir="bin">
+			<manifest>
+				<attribute name="Main-Class" value="jumpvm.Main" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run" depends="jar">
+		<java jar="JumpVM.jar" fork="true" spawn="true"/>
+	</target>
+	
+	<target name="test" depends="compile">
+		<javac
+			srcdir="test"
+			destdir="bin"
+			includeantruntime="false"
+			debug="true"
+			debuglevel="lines,vars,source"
+		>
+			<classpath>
+				<pathelement location="/usr/share/java/junit4.jar"/>
+			</classpath>
+		</javac>
+		<junit printsummary="yes" haltonfailure="no" fork="true">
+			<classpath>
+				<pathelement location="/usr/share/java/junit4.jar"/>
+				<pathelement location="/usr/share/java/ant-junit4.jar"/>
+				<pathelement location="bin"/>
+			</classpath>
+			<test name="jumpvm.JumpVMTest" />
+			<formatter type="xml"/>
+		</junit>
+	</target>
+</project>
