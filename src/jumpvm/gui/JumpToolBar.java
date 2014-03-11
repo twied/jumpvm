@@ -103,6 +103,32 @@ public class JumpToolBar extends JToolBar implements ActionListener {
 
     @Override
     public final void actionPerformed(final ActionEvent e) {
+        final Object source = e.getSource();
+        if (source == fileNewButton) {
+            gui.actionNewTab();
+        } else if (source == fileCloseButton) {
+            gui.actionCloseTab();
+        } else if (source == fileSaveButton) {
+            gui.actionSave();
+        } else if (source == fileSaveAsButton) {
+            gui.actionSaveAs();
+        } else if (source == runCompileButton) {
+            gui.actionCompile();
+        } else if (source == runStepForwardButton) {
+            gui.actionStepForward();
+        } else if (source == runStepBackwardButton) {
+            gui.actionStepBackward();
+        } else if (source == runRunButton) {
+            return;
+        } else if (source == runResetButton) {
+            gui.actionReset();
+        } else if (source == helpHelpButton) {
+            gui.actionHelp();
+        } else if (source == timer) {
+            if (runRunButton.isSelected()) {
+                gui.actionStepForward();
+            }
+        }
     }
 
     /**

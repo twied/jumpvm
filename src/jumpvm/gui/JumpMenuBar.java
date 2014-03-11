@@ -257,6 +257,56 @@ public class JumpMenuBar extends JMenuBar implements ActionListener {
 
     @Override
     public final void actionPerformed(final ActionEvent e) {
+        final Object source = e.getSource();
+        if (source == fileNewEmptyItem) {
+            gui.actionNewTab();
+        } else if (source == fileNewPaMaItem) {
+            gui.actionNewTab(VmType.PAMA);
+        } else if (source == fileNewMaMaItem) {
+            gui.actionNewTab(VmType.MAMA);
+        } else if (source == fileNewWiMaItem) {
+            gui.actionNewTab(VmType.WIMA);
+        } else if (source == fileNewBfMaItem) {
+            gui.actionNewTab(VmType.BFMA);
+        } else if (source == fileOpenPaMaItem) {
+            gui.actionOpen(VmType.PAMA);
+        } else if (source == fileOpenMaMaItem) {
+            gui.actionOpen(VmType.MAMA);
+        } else if (source == fileOpenWiMaItem) {
+            gui.actionOpen(VmType.WIMA);
+        } else if (source == fileOpenBfMaItem) {
+            gui.actionOpen(VmType.BFMA);
+        } else if (source == fileCloseItem) {
+            gui.actionCloseTab();
+        } else if (source == fileSaveItem) {
+            gui.actionSave();
+        } else if (source == fileSaveAsItem) {
+            gui.actionSaveAs();
+        } else if (source == fileExportDotItem) {
+            gui.actionExportDot();
+        } else if (source == fileExportAsmItem) {
+            gui.actionExportAsm();
+        } else if (source == fileQuitItem) {
+            gui.actionQuit();
+        } else if (source == runCompileItem) {
+            gui.actionCompile();
+        } else if (source == runStepForwardItem) {
+            gui.actionStepForward();
+        } else if (source == runStepBackwardItem) {
+            gui.actionStepBackward();
+        } else if (source == runResetItem) {
+            gui.actionReset();
+        } else if (source == helpHelpItem) {
+            gui.actionHelp();
+        } else if (source == helpAboutItem) {
+            gui.actionAbout();
+        } else if (exampleList.keySet().contains(source)) {
+            final JMenuItem item = (JMenuItem) source;
+            final VmType type = exampleList.get(source);
+            final JumpTab tab = gui.actionNewTab(type);
+            tab.setSource(Main.getResourceAsStream("/source/" + item.getText()));
+            gui.setTitle(tab, item.getText());
+        }
     }
 
     /**
