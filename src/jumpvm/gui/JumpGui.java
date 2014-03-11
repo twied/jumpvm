@@ -20,21 +20,36 @@ package jumpvm.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.CharArrayWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JToggleButton.ToggleButtonModel;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 import jumpvm.Main;
 import jumpvm.Main.VmType;
@@ -392,5 +407,69 @@ public class JumpGui extends JFrame {
      * @param file name of the resource
      */
     private void showHtmlDialog(final String file) {
+        final JEditorPane editorPane;
+
+        try {
+            editorPane = new JEditorPane(Main.getResource(file)) {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public void paintComponent(final Graphics g) {
+                    ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    super.paintComponent(g);
+                }
+            };
+
+            editorPane.setEditable(false);
+            editorPane.addHyperlinkListener(new HyperlinkListener() {
+                @Override
+                public void hyperlinkUpdate(final HyperlinkEvent e) {
+                    if (e.getEventType() != HyperlinkEvent.EventType.ACTIVATED) {
+                        return;
+                    }
+
+                    if (!Desktop.isDesktopSupported()) {
+                        return;
+                    }
+
+                    try {
+                        Desktop.getDesktop().browse(e.getURL().toURI());
+                    } catch (final IOException e1) {
+                        /* ignore. */
+                        return;
+                    } catch (final URISyntaxException e1) {
+                        /* ignore. */
+                        return;
+                    }
+                }
+            });
+        } catch (final IOException e) {
+            JOptionPane.showMessageDialog(this, "File not found: " + file, "JumpVM help", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        final JDialog dialog = new JDialog(this, "JumpVM", true);
+
+        final JButton button = new JButton("OK");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                dialog.dispose();
+            }
+        });
+
+        final JPanel buttonPane = new JPanel();
+        buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
+        buttonPane.add(button);
+
+        final JPanel contentPane = new JPanel();
+        contentPane.setLayout(new BorderLayout());
+        contentPane.add(new JScrollPane(editorPane), BorderLayout.CENTER);
+        contentPane.add(buttonPane, BorderLayout.PAGE_END);
+
+        dialog.setContentPane(contentPane);
+        dialog.setSize(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 }

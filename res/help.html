@@ -1,0 +1,92 @@
+<html>
+<h1>JumpVM help</h1>
+<p>JumpVM is "The Java Unified Multi Paradigm Virtual Machine", a gui, parser, compiler and VM for several different programming languages and paradigms.</p> 
+<p>The main goal of this tool is to support the "Einf&uuml;hrung in den &Uuml;bersetzerbau" and "&Uuml;bersetzung fortgeschrittener Sprachkonzepte" lectures of Ulm University.</p>
+<p>The names and capabilities of the different languages (<img src="icon16/preferences-desktop-multimedia.png"/>&nbsp;PaMa, <img src="icon16/accessories-calculator.png"/>&nbsp;MaMa, <img src="icon16/internet-group-chat.png"/>&nbsp;WiMa and <img src="icon16/weather-storm.png"/>&nbsp;BfMa) orient themselves toward the book "&Uuml;bersetzerbau - Theorie, Konstruktion, Generierung" by R. Wilhelm and D. Maurer which is used in said lectures.</p>
+<h2>Getting started</h2>
+<ul>
+<li>Open an example file: Select &#8801; File &#8594; Example &#8594; MaMa &#8594; example01.mama</li>
+<li>Compile the program: Click on <img src="icon16/applications-system.png"/> or select &#8801; Run &#8594; Compile</li>
+<li>Run the program: Click on <img src="icon16/go-last.png"/> or select &#8801; Run &#8594; Run</li>
+</ul>
+<h2>Menus</h2>
+<ul>
+<li>File
+    <ul>
+    <li><b><img src="icon16/document-new.png"/>&nbsp;New:</b> Create a new VM of the given type.</li>
+    <li><b><img src="icon16/document-open.png"/>&nbsp;Open:</b> Create a new VM of the given type and read the source code from a file.</li>
+    <li><b><img src="icon16/applications-system.png"/>&nbsp;Example:</b> Create a new VM of the given type and load example source code.</li>
+    <li><b><img src="icon16/document-save.png"/>&nbsp;Save:</b> Save the source code of the current tab to a file.</li>
+    <li><b><img src="icon16/document-save-as.png"/>&nbsp;Save&nbsp;as:</b> Save the source code of the current tab to a different file.</li>
+    <li><b><img src="icon16/document-save-as.png"/>&nbsp;Export&nbsp;dot:</b> Export the source code's abstract syntax tree (given it compiles) as a <a href="http://www.graphviz.org/">graphviz</a> "dot" file.</li>
+    <li><b><img src="icon16/document-save-as.png"/>&nbsp;Export&nbsp;asm:</b> Export the compiled mnemonics to a file.</li>
+    <li><b><img src="icon16/user-trash-full.png"/>&nbsp;Close&nbsp;tab:</b> Close the current tab.</li>
+    <li><b><img src="icon16/system-log-out.png"/>&nbsp;Quit:</b> Exit the program.</li>
+    </ul>
+</li>
+<li>Run
+    <ul>
+    <li><b><img src="icon16/applications-system.png"/>&nbsp;Compile:</b> Compile the source code into mnemonics fit to be run in the current VM.</li>
+    <li><b><img src="icon16/go-previous.png"/>&nbsp;Step&nbsp;backward:</b> Goes back one step on the current VM.</li>
+    <li><b><img src="icon16/go-next.png"/>&nbsp;Step&nbsp;forward:</b> Execute the next step on the current VM / start executing.</li>
+    <li><b><img src="icon16/go-last.png"/>&nbsp;Run:</b> Executes the VM in "fast forward" mode.</li>
+    <li><b><img src="icon16/view-refresh.png"/>&nbsp;Reset:</b> Reset the VM.</li>
+    </ul>
+</li>
+<li>Help
+    <ul>
+    <li><b><img src="icon16/help-browser.png"/>&nbsp;Help:</b> This help.</li>
+    <li><b><img src="icon16/dialog-information.png"/>&nbsp;About:</b> Author and license information.</li>
+    </ul>
+</li>
+</ul>
+
+<h2>Toolbar</h2>
+<ul>
+<li><b><img src="icon16/document-new.png"/>&nbsp;New&nbsp;tab:</b> Create an empty tab.</li>
+<li><b><img src="icon16/user-trash-full.png"/>&nbsp;Close&nbsp;tab:</b> Same as &#8801; File &#8594; Close&nbsp;tab.</li>
+<li><b><img src="icon16/document-save.png"/>&nbsp;Save:</b> Same as &#8801; File &#8594; Save.</li>
+<li><b><img src="icon16/document-save-as.png"/>&nbsp;Save&nbsp;as:</b> Same as &#8801; File &#8594; Save&nbsp;as.</li>
+<li><b><img src="icon16/applications-system.png"/>&nbsp;Compile:</b> Same as &#8801; Run &#8594; Compile.</li>
+<li><b><img src="icon16/go-previous.png"/>&nbsp;Step&nbsp;backward:</b> Same as &#8801; Run &#8594; Step&nbsp;backward.</li>
+<li><b><img src="icon16/go-next.png"/>&nbsp;Step&nbsp;forward:</b> Same as &#8801; Run &#8594; Step&nbsp;forward.</li>
+<li><b><img src="icon16/go-last.png"/>&nbsp;Run:</b> Same as &#8801; Run &#8594; Run.</li>
+<li><b><img src="icon16/view-refresh.png"/>&nbsp;Reset:</b> Same as &#8801; Run &#8594; Reset.</li>
+<li><b><img src="icon16/help-browser.png"/>&nbsp;Help:</b> Same as &#8801; Help &#8594; Help.</li>
+</ul>
+
+<h2>Tabs</h2>
+<ul>
+<li><b>Registers:</b> A list of registers the current VM has. Move the cursor above a register to get its full name in the tooltip.</li>
+<li><b>Program</b> / <b>Stack</b> / <b>Heap:</b> These are the different types of memory the current VM has. Once you compile a program you will find the compiled program in "Program" with the current instruction highlighted. The tooltip gives a short explanation of each instruction. Click on an instruction to highlight the originating node in the abstract syntax tree and text passage in the source code. Values in the "Stack" and "Heap" portions of memory show their type and value as well as a short description of the value's meaning.</li>
+<li><b>Source:</b> You can enter your program source code here or load source code via &#8801; File &#8594; Open. Use the <img src="icon16/applications-system.png"/> button in the toolbar to turn this sourcecode into mnemonics.</li> 
+<li><b>Tree:</b> Once you compile a program, this area will show the program's abstract syntax tree. Click on a node to highlight the origin passage in the source code and the created instructions in the program memory from this node.</li> 
+<li><b>Output:</b> Programs that generate output will display it here.</li> 
+</ul>
+
+<h2>Limits</h2>
+<ul>
+<li><img src="icon16/preferences-desktop-multimedia.png"/>&nbsp;PaMa
+    <ul>
+    <li>The PaMa is not implemented yet.</li>
+    </ul>
+</li>
+<li><img src="icon16/accessories-calculator.png"/>&nbsp;MaMa
+    <ul>
+    <li>The MaMa doesn't do variable reordering in letrec expressions which makes it fail on certain valid programs. See <i>example2.mama</i>. </li>
+    </ul>
+</li>
+<li><img src="icon16/internet-group-chat.png"/>&nbsp;WiMa
+    <ul>
+    <li>The WiMa doesn't do lists, see <i>sublist.wima</i> for an example of explicit lists.</li>
+    <li>The WiMa doesn't do arithmetic evaluates, especially the predicate "is/2" is missing.</li>
+    </ul>
+</li>
+<li><img src="icon16/weather-storm.png"/>&nbsp;BfMa
+    <ul>
+    <li>Only the positive half of the infinite band is accessible.</li>
+    <li>Input (character ",") is not supported yet and does nothing.</li>
+    </ul>
+</li>
+</ul>
+</html>
