@@ -18,6 +18,7 @@
 
 package jumpvm;
 
+import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +27,8 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+
+import jumpvm.gui.JumpGui;
 
 /**
  * JumpVM entry point.
@@ -104,6 +107,23 @@ public final class Main {
         }
 
         return content;
+    }
+
+    /**
+     * JumpVM entry point.
+     * 
+     * @param args arguments (ignored)
+     */
+    public static void main(final String... args) {
+        final Runnable createGui = new Runnable() {
+            @Override
+            public void run() {
+                final JumpGui jumpGui = new JumpGui();
+                jumpGui.setVisible(true);
+            }
+        };
+
+        EventQueue.invokeLater(createGui);
     }
 
     /**
