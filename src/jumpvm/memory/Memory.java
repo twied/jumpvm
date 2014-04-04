@@ -30,7 +30,7 @@ import jumpvm.memory.objects.StackObject;
  * 
  * @param <E> Type of the objects to store
  */
-public class Memory<E extends MemoryObject> extends AbstractListModel {
+public class Memory<E extends MemoryObject> extends AbstractListModel<MemoryObject> {
     /** Default serialVersionUID. */
     private static final long serialVersionUID = 1L;
 

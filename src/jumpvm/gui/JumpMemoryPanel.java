@@ -43,7 +43,7 @@ import jumpvm.memory.objects.MemoryObject;
 /**
  * Jump memory panel.
  */
-public class JumpMemoryPanel extends JPanel implements ListCellRenderer, ListSelectionListener {
+public class JumpMemoryPanel extends JPanel implements ListCellRenderer<MemoryObject>, ListSelectionListener {
     /** Default serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -57,7 +57,7 @@ public class JumpMemoryPanel extends JPanel implements ListCellRenderer, ListSel
     private final JumpTab tab;
 
     /** GUI element: Memory content. */
-    private final JList list;
+    private final JList<MemoryObject> list;
 
     /** Underlying memory. */
     private final Memory<?> memory;
@@ -68,8 +68,8 @@ public class JumpMemoryPanel extends JPanel implements ListCellRenderer, ListSel
      * @param memory memory
      * @param tab parent JumpTab
      */
-    public JumpMemoryPanel(final Memory<?> memory, final JumpTab tab) {
-        this.list = new JList(memory);
+    public JumpMemoryPanel(final Memory<? extends MemoryObject> memory, final JumpTab tab) {
+        this.list = new JList<MemoryObject>(memory);
         this.tab = tab;
         this.memory = memory;
 
@@ -84,15 +84,14 @@ public class JumpMemoryPanel extends JPanel implements ListCellRenderer, ListSel
     }
 
     @Override
-    public final Component getListCellRendererComponent(final JList jlist, final Object value, final int index, final boolean isSelected, final boolean cellHasFocus) {
-        if (value == null) {
+    public final Component getListCellRendererComponent(final JList<? extends MemoryObject> jlist, final MemoryObject object, final int index, final boolean isSelected, final boolean cellHasFocus) {
+        if (object == null) {
             final JLabel l = new JLabel("JumpMemoryPanel.getListCellRendererComponent() value = null!");
             l.setBackground(Color.RED);
             l.setOpaque(true);
             return l;
         }
 
-        final MemoryObject object = (MemoryObject) value;
         final String displayType = object.getDisplayType();
         final String displayValue = object.getDisplayValue();
         final String displayDescription = object.getDisplayDescription();

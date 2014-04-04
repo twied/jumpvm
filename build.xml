@@ -13,8 +13,6 @@
 			includeantruntime="false"
 			debug="true"
 			debuglevel="lines,vars,source"
-			target="1.6"
-			source="1.6"
 		/>
 		<copy todir="bin">
 			<fileset dir="res" includes="**"/>
