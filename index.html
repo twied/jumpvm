@@ -1,0 +1,209 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Jumpvm</title>
+  <meta name="description" content="">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Jumpvm</h1>
+    </header>
+    <div id="container">
+      <p class="tagline"></p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/twied/jumpvm/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/twied/jumpvm/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/twied/jumpvm" class="code">View Jumpvm on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>
+<a name="jumpvm" class="anchor" href="#jumpvm"><span class="octicon octicon-link"></span></a>JumpVM</h1>
+
+<p><img src="doc/screenshot.png" alt="screenshot" title="screenshot"></p>
+
+<p>JumpVM is "The Java Unified Multi Paradigm Virtual Machine", a gui, parser, compiler and VM for several different programming languages and paradigms.</p>
+
+<p>The main goal of this tool is to support the "Einführung in den Übersetzerbau" and "Übersetzung fortgeschrittener Sprachkonzepte" lectures of Ulm University.</p>
+
+<p>The names and capabilities of the different languages (<img src="res/icon16/preferences-desktop-multimedia.png" alt="PaMa" title="PaMa"> PaMa, <img src="res/icon16/accessories-calculator.png" alt="MaMa" title="MaMa"> MaMa, <img src="res/icon16/internet-group-chat.png" alt="WiMa" title="WiMa"> WiMa and <img src="res/icon16/weather-storm.png" alt="BfMa" title="BfMa"> BfMa) orient themselves toward the book "Übersetzerbau - Theorie, Konstruktion, Generierung" by R. Wilhelm and D. Maurer which is used in said lectures.</p>
+
+<h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting started</h2>
+
+<ul>
+<li>Open an example file: Select ≡ File → Example → MaMa → example01.mama</li>
+<li>Compile the program: Click on <img src="res/icon16/applications-system.png" alt="Compile" title="Compile"> or select ≡ Run → Compile</li>
+<li>Run the program: Click on <img src="res/icon16/go-last.png" alt="Run" title="Run"> or select ≡ Run → Run</li>
+</ul><h2>
+<a name="menus" class="anchor" href="#menus"><span class="octicon octicon-link"></span></a>Menus</h2>
+
+<ul>
+<li>File
+
+<ul>
+<li>
+<img src="res/icon16/document-new.png" alt="New" title="New"><strong>New:</strong> Create a new VM of the given type.</li>
+<li>
+<img src="res/icon16/document-open.png" alt="Open" title="Open"><strong>Open:</strong> Create a new VM of the given type and read the source code from a file.</li>
+<li>
+<img src="res/icon16/applications-system.png" alt="Example" title="Example"><strong>Example:</strong> Create a new VM of the given type and load example source code.</li>
+<li>
+<img src="res/icon16/document-save.png" alt="Save" title="Save"><strong>Save:</strong> Save the source code of the current tab to a file.</li>
+<li>
+<img src="res/icon16/document-save-as.png" alt="Save As" title="Save As"><strong>Save as:</strong> Save the source code of the current tab to a different file.</li>
+<li>
+<img src="res/icon16/document-save-as.png" alt="Export" title="Export"><strong>Export dot:</strong> Export the source code's abstract syntax tree (given it compiles) as a <a href="http://www.graphviz.org/">graphviz</a> "dot" file.</li>
+<li>
+<img src="res/icon16/document-save-as.png" alt="Export" title="Export"><strong>Export asm:</strong> Export the compiled mnemonics to a file.</li>
+<li>
+<img src="res/icon16/user-trash-full.png" alt="Close" title="Close"><strong>Close tab:</strong> Close the current tab.</li>
+<li>
+<img src="res/icon16/system-log-out.png" alt="Quit" title="Quit"><strong>Quit:</strong> Exit the program.</li>
+</ul>
+</li>
+<li>Run
+
+<ul>
+<li>
+<img src="res/icon16/applications-system.png" alt="Compile" title="Compile"><strong>Compile:</strong> Compile the source code into mnemonics fit to be run in the current VM.</li>
+<li>
+<img src="res/icon16/go-previous.png" alt="Go backward" title="Go backward"><strong>Step backward:</strong> Goes back one step on the current VM.</li>
+<li>
+<img src="res/icon16/go-next.png" alt="Go forward" title="Go forward"><strong>Step forward:</strong> Execute the next step on the current VM / start executing.</li>
+<li>
+<img src="res/icon16/go-last.png" alt="Run" title="Run"><strong>Run:</strong> Executes the VM in "fast forward" mode.</li>
+<li>
+<img src="res/icon16/view-refresh.png" alt="Reset" title="Reset"><strong>Reset:</strong> Reset the VM.</li>
+</ul>
+</li>
+<li>Help
+
+<ul>
+<li>
+<img src="res/icon16/help-browser.png" alt="Help" title="Help"><strong>Help:</strong> Help text.</li>
+<li>
+<img src="res/icon16/dialog-information.png" alt="About" title="About"><strong>About:</strong> Author and license information.</li>
+</ul>
+</li>
+</ul><h2>
+<a name="toolbar" class="anchor" href="#toolbar"><span class="octicon octicon-link"></span></a>Toolbar</h2>
+
+<ul>
+<li>
+<img src="res/icon16/document-new.png" alt="New" title="New"><strong>New tab:</strong> Create an empty tab.</li>
+<li>
+<img src="res/icon16/user-trash-full.png" alt="Close" title="Close"><strong>Close tab:</strong> Same as ≡ File → Close tab.</li>
+<li>
+<img src="res/icon16/document-save.png" alt="Save" title="Save"><strong>Save:</strong> Same as ≡ File → Save.</li>
+<li>
+<img src="res/icon16/document-save-as.png" alt="Save As" title="Save As"><strong>Save as:</strong> Same as ≡ File → Save as.</li>
+<li>
+<img src="res/icon16/applications-system.png" alt="Compile" title="Compile"><strong>Compile:</strong> Same as ≡ Run → Compile.</li>
+<li>
+<img src="res/icon16/go-previous.png" alt="Go backward" title="Go backward"><strong>Step backward:</strong> Same as ≡ Run → Step backward.</li>
+<li>
+<img src="res/icon16/go-next.png" alt="Go forward" title="Go forward"><strong>Step forward:</strong> Same as ≡ Run → Step forward.</li>
+<li>
+<img src="res/icon16/go-last.png" alt="Run" title="Run"><strong>Run:</strong> Same as ≡ Run → Run.</li>
+<li>
+<img src="res/icon16/view-refresh.png" alt="Reset" title="Reset"><strong>Reset:</strong> Same as ≡ Run → Reset.</li>
+<li>
+<img src="res/icon16/help-browser.png" alt="Help" title="Help"><strong>Help:</strong> Same as ≡ Help → Help.</li>
+</ul><h2>
+<a name="tabs" class="anchor" href="#tabs"><span class="octicon octicon-link"></span></a>Tabs</h2>
+
+<ul>
+<li>
+<strong>Registers:</strong> A list of registers the current VM has. Move the cursor above a register to get its full name in the tooltip.</li>
+<li>
+<strong>Program</strong> / <strong>Stack</strong> / <strong>Heap:</strong> These are the different types of memory the current VM has. Once you compile a program you will find the compiled program in "Program" with the current instruction highlighted. The tooltip gives a short explanation of each instruction. Click on an instruction to highlight the originating node in the abstract syntax tree and text passage in the source code. Values in the "Stack" and "Heap" portions of memory show their type and value as well as a short description of the value's meaning.</li>
+<li>
+<strong>Source:</strong> You can enter your program source code here or load source code via ≡ File → Open. Use the <img src="res/icon16/applications-system.png" alt="Compile" title="Compile"> button in the toolbar to turn this sourcecode into mnemonics. </li>
+<li>
+<strong>Tree:</strong> Once you compile a program, this area will show the program's abstract syntax tree. Click on a node to highlight the origin passage in the source code and the created instructions in the program memory from this node. </li>
+<li>
+<strong>Output:</strong> Programs that generate output will display it here. </li>
+</ul><h2>
+<a name="limits" class="anchor" href="#limits"><span class="octicon octicon-link"></span></a>Limits</h2>
+
+<ul>
+<li>
+<img src="res/icon16/preferences-desktop-multimedia.png" alt="PaMa" title="PaMa"> PaMa
+
+<ul>
+<li>The PaMa is not implemented yet.</li>
+</ul>
+</li>
+<li>
+<img src="res/icon16/accessories-calculator.png" alt="MaMa" title="MaMa"> MaMa
+
+<ul>
+<li>The MaMa doesn't do variable reordering in letrec expressions which makes it fail on certain valid programs. See <code>example2.mama</code>.</li>
+</ul>
+</li>
+<li>
+<img src="res/icon16/internet-group-chat.png" alt="WiMa" title="WiMa"> WiMa
+
+<ul>
+<li>The WiMa doesn't do lists, see <code>sublist.wima</code> for an example of explicit lists.</li>
+<li>The WiMa doesn't do arithmetic evaluates, especially the predicate <code>is/2</code> is missing.</li>
+</ul>
+</li>
+<li>
+<img src="res/icon16/weather-storm.png" alt="BfMa" title="BfMa"> BfMa
+
+<ul>
+<li>Only the positive half of the infinite band is accessible.</li>
+<li>Input (character <code>,</code>) is not supported yet and does nothing.</li>
+</ul>
+</li>
+</ul><h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<ul>
+<li>Code: (c) 2013, 2014 Tim Wiederhake, licensed under GPLv3 or greater.</li>
+<li>Art: <a href="http://tango.freedesktop.org/">Tango</a>, licensed under CC0.</li>
+</ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/twied" class="avatar"><img src="https://avatars0.githubusercontent.com/u/1965084?s=60" width="48" height="48"/></a> <a href="https://github.com/twied">twied</a> maintains <a href="https://github.com/twied/jumpvm">Jumpvm</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="http://pages.github.com/">GitHub Pages</a><br/>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/twied/jumpvm/tarball/master" class="tar">tar</a><a href="https://github.com/twied/jumpvm/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>
