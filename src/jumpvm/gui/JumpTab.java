@@ -33,6 +33,7 @@ import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.tree.TreeNode;
@@ -174,6 +175,16 @@ public abstract class JumpTab extends JPanel {
             JumpGui.showExceptionDialog(this, e.getCause() == null ? e : e.getCause(), "At " + e.getNode().getBegin() + ":\n" + e.getLocalizedMessage(), "JumpVM compile failure");
         }
         update();
+    }
+
+    /**
+     * Action "edit registers".
+     */
+    public final void actionEditRegisters() {
+        final JumpModifyRegisterPanel jumpModifyRegisterPanel = new JumpModifyRegisterPanel(vm);
+        if (JOptionPane.showConfirmDialog(this, jumpModifyRegisterPanel, "Registers", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) == JOptionPane.OK_OPTION) {
+            jumpModifyRegisterPanel.apply();
+        }
     }
 
     /**

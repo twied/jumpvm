@@ -116,6 +116,12 @@ public class JumpMenuBar extends JMenuBar implements ActionListener {
     /** Menu item "File -> Quit". */
     private final JMenuItem fileQuitItem;
 
+    /** Menu "Edit". */
+    private final JMenu editMenu;
+
+    /** Menu item "Edit -> Registers". */
+    private final JMenuItem editRegistersItem;
+
     /** Menu "Run". */
     private final JMenu runMenu;
 
@@ -185,6 +191,9 @@ public class JumpMenuBar extends JMenuBar implements ActionListener {
         fileQuitItem = item("Quit", "system-log-out");
         fileQuitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
 
+        editMenu = new JMenu("Edit");
+        editRegistersItem = item("Registers", "preferences-desktop");
+
         runMenu = new JMenu("Run");
 
         runCompileItem = item("Compile", "applications-system");
@@ -234,6 +243,8 @@ public class JumpMenuBar extends JMenuBar implements ActionListener {
         fileMenu.addSeparator();
         fileMenu.add(fileQuitItem);
 
+        editMenu.add(editRegistersItem);
+
         runMenu.add(runCompileItem);
         runMenu.addSeparator();
         runMenu.add(runStepBackwardItem);
@@ -246,6 +257,7 @@ public class JumpMenuBar extends JMenuBar implements ActionListener {
         helpMenu.add(helpAboutItem);
 
         add(fileMenu);
+        add(editMenu);
         add(runMenu);
         add(helpMenu);
 
@@ -288,6 +300,8 @@ public class JumpMenuBar extends JMenuBar implements ActionListener {
             gui.actionExportAsm();
         } else if (source == fileQuitItem) {
             gui.actionQuit();
+        } else if (source == editRegistersItem) {
+            gui.actionEditRegisters();
         } else if (source == runCompileItem) {
             gui.actionCompile();
         } else if (source == runStepForwardItem) {

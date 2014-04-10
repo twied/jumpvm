@@ -186,6 +186,18 @@ public class JumpGui extends JFrame {
     }
 
     /**
+     * Action "edit registers".
+     */
+    public final void actionEditRegisters() {
+        final JumpTab tab = getCurrentTab();
+        if (tab == null) {
+            return;
+        }
+        runningToggle.setSelected(false);
+        tab.actionEditRegisters();
+    }
+
+    /**
      * Action "export as asm".
      */
     public final void actionExportAsm() {
