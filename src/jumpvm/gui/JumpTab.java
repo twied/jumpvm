@@ -178,6 +178,16 @@ public abstract class JumpTab extends JPanel {
     }
 
     /**
+     * Action "edit memories".
+     */
+    public final void actionEditMemories() {
+        final JumpModifyMemoryPanel jumpModifyMemoryPanel = new JumpModifyMemoryPanel(this);
+        if (JOptionPane.showConfirmDialog(this, jumpModifyMemoryPanel, "Memories", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) == JOptionPane.OK_OPTION) {
+            jumpModifyMemoryPanel.apply();
+        }
+    }
+
+    /**
      * Action "edit registers".
      */
     public final void actionEditRegisters() {

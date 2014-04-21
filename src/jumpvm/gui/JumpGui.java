@@ -186,6 +186,18 @@ public class JumpGui extends JFrame {
     }
 
     /**
+     * Action "edit memories".
+     */
+    public final void actionEditMemories() {
+        final JumpTab tab = getCurrentTab();
+        if (tab == null) {
+            return;
+        }
+        runningToggle.setSelected(false);
+        tab.actionEditMemories();
+    }
+
+    /**
      * Action "edit registers".
      */
     public final void actionEditRegisters() {

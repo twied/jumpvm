@@ -122,6 +122,9 @@ public class JumpMenuBar extends JMenuBar implements ActionListener {
     /** Menu item "Edit -> Registers". */
     private final JMenuItem editRegistersItem;
 
+    /** Menu item "Edit -> Memories". */
+    private final JMenuItem editMemoriesItem;
+
     /** Menu "Run". */
     private final JMenu runMenu;
 
@@ -193,6 +196,7 @@ public class JumpMenuBar extends JMenuBar implements ActionListener {
 
         editMenu = new JMenu("Edit");
         editRegistersItem = item("Registers", "preferences-desktop");
+        editMemoriesItem = item("Memories", "preferences-desktop");
 
         runMenu = new JMenu("Run");
 
@@ -244,6 +248,7 @@ public class JumpMenuBar extends JMenuBar implements ActionListener {
         fileMenu.add(fileQuitItem);
 
         editMenu.add(editRegistersItem);
+        editMenu.add(editMemoriesItem);
 
         runMenu.add(runCompileItem);
         runMenu.addSeparator();
@@ -302,6 +307,8 @@ public class JumpMenuBar extends JMenuBar implements ActionListener {
             gui.actionQuit();
         } else if (source == editRegistersItem) {
             gui.actionEditRegisters();
+        } else if (source == editMemoriesItem) {
+            gui.actionEditMemories();
         } else if (source == runCompileItem) {
             gui.actionCompile();
         } else if (source == runStepForwardItem) {
