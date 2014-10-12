@@ -31,6 +31,9 @@ Menus
     * ![Export](res/icon16/document-save-as.png "Export") **Export asm:** Export the compiled mnemonics to a file.
     * ![Close](res/icon16/user-trash-full.png "Close") **Close tab:** Close the current tab.
     * ![Quit](res/icon16/system-log-out.png "Quit") **Quit:** Exit the program.
+* Edit
+	* ![Registers](res/icon16/preferences-desktop.png "Registers") **Registers:** Edit the values of the current VM's registers.
+	* ![Memories](res/icon16/preferences-desktop.png "Memories") **Memories:** Edit the elements in the current VM's memory.
 * Run
     * ![Compile](res/icon16/applications-system.png "Compile") **Compile:** Compile the source code into mnemonics fit to be run in the current VM.
     * ![Go backward](res/icon16/go-previous.png "Go backward") **Step backward:** Goes back one step on the current VM.
@@ -52,7 +55,7 @@ Toolbar
 * ![Compile](res/icon16/applications-system.png "Compile") **Compile:** Same as ≡ Run → Compile.
 * ![Go backward](res/icon16/go-previous.png "Go backward") **Step backward:** Same as ≡ Run → Step backward.
 * ![Go forward](res/icon16/go-next.png "Go forward") **Step forward:** Same as ≡ Run → Step forward.
-* ![Run](res/icon16/go-last.png "Run") **Run:** Same as ≡ Run → Run.
+* ![Run](res/icon16/go-last.png "Run") **Run:** Same as ≡ Run → Run. Shift + click to run without delay.
 * ![Reset](res/icon16/view-refresh.png "Reset") **Reset:** Same as ≡ Run → Reset.
 * ![Help](res/icon16/help-browser.png "Help") **Help:** Same as ≡ Help → Help.
 
@@ -71,7 +74,9 @@ Limits
 ------
 
 * ![PaMa](res/icon16/preferences-desktop-multimedia.png "PaMa") PaMa
-	* The PaMa is not implemented yet.
+	* The PaMa doesn't do static arrays. All arrays are considered dynamic.
+	* Case values must start at 0 and be continuous.
+	* Input (`readln`) is not supported and does nothing.
 * ![MaMa](res/icon16/accessories-calculator.png "MaMa") MaMa
     * The MaMa doesn't do variable reordering in letrec expressions which makes it fail on certain valid programs. See `example2.mama`.
 * ![WiMa](res/icon16/internet-group-chat.png "WiMa") WiMa

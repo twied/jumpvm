@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Exec=java -jar JumpVM.jar
+Icon=JumpVM.png
+Type=Application
+Categories=Education;
+Name=JumpVM
+Comment=Java Unified Multi Paradigm Virtual Machine

@@ -157,6 +157,7 @@ public class JumpGui extends JFrame {
         setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setIconImage(Main.getImageIconResource("/icon16/icon.png").getImage());
     }
 
     /**
@@ -304,6 +305,7 @@ public class JumpGui extends JFrame {
      */
     public final void actionQuit() {
         dispose();
+        System.exit(0);
     }
 
     /**

@@ -20,6 +20,7 @@ package jumpvm.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -119,6 +120,11 @@ public class JumpToolBar extends JToolBar implements ActionListener {
         } else if (source == runStepBackwardButton) {
             gui.actionStepBackward();
         } else if (source == runRunButton) {
+            if ((e.getModifiers() & InputEvent.SHIFT_MASK) == 0) {
+                timer.setDelay(JumpGui.MILLISECONDS_PER_RUNSTEP);
+            } else {
+                timer.setDelay(0);
+            }
             return;
         } else if (source == runResetButton) {
             gui.actionReset();
