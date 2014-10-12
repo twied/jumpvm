@@ -25,7 +25,9 @@ import java.util.List;
 import jumpvm.JumpVMTest;
 import jumpvm.Main.VmType;
 import jumpvm.compiler.Token;
+import jumpvm.compiler.pama.PaMaDotBackend;
 import jumpvm.compiler.pama.PaMaLexer;
+import jumpvm.compiler.pama.PaMaParser;
 import jumpvm.compiler.pama.PaMaToken;
 
 import org.junit.Assert;
@@ -68,6 +70,15 @@ public class PaMaTest {
     }
 
     /**
+     * Create a parser for the given source file.
+     *
+     * @return the parser
+     */
+    private PaMaParser createParser() {
+        return new PaMaParser(createLexer());
+    }
+
+    /**
      * Returns the name of the expect file for the given source file and test name.
      *
      * @param testName name of the current test
@@ -75,6 +86,20 @@ public class PaMaTest {
      */
     private File getExpectFile(final String testName) {
         return JumpVMTest.getExpectFile(testName, sourceFile);
+    }
+
+    /**
+     * Test dot backend.
+     *
+     * @throws Exception on failure
+     */
+    @Test(timeout = JumpVMTest.TIMEOUT)
+    public final void testDot() throws Exception {
+        final PaMaParser parser = createParser();
+        final PaMaDotBackend backend = new PaMaDotBackend();
+        backend.process(parser.parse());
+
+        JumpVMTest.compare(getExpectFile("dot"), backend.getContent());
     }
 
     /**

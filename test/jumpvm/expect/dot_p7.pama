@@ -1,0 +1,17 @@
+digraph G {
+root [label="Program"];
+id_0 [label="Declarations"];
+id_1 [label="Procedures"];
+id_0 -> id_1;
+id_2 [label="h"];
+id_3 [label="Parameters"];
+id_2 -> id_3;
+id_4 [label="Declarations"];
+id_2 -> id_4;
+id_5 [label="Statements"];
+id_2 -> id_5;
+id_1 -> id_2;
+root -> id_0;
+id_6 [label="Statements"];
+root -> id_6;
+}

@@ -1,0 +1,27 @@
+digraph G {
+root [label="Program"];
+id_0 [label="Declarations"];
+id_1 [label="Variables"];
+id_0 -> id_1;
+id_2 [label="y"];
+id_3 [label="Boolean"];
+id_2 -> id_3;
+id_1 -> id_2;
+root -> id_0;
+id_4 [label="Statements"];
+root -> id_4;
+id_5 [label=":="];
+id_6 [label="y"];
+id_5 -> id_6 [label="lhs"];
+id_7 [label="GT"];
+id_8 [label="1"];
+id_7 -> id_8 [label="lhs"];
+id_9 [label="4"];
+id_7 -> id_9 [label="rhs"];
+id_5 -> id_7 [label="rhs"];
+id_4 -> id_5;
+id_10 [label="Writeln"];
+id_11 [label="y"];
+id_10 -> id_11;
+id_4 -> id_10;
+}
