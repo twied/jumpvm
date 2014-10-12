@@ -37,6 +37,7 @@ import jumpvm.compiler.Compiler;
 import jumpvm.compiler.LocatedReader;
 import jumpvm.tests.BfMaTest;
 import jumpvm.tests.MaMaTest;
+import jumpvm.tests.PaMaTest;
 import jumpvm.tests.WiMaTest;
 
 import org.junit.Assert;
@@ -46,7 +47,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 /** JumpVM test suite. */
 @RunWith(Suite.class)
-@SuiteClasses({BfMaTest.class, MaMaTest.class, WiMaTest.class})
+@SuiteClasses({BfMaTest.class, MaMaTest.class, PaMaTest.class, WiMaTest.class})
 public final class JumpVMTest {
     /** Maximum processing time in milliseconds. */
     public static final int TIMEOUT = 5000;
