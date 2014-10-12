@@ -49,6 +49,10 @@ public class SepInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        vm.getExtremePointer().setValue(vm.getStackPointer().getValue() + size);
+        if (vm.getExtremePointer().getValue() >= vm.getNewPointer().getValue()) {
+            throw new ExecutionException(this, "Store overflow");
+        }
     }
 
     @Override

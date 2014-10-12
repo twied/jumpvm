@@ -41,6 +41,7 @@ public class PopInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        vm.pop();
     }
 
     @Override

@@ -20,6 +20,7 @@ package jumpvm.code.pama;
 
 import jumpvm.ast.pama.PaMaAstNode;
 import jumpvm.exception.ExecutionException;
+import jumpvm.memory.objects.StackObject;
 import jumpvm.vm.PaMa;
 
 /**
@@ -42,6 +43,9 @@ public class SliInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        final StackObject object = vm.pop();
+        vm.pop();
+        vm.push(object);
     }
 
     @Override

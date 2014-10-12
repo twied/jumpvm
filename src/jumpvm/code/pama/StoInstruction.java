@@ -20,6 +20,7 @@ package jumpvm.code.pama;
 
 import jumpvm.ast.pama.PaMaAstNode;
 import jumpvm.exception.ExecutionException;
+import jumpvm.memory.objects.BasicValueObject;
 import jumpvm.vm.PaMa;
 
 /**
@@ -47,6 +48,9 @@ public class StoInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        final int value = vm.pop().getIntValue();
+        final int address = vm.pop().getIntValue();
+        vm.setElementAt(address, new BasicValueObject(value, identifier, null));
     }
 
     @Override

@@ -46,6 +46,7 @@ public class SmpInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        vm.getMarkPointer().setValue(vm.getStackPointer().getValue() - p - (PaMa.FRAME_SIZE - 1));
     }
 
     @Override

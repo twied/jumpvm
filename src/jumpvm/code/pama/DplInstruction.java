@@ -42,6 +42,7 @@ public class DplInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        vm.push(vm.peek());
     }
 
     @Override

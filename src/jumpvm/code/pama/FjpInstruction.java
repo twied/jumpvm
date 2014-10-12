@@ -50,6 +50,10 @@ public class FjpInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        final int value = vm.pop().getIntValue();
+        if (value == 0) {
+            vm.getProgramCounter().setValue(label.getAddress());
+        }
     }
 
     @Override

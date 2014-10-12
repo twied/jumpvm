@@ -54,6 +54,10 @@ public class MovsInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        final int base = vm.pop().getIntValue();
+        for (int i = 0; i < q; ++i) {
+            vm.push(vm.getElementAt(base + i));
+        }
     }
 
     @Override

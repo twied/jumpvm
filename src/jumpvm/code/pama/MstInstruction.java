@@ -20,6 +20,7 @@ package jumpvm.code.pama;
 
 import jumpvm.ast.pama.PaMaAstNode;
 import jumpvm.exception.ExecutionException;
+import jumpvm.memory.objects.BasicValueObject;
 import jumpvm.vm.PaMa;
 
 /**
@@ -54,6 +55,12 @@ public class MstInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        vm.startFrame();
+        vm.push(new BasicValueObject(0, "RVAL", "result of " + identifier));
+        vm.push(new BasicValueObject(base(vm, p, vm.getMarkPointer().getValue()), "SPD", "Static predecessor"));
+        vm.push(new BasicValueObject(vm.getMarkPointer().getValue(), "DPD", "Dynamic predecessor"));
+        vm.push(new BasicValueObject(vm.getExtremePointer()));
+        vm.push(new BasicValueObject(0, "RA", "return address"));
     }
 
     @Override

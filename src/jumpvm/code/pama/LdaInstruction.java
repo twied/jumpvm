@@ -20,6 +20,7 @@ package jumpvm.code.pama;
 
 import jumpvm.ast.pama.PaMaAstNode;
 import jumpvm.exception.ExecutionException;
+import jumpvm.memory.objects.PointerObject;
 import jumpvm.vm.PaMa;
 
 /**
@@ -57,6 +58,7 @@ public class LdaInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        vm.push(new PointerObject(base(vm, p, vm.getMarkPointer().getValue()) + q, PointerObject.Type.POINTER_STACK, "→ " + identifier, "Pointer to " + identifier));
     }
 
     @Override

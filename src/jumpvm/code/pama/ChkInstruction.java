@@ -53,6 +53,10 @@ public class ChkInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        final int value = vm.peek().getIntValue();
+        if ((value < p) || (value > q)) {
+            throw new ExecutionException(this, "Index out of range");
+        }
     }
 
     @Override

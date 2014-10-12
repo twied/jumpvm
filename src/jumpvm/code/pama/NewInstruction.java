@@ -20,6 +20,9 @@ package jumpvm.code.pama;
 
 import jumpvm.ast.pama.PaMaAstNode;
 import jumpvm.exception.ExecutionException;
+import jumpvm.memory.Register;
+import jumpvm.memory.objects.NilPointerObject;
+import jumpvm.memory.objects.PointerObject;
 import jumpvm.vm.PaMa;
 
 /**
@@ -52,6 +55,20 @@ public class NewInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        final Register np = vm.getNewPointer();
+        final int size = vm.pop().getIntValue();
+        final int address = vm.pop().getIntValue();
+
+        if ((np.getValue() - size) <= vm.getExtremePointer().getValue()) {
+            throw new ExecutionException(this, "Store overflow");
+        }
+
+        np.setValue(np.getValue() - size);
+        vm.setElementAt(address, new PointerObject(np.getValue(), PointerObject.Type.POINTER_STACK, "→ " + identifier, "Pointer to " + identifier));
+
+        for (int i = 0; i < size; ++i) {
+            vm.setElementAt(np.getValue() + i, new NilPointerObject());
+        }
     }
 
     @Override

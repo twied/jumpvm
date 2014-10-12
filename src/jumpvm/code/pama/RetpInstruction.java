@@ -47,6 +47,14 @@ public class RetpInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        final int mp = vm.getMarkPointer().getValue();
+        vm.getProgramCounter().setValue(vm.getElementAt(mp + PaMa.OFFSET_RSA).getIntValue());
+        vm.getExtremePointer().setValue(vm.getElementAt(mp + PaMa.OFFSET_EP).getIntValue());
+        if (vm.getExtremePointer().getValue() >= vm.getNewPointer().getValue()) {
+            throw new ExecutionException(this, "Store Overflow");
+        }
+        vm.getMarkPointer().setValue(vm.getElementAt(mp + 2).getIntValue());
+        vm.getStackPointer().setValue(mp - 1);
     }
 
     @Override

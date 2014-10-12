@@ -19,11 +19,13 @@
 package jumpvm.tests;
 
 import java.io.File;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import jumpvm.JumpVMTest;
 import jumpvm.Main.VmType;
+import jumpvm.code.Instruction;
 import jumpvm.compiler.Token;
 import jumpvm.compiler.pama.PaMaCompiler;
 import jumpvm.compiler.pama.PaMaDotBackend;
@@ -32,6 +34,7 @@ import jumpvm.compiler.pama.PaMaParser;
 import jumpvm.compiler.pama.PaMaToken;
 import jumpvm.exception.CompileException;
 import jumpvm.exception.ParseException;
+import jumpvm.vm.PaMa;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -97,6 +100,22 @@ public class PaMaTest {
     }
 
     /**
+     * Create a vm for the given source file, compile and load.
+     *
+     * @return the vm
+     * @throws CompileException on failure
+     * @throws ParseException on failure
+     */
+    private PaMa createVM() throws CompileException, ParseException {
+        final ArrayList<Instruction> instructions = createCompiler().getInstructions();
+        Assert.assertNotEquals(instructions.size(), 0);
+
+        final PaMa vm = new PaMa();
+        vm.reset(instructions);
+        return vm;
+    }
+
+    /**
      * Returns the name of the expect file for the given source file and test name.
      *
      * @param testName name of the current test
@@ -154,5 +173,24 @@ public class PaMaTest {
         Assert.assertFalse(tokenList.contains(PaMaToken.UNKNOWN));
 
         JumpVMTest.compare(getExpectFile("lexer"), JumpVMTest.toStrings(tokenList));
+    }
+
+    /**
+     * Test run.
+     *
+     * @throws Exception on failure
+     */
+    @Test(timeout = JumpVMTest.TIMEOUT)
+    public final void testRun() throws Exception {
+        final PaMa vm = createVM();
+
+        final StringWriter stringWriter = new StringWriter();
+        vm.setWriter(stringWriter);
+
+        while (vm.isRunning()) {
+            vm.step();
+        }
+
+        JumpVMTest.compare(getExpectFile("run"), stringWriter.toString());
     }
 }

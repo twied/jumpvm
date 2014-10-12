@@ -42,6 +42,7 @@ public class WritelnInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        vm.getWriter().println(vm.pop().getIntValue());
     }
 
     @Override

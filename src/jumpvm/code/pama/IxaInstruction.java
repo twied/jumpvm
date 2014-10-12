@@ -20,6 +20,7 @@ package jumpvm.code.pama;
 
 import jumpvm.ast.pama.PaMaAstNode;
 import jumpvm.exception.ExecutionException;
+import jumpvm.memory.objects.BasicValueObject;
 import jumpvm.vm.PaMa;
 
 /**
@@ -47,6 +48,9 @@ public class IxaInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        final int d = vm.pop().getIntValue();
+        final int g = vm.pop().getIntValue();
+        vm.push(new BasicValueObject(g + (d * offset), null, "virtual start address"));
     }
 
     @Override

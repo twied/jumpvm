@@ -20,6 +20,7 @@ package jumpvm.code.pama;
 
 import jumpvm.ast.pama.PaMaAstNode;
 import jumpvm.exception.ExecutionException;
+import jumpvm.memory.objects.BasicValueObject;
 import jumpvm.vm.PaMa;
 
 /**
@@ -41,6 +42,12 @@ public class NotInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        final int value = vm.pop().getIntValue();
+        if (value == 0) {
+            vm.push(new BasicValueObject(1, "true", "true"));
+        } else {
+            vm.push(new BasicValueObject(0, "false", "false"));
+        }
     }
 
     @Override

@@ -44,7 +44,11 @@ public abstract class PaMaInstruction extends Instruction {
      * @return absolut address of the object
      */
     protected final int base(final PaMa vm, final int p, final int a) {
-        return 0;
+        if (p == 0) {
+            return a;
+        }
+
+        return base(vm, p - 1, vm.getElementAt(a + 1).getIntValue());
     }
 
     @Override

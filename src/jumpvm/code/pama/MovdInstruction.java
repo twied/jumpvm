@@ -20,6 +20,7 @@ package jumpvm.code.pama;
 
 import jumpvm.ast.pama.PaMaAstNode;
 import jumpvm.exception.ExecutionException;
+import jumpvm.memory.objects.PointerObject;
 import jumpvm.vm.PaMa;
 
 /**
@@ -55,6 +56,15 @@ public class MovdInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        final int address = vm.getElementAt(vm.getMarkPointer().getValue() + q).getIntValue();
+        final int size = vm.getElementAt(vm.getMarkPointer().getValue() + q + 1).getIntValue();
+        final int subtractor = vm.getElementAt(vm.getMarkPointer().getValue() + q + 2).getIntValue();
+        final int sp = vm.getStackPointer().getValue();
+
+        for (int i = 0; i < size; ++i) {
+            vm.push(vm.getElementAt(address + subtractor + i));
+        }
+        vm.setElementAt(vm.getMarkPointer().getValue() + q, new PointerObject((sp + 1) - subtractor, PointerObject.Type.POINTER_STACK, "̣→ " + identifier, "Start of array " + identifier));
     }
 
     @Override

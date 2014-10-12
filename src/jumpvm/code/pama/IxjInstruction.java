@@ -48,6 +48,7 @@ public class IxjInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        vm.getProgramCounter().setValue((vm.pop().getIntValue() + jumptable.getAddress()) - 1);
     }
 
     @Override

@@ -21,6 +21,7 @@ package jumpvm.code.pama;
 import jumpvm.ast.pama.PaMaAstNode;
 import jumpvm.exception.ExecutionException;
 import jumpvm.memory.Label;
+import jumpvm.memory.objects.BasicValueObject;
 import jumpvm.vm.PaMa;
 
 /**
@@ -54,6 +55,9 @@ public class CupInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        vm.getMarkPointer().setValue(vm.getStackPointer().getValue() - ((size + PaMa.FRAME_SIZE) - 1));
+        vm.setElementAt(vm.getMarkPointer().getValue() + PaMa.OFFSET_RSA, new BasicValueObject(vm.getProgramCounter()));
+        vm.getProgramCounter().setValue(address);
     }
 
     @Override

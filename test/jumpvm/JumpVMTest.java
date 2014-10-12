@@ -29,6 +29,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import jumpvm.Main.VmType;
@@ -78,11 +79,15 @@ public final class JumpVMTest {
     public static void compare(final File expectFile, final String actual) throws IOException {
         final Scanner scanner = new Scanner(expectFile);
         scanner.useDelimiter("\\Z");
-        final String expected = scanner.next();
-        scanner.close();
-        Assert.assertNotNull(expected);
-        Assert.assertNotEquals(expected.length(), 0);
-        Assert.assertEquals(expected, actual);
+        try {
+            final String expected = scanner.next();
+            scanner.close();
+            Assert.assertNotNull(expected);
+            Assert.assertNotEquals(expected.length(), 0);
+            Assert.assertEquals(expected, actual);
+        } catch (final NoSuchElementException e) {
+            Assert.assertEquals(actual.length(), 0);
+        }
     }
 
     /**

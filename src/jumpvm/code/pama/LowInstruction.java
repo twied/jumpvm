@@ -42,6 +42,9 @@ public class LowInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        final int dimension = vm.pop().getIntValue();
+        final int descriptor = vm.pop().getIntValue();
+        vm.push(vm.getElementAt(descriptor + dimension + dimension + 1));
     }
 
     @Override

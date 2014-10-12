@@ -20,6 +20,7 @@ package jumpvm.code.pama;
 
 import jumpvm.ast.pama.PaMaAstNode;
 import jumpvm.exception.ExecutionException;
+import jumpvm.memory.objects.BasicValueObject;
 import jumpvm.vm.PaMa;
 
 /**
@@ -51,6 +52,23 @@ public class SspInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        final int s = (vm.getMarkPointer().getValue() + size) - 1;
+
+        if ((s - vm.getStackPointer().getValue()) > (PaMa.FRAME_SIZE - 1)) {
+            vm.startFrame();
+            vm.push(new BasicValueObject(0, "RVAL", "result of " + identifier));
+            vm.push(new BasicValueObject(0, "SPD", "Static predecessor"));
+            vm.push(new BasicValueObject(0, "DPD", "Dynamic predecessor"));
+            vm.push(new BasicValueObject(0, "EP", "Extreme pointer"));
+            vm.push(new BasicValueObject(0, "RA", "return address"));
+        }
+
+        while (vm.getStackPointer().getValue() < s) {
+            vm.push(new BasicValueObject(0, null, null));
+        }
+        while (vm.getStackPointer().getValue() > s) {
+            vm.pop();
+        }
     }
 
     @Override

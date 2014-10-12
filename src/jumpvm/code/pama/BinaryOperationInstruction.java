@@ -66,6 +66,9 @@ public abstract class BinaryOperationInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        final int rhs = vm.pop().getIntValue();
+        final int lhs = vm.pop().getIntValue();
+        vm.push(execute(lhs, rhs));
     }
 
     @Override

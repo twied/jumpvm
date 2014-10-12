@@ -32,6 +32,9 @@ import jumpvm.vm.PaMa;
  * </pre>
  */
 public class ChdInstruction extends PaMaInstruction {
+    /** Relative address of array descriptor. */
+    private static final int DESCRIPTOR_ADDRESS = 3;
+
     /** Dimension. */
     private final int d;
 
@@ -48,6 +51,11 @@ public class ChdInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        final int value = vm.peek().getIntValue();
+        final int address = vm.getElementAt(vm.getStackPointer().getValue() - DESCRIPTOR_ADDRESS).getIntValue();
+        if ((value < vm.getElementAt(address + d + d + 1).getIntValue()) || (value > vm.getElementAt(address + d + d + 2).getIntValue())) {
+            throw new ExecutionException(this, "Index out of range");
+        }
     }
 
     @Override

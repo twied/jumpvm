@@ -41,6 +41,8 @@ public class IndInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        final int address = vm.pop().getIntValue();
+        vm.push(vm.getElementAt(address));
     }
 
     @Override

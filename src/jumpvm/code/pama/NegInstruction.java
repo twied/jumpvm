@@ -20,6 +20,8 @@ package jumpvm.code.pama;
 
 import jumpvm.ast.pama.PaMaAstNode;
 import jumpvm.exception.ExecutionException;
+import jumpvm.memory.objects.BasicValueObject;
+import jumpvm.memory.objects.StackObject;
 import jumpvm.vm.PaMa;
 
 /**
@@ -41,6 +43,8 @@ public class NegInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        final StackObject object = vm.pop();
+        vm.push(new BasicValueObject(-object.getIntValue(), null, null));
     }
 
     @Override

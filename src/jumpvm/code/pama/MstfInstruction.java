@@ -20,6 +20,7 @@ package jumpvm.code.pama;
 
 import jumpvm.ast.pama.PaMaAstNode;
 import jumpvm.exception.ExecutionException;
+import jumpvm.memory.objects.BasicValueObject;
 import jumpvm.vm.PaMa;
 
 /**
@@ -59,6 +60,12 @@ public class MstfInstruction extends PaMaInstruction {
 
     @Override
     public final void execute(final PaMa vm) throws ExecutionException {
+        vm.startFrame();
+        vm.push(new BasicValueObject(0, "RVAL", "result of " + identifier));
+        vm.push(vm.getElementAt(base(vm, p, vm.getMarkPointer().getValue()) + q + 1));
+        vm.push(new BasicValueObject(vm.getMarkPointer()));
+        vm.push(new BasicValueObject(vm.getExtremePointer()));
+        vm.push(new BasicValueObject(0, "RA", "return address"));
     }
 
     @Override
