@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<project name="JumpGrammarTest" default="run" basedir=".">
+	<target name="clean">
+		<delete>
+			<fileset dir="." includes="*.jar" />
+			<fileset dir="." includes="*.class" />
+			<fileset dir="." includes="*.tokens" />
+			<fileset dir="." includes="*GrammarLexer.java" />
+			<fileset dir="." includes="*GrammarParser.java" />
+		</delete>
+	</target>
+
+	<target name="download">
+		<get
+			src="http://www.antlr3.org/download/antlr-3.5.1-complete-no-st3.jar"
+			dest="antlr-3.5.1-complete-no-st3.jar"
+			skipexisting="true"
+		/>
+		<get
+			src="http://www.antlr3.org/download/antlrworks-1.5.jar"
+			dest="antlrworks-1.5.jar"
+			skipexisting="true"
+		/>
+	</target>
+	
+	<target name="generate" depends="download">
+		<java fork="true" jar="antlr-3.5.1-complete-no-st3.jar">
+			<arg value="../../doc/grammar/PaMaGrammar.g" />
+			<arg value="-fo" />
+			<arg value="." />
+		</java>
+		<java fork="true" jar="antlr-3.5.1-complete-no-st3.jar">
+			<arg value="../../doc/grammar/MaMaGrammar.g" />
+			<arg value="-fo" />
+			<arg value="." />
+		</java>
+		<java fork="true" jar="antlr-3.5.1-complete-no-st3.jar">
+			<arg value="../../doc/grammar/WiMaGrammar.g" />
+			<arg value="-fo" />
+			<arg value="." />
+		</java>
+	</target>
+	
+	<target name="compile" depends="generate">
+		<javac
+			srcdir="."
+			destdir="."
+			includeantruntime="false"
+			debug="true"
+			debuglevel="lines,vars,source"
+			classpath="antlr-3.5.1-complete-no-st3.jar"
+		/>
+	</target>
+
+	<target name="run" depends="compile">
+		<java
+			classname="JumpGrammarTest"
+			classpath="antlr-3.5.1-complete-no-st3.jar:."
+		/>
+	</target>
+</project>
