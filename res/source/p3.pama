@@ -1,0 +1,8 @@
+program
+    var i: integer
+    procedure fak(a: integer)
+    begin
+    end
+begin
+    fak(2)
+end.

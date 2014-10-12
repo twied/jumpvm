@@ -1,0 +1,10 @@
+program
+    var i: integer
+begin
+    if true then
+        i := 5 
+    else
+        i := 6
+    end;
+    writeln(i)
+end.

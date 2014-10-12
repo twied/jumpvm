@@ -1,0 +1,120 @@
+program
+    type
+        Node = ^NodeDesc;
+        NodeDesc = record
+            cont: integer;
+            left:  Node;
+            right: Node
+        end;
+        Tree = record
+            root: Node
+        end
+    
+    var t: Tree;
+        x: Node
+    
+    procedure Init(var t: Tree)
+    begin
+        t.root := nil
+    end;
+
+    procedure Insert(var t: Tree; x: Node)
+        var this: Node;
+        father: Node
+    begin
+        this := t.root;
+        x^.left := nil; 
+        x^.right := nil;
+    
+        while this /= nil do
+            father := this;
+            if x^.cont < this^.cont then
+                this := this^.left
+            else
+                this := this^.right
+            end
+        end;
+        
+        if t.root = nil then 
+            t.root := x
+        else
+            if x^.cont < father^.cont then
+                father^.left  := x
+            else
+                father^.right := x
+            end
+        end
+    end;
+
+    function Search(var t: Tree; x: Node): Node
+        var this: Node
+    begin
+        this := t.root;
+        while (this /= nil) and (x^.cont /= this^.cont) do
+            if x^.cont < this^.cont then
+                this := this^.left
+            else
+                this := this^.right
+            end
+        end;
+        Search := this
+    end;
+
+    procedure Delete(var t: Tree; x: Node)
+        var this: Node;
+            father: Node;
+            p : Node;
+            q : Node
+    begin
+        this := t.root;
+        while (this /= nil) and (x^.cont /= this^.cont) do
+            father := this;
+            if x^.cont < this^.cont then
+                this := this^.left
+            else
+                this := this^.right
+            end
+        end;
+        
+        if this /= nil then
+            (* x^.cont = this^.cont; find p that can replace this *)
+            if this^.right = nil then
+                p := this^.left
+            else
+                if this^.right^.left = nil then
+                    p := this^.right;
+                    p^.left := this^.left
+                else
+                    (* p := smallest node greater than this *)
+                    p := this^.right;
+                    while p^.left /= nil do
+                        q := p;
+                        p := p^.left
+                    end;
+                    q^.left := p^.right;
+                    p^.left := this^.left;
+                    p^.right := this^.right
+                end
+            end;
+            
+            if this = t.root then
+                t.root := p
+            else
+                if this^.cont < father^.cont then
+                    father^.left := p
+                else
+                    father^.right := p
+                end
+            end
+        end
+    end
+begin
+   Init(t);
+   new(x); x^.cont := 2;
+   Insert(t, x);
+   new(x); x^.cont := 1;
+   Insert(t, x);
+   new(x); x^.cont := 3;
+   Insert(t, x);
+   Delete(t, t.root)
+end.

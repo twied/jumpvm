@@ -1,0 +1,10 @@
+program
+    procedure test(a: integer)
+        procedure test2(b: integer)
+        begin
+        end
+    begin
+        test2(3)
+    end
+begin
+end.

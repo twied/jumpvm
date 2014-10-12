@@ -1,0 +1,8 @@
+program
+var r:
+    record
+        name: integer
+    end
+begin
+   r.name := 2
+end.

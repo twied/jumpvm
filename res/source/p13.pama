@@ -1,0 +1,6 @@
+program
+    var y: boolean
+begin
+    y := 1 > 4;
+    writeln(y)
+end.

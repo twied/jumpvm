@@ -1,0 +1,9 @@
+program
+    var x: ^array [1 .. 3] of integer
+begin
+    new(x);
+
+    x^[3] := 3;
+    x^[2] := 2;
+    x^[1] := 1
+end.

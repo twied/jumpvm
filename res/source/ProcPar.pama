@@ -1,0 +1,27 @@
+program
+    type binaryFunction = function(integer; integer): integer
+
+    var i: integer;
+        j: integer
+
+    function add(a: integer; b: integer): integer
+    begin
+        add := a + b
+    end;
+
+    function sub(a: integer; b: integer): integer
+    begin
+        sub := a - b
+    end;
+
+    function call(f: binaryFunction; a: integer; b: integer): integer
+    begin
+        call := f(a, b)
+    end
+begin
+    i := call(add, 23, 17);
+    j := call(sub, 23, 17);
+    
+    writeln(i);
+    writeln(j)
+end.

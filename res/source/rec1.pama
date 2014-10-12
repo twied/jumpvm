@@ -1,0 +1,10 @@
+program
+    type myrec =
+        record
+            x: integer
+        end
+    procedure test(y: myrec)
+    begin
+    end
+begin
+end.

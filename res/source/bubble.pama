@@ -1,0 +1,57 @@
+program
+    type TCompFunction = function (integer; integer): boolean
+    
+    var a: array [1 .. 9] of integer;
+        i: integer
+
+    function Les (i: integer; j: integer): boolean
+    begin
+        Les := i < j
+    end;
+    
+    procedure BubbleSort (var arr: array[1] of integer; comp: TCompFunction)
+        var i: integer;
+            h: integer;
+            l: integer;
+            sorted : boolean
+
+        procedure swap(j: integer; k: integer)
+            var tmp : integer
+        begin
+            tmp := arr[j];
+            arr[j] := arr[k];
+            arr[k] := tmp
+        end
+    begin
+        sorted := false;
+        l := low(arr, 1);
+        h := high(arr, 1);
+        while (not sorted) do
+            sorted := true;
+            i := l;
+            while (i < h) do
+                if not comp(arr[i], arr[i + 1]) then
+                    swap (i, i + 1);
+                    sorted := false
+                end;
+                i := i + 1
+            end
+        end
+    end
+begin
+    a[1] := 7;
+    a[2] := 6;
+    a[3] := 8;
+    a[4] := 5;
+    a[5] := 9;
+    a[6] := 4;
+    a[7] := 3;
+    a[8] := 2;
+    a[9] := 1;
+    
+    BubbleSort(a, Les);
+    
+    for i := 1 to 9 do
+        writeln(a[i])
+    end
+end.

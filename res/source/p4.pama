@@ -1,0 +1,14 @@
+program
+    var erg: integer
+    function fak(arg: integer): integer
+    begin
+        if arg = 1 then
+            fak := 1
+        else
+            fak := arg + fak(arg - 1)
+        end
+    end
+begin
+    erg := fak(4);
+    writeln(erg)
+end.

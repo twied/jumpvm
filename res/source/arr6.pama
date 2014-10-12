@@ -1,0 +1,18 @@
+program
+    var x: array [1 .. 4, -2 .. -1, 3 .. 4] of integer;
+        i: integer;
+        j: integer;
+        k: integer;
+        n: integer
+begin
+    n := 1;
+    for i := 1 to 4 do
+        for j := -2 to -1 do
+            for k := 3 to 4 do
+                x[i, j, k] := n;
+                n := n + 1
+            end
+        end
+    end;
+    writeln(x[2, -1, 3])
+end.

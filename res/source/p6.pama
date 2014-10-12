@@ -1,0 +1,12 @@
+program
+    procedure p()
+    begin
+        q()
+    end;
+    procedure q()
+    begin
+        p()
+    end
+begin
+end.
+

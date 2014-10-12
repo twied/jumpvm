@@ -1,0 +1,12 @@
+program
+    var i: integer
+begin
+    i := 2;
+    case i of
+        0 : i := 23
+        1 : i := 42
+        2 : i := 1337
+        3 : i := 666
+    end;
+    writeln(i)
+end.

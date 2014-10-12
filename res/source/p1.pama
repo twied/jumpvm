@@ -1,0 +1,11 @@
+program
+    var i: integer
+begin
+    while (i < 5) do
+        writeln(i);
+        while (i < 5) do
+            writeln(i);
+            i := i + 1
+        end
+    end
+end.

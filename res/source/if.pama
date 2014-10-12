@@ -1,0 +1,20 @@
+program
+    var i: integer;
+        j: integer
+begin
+    i := 1;
+    j := 2;
+    
+    if i = 1 then
+        i := 2
+    end;
+    
+    if i < j then
+       i := j + 1
+    else
+       j := i + 1
+    end;
+    
+    writeln(i);
+    writeln(j)
+end.

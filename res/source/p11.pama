@@ -1,0 +1,7 @@
+program
+    var p : ^integer;
+        q : ^integer
+begin
+    p := nil;
+    p := q
+end.

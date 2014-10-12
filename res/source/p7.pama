@@ -1,0 +1,6 @@
+program
+   procedure h()
+   begin
+   end
+begin
+end.

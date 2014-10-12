@@ -1,0 +1,14 @@
+program
+    var i: integer
+    function fak(a: integer): integer
+    begin
+        if (a = 1) then
+            fak := a
+        else
+            fak := a * fak(a - 1)
+        end
+    end
+begin
+    i := fak(2);
+    writeln(i)
+end.

@@ -1,0 +1,12 @@
+program
+var p : ^integer;
+    q : ^integer
+begin
+    p := nil;
+    new(q);
+    new(p);
+    q^ := 3;
+    p^ := q^;
+    
+    writeln(p^)
+end.

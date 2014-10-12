@@ -1,0 +1,10 @@
+program
+    var i: array [-1 .. 3] of integer
+    procedure t(arr: array [1] of integer)
+    begin
+        arr[high(arr, 1)] := 4;
+        writeln(arr[3])
+    end
+begin
+    t(i)
+end.

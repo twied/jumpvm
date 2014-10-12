@@ -1,0 +1,12 @@
+program
+    var h: integer;
+        k: integer
+    procedure Hello(i: integer; j: integer)
+    begin
+        i := 5
+    end
+begin
+    h := 4;
+    Hello(h, k + 1);
+    writeln(h)
+end.
