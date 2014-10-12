@@ -76,6 +76,15 @@ public class CaseStatement extends Statement {
     }
 
     @Override
+    public final int getMaxStackSize() {
+        int size = expression.getMaxStackSize();
+        for (final CaseLimb caseLimb : caseLimbList) {
+            size = Math.max(size, caseLimb.getMaxStackSize());
+        }
+        return size;
+    }
+
+    @Override
     public final void process(final PaMaAstWalker treewalker) throws CompileException {
         treewalker.process(this);
     }

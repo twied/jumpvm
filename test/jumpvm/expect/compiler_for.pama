@@ -1,0 +1,73 @@
+ssp 21
+sep 5
+lda 0 6
+sof 1 10
+sof 2 1
+sof 3 1
+sof 4 10
+lda 0 11
+inc -1
+sto
+ujp 11
+lda 0 5
+ldc 1
+sto
+ldc 10
+dpl
+lda 0 5
+ind
+geq
+fjp 42
+lda 0 6
+dpl
+ind
+ldc 0
+lda 0 5
+ind
+chd 1
+add
+ixa 1
+sli
+ldc 10
+lda 0 5
+ind
+sub
+sto
+lda 0 5
+lda 0 5
+ind
+ldc 1
+add
+sto
+ujp 15
+pop
+lda 0 5
+ldc 1
+sto
+ldc 10
+dpl
+lda 0 5
+ind
+geq
+fjp 71
+lda 0 6
+dpl
+ind
+ldc 0
+lda 0 5
+ind
+chd 1
+add
+ixa 1
+sli
+ind
+wrt
+lda 0 5
+lda 0 5
+ind
+ldc 1
+add
+sto
+ujp 47
+pop
+stp

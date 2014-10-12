@@ -45,6 +45,11 @@ public class IntegerExpression extends Expression {
         setType(new IntegerType(begin, end));
     }
 
+    @Override
+    public final int getMaxStackSize() {
+        return 1;
+    }
+
     /**
      * Returns the value.
      *

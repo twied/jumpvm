@@ -55,6 +55,11 @@ public class NewStatement extends Statement {
     }
 
     @Override
+    public final int getMaxStackSize() {
+        return Math.max(2, designator.getMaxStackSize());
+    }
+
+    @Override
     public final void process(final PaMaAstWalker treewalker) throws CompileException {
         treewalker.process(this);
     }

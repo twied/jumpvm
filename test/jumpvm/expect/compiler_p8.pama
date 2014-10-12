@@ -1,0 +1,8 @@
+ssp 6
+sep 2
+ujp 3
+lda 0 5
+inc 0
+ldc 2
+sto
+stp

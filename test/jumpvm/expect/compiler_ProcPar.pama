@@ -1,0 +1,61 @@
+ssp 7
+sep 10
+ujp 38
+ssp 7
+sep 3
+ujp 6
+lda 0 0
+lda 0 5
+ind
+lda 0 6
+ind
+add
+sto
+retf
+ssp 7
+sep 3
+ujp 17
+lda 0 0
+lda 0 5
+ind
+lda 0 6
+ind
+sub
+sto
+retf
+ssp 9
+sep 8
+ujp 28
+lda 0 0
+mstf 0 5
+lda 0 7
+ind
+lda 0 8
+ind
+smp 2
+cupi 0 5
+sto
+retf
+lda 0 5
+mst 0
+ldc 3
+lda 0 0
+ldc 23
+ldc 17
+cup 4 25
+sto
+lda 0 6
+mst 0
+ldc 14
+lda 0 0
+ldc 23
+ldc 17
+cup 4 25
+sto
+lda 0 5
+ind
+wrt
+lda 0 6
+ind
+wrt
+stp

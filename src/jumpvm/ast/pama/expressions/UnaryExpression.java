@@ -86,6 +86,11 @@ public class UnaryExpression extends Expression {
         return expression;
     }
 
+    @Override
+    public final int getMaxStackSize() {
+        return expression.getMaxStackSize();
+    }
+
     /**
      * Returns the operator.
      *

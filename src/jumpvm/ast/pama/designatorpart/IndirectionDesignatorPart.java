@@ -39,6 +39,11 @@ public class IndirectionDesignatorPart extends DesignatorPart {
     }
 
     @Override
+    public final int getMaxStackSize() {
+        return 1;
+    }
+
+    @Override
     public final void process(final PaMaAstWalker treewalker) throws CompileException {
         treewalker.process(this);
     }

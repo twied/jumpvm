@@ -31,6 +31,9 @@ public class ListAccessDesignatorPart extends DesignatorPart {
     /** Default serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** Minimum designator size. */
+    private static final int MIN_DESIGNATOR_SIZE = 1 + /* lda address */1 + /* dpl */1 /* ldc 0 */;
+
     /** List of expressions. */
     private final ArrayList<Expression> expressionList;
 
@@ -57,6 +60,16 @@ public class ListAccessDesignatorPart extends DesignatorPart {
      */
     public final ArrayList<Expression> getExpressionList() {
         return expressionList;
+    }
+
+    @Override
+    public final int getMaxStackSize() {
+
+        int size = MIN_DESIGNATOR_SIZE;
+        for (final Expression expression : expressionList) {
+            size = Math.max(size, expression.getMaxStackSize() + MIN_DESIGNATOR_SIZE);
+        }
+        return size;
     }
 
     @Override

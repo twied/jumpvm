@@ -68,6 +68,20 @@ public class Program extends PaMaAstNode {
     }
 
     /**
+     * Returns the maximum stack usage on execution.
+     *
+     * @return the maximum stack usage on execution
+     */
+    public final int getMaxStackSize() {
+        int max = 0;
+        for (final Statement statement : statementList) {
+            max = Math.max(max, statement.getMaxStackSize());
+        }
+
+        return max;
+    }
+
+    /**
      * Returns the list of statements.
      *
      * @return the list of statements

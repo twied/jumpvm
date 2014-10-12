@@ -89,6 +89,15 @@ public class Designator extends Expression {
     }
 
     @Override
+    public final int getMaxStackSize() {
+        int size = 1;
+        for (final DesignatorPart designatorPart : designatorPartList) {
+            size = Math.max(size, designatorPart.getMaxStackSize());
+        }
+        return size;
+    }
+
+    @Override
     public final void process(final PaMaAstWalker treewalker) throws CompileException {
         treewalker.process(this);
     }

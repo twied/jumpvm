@@ -69,6 +69,15 @@ public class RepeatStatement extends Statement {
         return condition;
     }
 
+    @Override
+    public final int getMaxStackSize() {
+        int size = condition.getMaxStackSize();
+        for (final Statement statement : statementList) {
+            size = Math.max(size, statement.getMaxStackSize());
+        }
+        return size;
+    }
+
     /**
      * Returns the list of statements.
      *

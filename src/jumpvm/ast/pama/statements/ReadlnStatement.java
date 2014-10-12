@@ -54,6 +54,11 @@ public class ReadlnStatement extends Statement {
     }
 
     @Override
+    public final int getMaxStackSize() {
+        return designator.getMaxStackSize();
+    }
+
+    @Override
     public final void process(final PaMaAstWalker treewalker) throws CompileException {
         treewalker.process(this);
     }

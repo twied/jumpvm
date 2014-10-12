@@ -1,0 +1,45 @@
+ssp 15
+sep 10
+lda 0 5
+sof 1 5
+sof 2 -1
+sof 3 -1
+sof 4 3
+lda 0 10
+inc 1
+sto
+ujp 40
+ssp 10
+sep 5
+movd 5
+ujp 15
+lda 0 5
+dpl
+ind
+ldc 0
+lda 0 5
+ldc 1
+high
+chd 1
+add
+ixa 1
+sli
+ldc 4
+sto
+lda 0 5
+dpl
+ind
+ldc 0
+ldc 3
+chd 1
+add
+ixa 1
+sli
+ind
+wrt
+retp
+mst 0
+lda 0 5
+movs 5
+cup 5 11
+stp

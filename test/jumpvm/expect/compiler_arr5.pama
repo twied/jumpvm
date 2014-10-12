@@ -1,0 +1,40 @@
+ssp 40
+sep 4
+lda 0 5
+sof 1 24
+sof 2 3
+sof 3 1
+sof 4 4
+sof 5 -3
+sof 6 -1
+sof 7 3
+sof 8 4
+sof 9 3
+sof 10 2
+lda 0 16
+inc -3
+sto
+ujp 17
+lda 0 5
+dpl
+ind
+ldc 0
+ldc 4
+chd 1
+add
+ldd 9
+mul
+ldc 1
+neg
+chd 2
+add
+ldd 10
+mul
+ldc 4
+chd 3
+add
+ixa 1
+sli
+ldc 4
+sto
+stp

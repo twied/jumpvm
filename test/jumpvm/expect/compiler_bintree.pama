@@ -1,0 +1,378 @@
+ssp 7
+sep 7
+ujp 329
+ssp 6
+sep 2
+ujp 6
+lod 0 5
+inc 0
+ldc 0
+sto
+retp
+ssp 9
+sep 2
+ujp 14
+lda 0 7
+lod 0 5
+inc 0
+ind
+sto
+lda 0 6
+ind
+inc 1
+ldc 0
+sto
+lda 0 6
+ind
+inc 2
+ldc 0
+sto
+lda 0 7
+ind
+ldc 0
+neq
+fjp 62
+lda 0 8
+lda 0 7
+ind
+sto
+lda 0 6
+ind
+inc 0
+ind
+lda 0 7
+ind
+inc 0
+ind
+les
+fjp 55
+lda 0 7
+lda 0 7
+ind
+inc 1
+ind
+sto
+ujp 61
+lda 0 7
+lda 0 7
+ind
+inc 2
+ind
+sto
+ujp 29
+lod 0 5
+inc 0
+ind
+ldc 0
+equ
+fjp 74
+lod 0 5
+inc 0
+lda 0 6
+ind
+sto
+ujp 97
+lda 0 6
+ind
+inc 0
+ind
+lda 0 8
+ind
+inc 0
+ind
+les
+fjp 91
+lda 0 8
+ind
+inc 1
+lda 0 6
+ind
+sto
+ujp 97
+lda 0 8
+ind
+inc 2
+lda 0 6
+ind
+sto
+retp
+ssp 8
+sep 3
+ujp 101
+lda 0 7
+lod 0 5
+inc 0
+ind
+sto
+lda 0 7
+ind
+ldc 0
+neq
+lda 0 6
+ind
+inc 0
+ind
+lda 0 7
+ind
+inc 0
+ind
+neq
+and
+fjp 145
+lda 0 6
+ind
+inc 0
+ind
+lda 0 7
+ind
+inc 0
+ind
+les
+fjp 138
+lda 0 7
+lda 0 7
+ind
+inc 1
+ind
+sto
+ujp 144
+lda 0 7
+lda 0 7
+ind
+inc 2
+ind
+sto
+ujp 106
+lda 0 0
+lda 0 7
+ind
+sto
+retf
+ssp 11
+sep 3
+ujp 153
+lda 0 7
+lod 0 5
+inc 0
+ind
+sto
+lda 0 7
+ind
+ldc 0
+neq
+lda 0 6
+ind
+inc 0
+ind
+lda 0 7
+ind
+inc 0
+ind
+neq
+and
+fjp 201
+lda 0 8
+lda 0 7
+ind
+sto
+lda 0 6
+ind
+inc 0
+ind
+lda 0 7
+ind
+inc 0
+ind
+les
+fjp 194
+lda 0 7
+lda 0 7
+ind
+inc 1
+ind
+sto
+ujp 200
+lda 0 7
+lda 0 7
+ind
+inc 2
+ind
+sto
+ujp 158
+lda 0 7
+ind
+ldc 0
+neq
+fjp 328
+lda 0 7
+ind
+inc 2
+ind
+ldc 0
+equ
+fjp 220
+lda 0 9
+lda 0 7
+ind
+inc 1
+ind
+sto
+ujp 292
+lda 0 7
+ind
+inc 2
+ind
+inc 1
+ind
+ldc 0
+equ
+fjp 244
+lda 0 9
+lda 0 7
+ind
+inc 2
+ind
+sto
+lda 0 9
+ind
+inc 1
+lda 0 7
+ind
+inc 1
+ind
+sto
+ujp 292
+lda 0 9
+lda 0 7
+ind
+inc 2
+ind
+sto
+lda 0 9
+ind
+inc 1
+ind
+ldc 0
+neq
+fjp 268
+lda 0 10
+lda 0 9
+ind
+sto
+lda 0 9
+lda 0 9
+ind
+inc 1
+ind
+sto
+ujp 250
+lda 0 10
+ind
+inc 1
+lda 0 9
+ind
+inc 2
+ind
+sto
+lda 0 9
+ind
+inc 1
+lda 0 7
+ind
+inc 1
+ind
+sto
+lda 0 9
+ind
+inc 2
+lda 0 7
+ind
+inc 2
+ind
+sto
+lda 0 7
+ind
+lod 0 5
+inc 0
+ind
+equ
+fjp 305
+lod 0 5
+inc 0
+lda 0 9
+ind
+sto
+ujp 328
+lda 0 7
+ind
+inc 0
+ind
+lda 0 8
+ind
+inc 0
+ind
+les
+fjp 322
+lda 0 8
+ind
+inc 1
+lda 0 9
+ind
+sto
+ujp 328
+lda 0 8
+ind
+inc 2
+lda 0 9
+ind
+sto
+retp
+mst 0
+lda 0 5
+cup 1 3
+lda 0 6
+ldc 3
+new
+lda 0 6
+ind
+inc 0
+ldc 2
+sto
+mst 0
+lda 0 5
+lda 0 6
+ind
+cup 2 11
+lda 0 6
+ldc 3
+new
+lda 0 6
+ind
+inc 0
+ldc 1
+sto
+mst 0
+lda 0 5
+lda 0 6
+ind
+cup 2 11
+lda 0 6
+ldc 3
+new
+lda 0 6
+ind
+inc 0
+ldc 3
+sto
+mst 0
+lda 0 5
+lda 0 6
+ind
+cup 2 11
+mst 0
+lda 0 5
+lda 0 5
+inc 0
+ind
+cup 2 150
+stp

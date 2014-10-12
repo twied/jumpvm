@@ -1,0 +1,127 @@
+ssp 36
+sep 7
+lda 0 5
+sof 1 16
+sof 2 3
+sof 3 1
+sof 4 4
+sof 5 -2
+sof 6 -1
+sof 7 3
+sof 8 4
+sof 9 2
+sof 10 2
+lda 0 16
+inc -3
+sto
+ujp 17
+lda 0 35
+ldc 1
+sto
+lda 0 32
+ldc 1
+sto
+ldc 4
+dpl
+lda 0 32
+ind
+geq
+fjp 103
+lda 0 33
+ldc 2
+neg
+sto
+ldc 1
+neg
+dpl
+lda 0 33
+ind
+geq
+fjp 95
+lda 0 34
+ldc 3
+sto
+ldc 4
+dpl
+lda 0 34
+ind
+geq
+fjp 87
+lda 0 5
+dpl
+ind
+ldc 0
+lda 0 32
+ind
+chd 1
+add
+ldd 9
+mul
+lda 0 33
+ind
+chd 2
+add
+ldd 10
+mul
+lda 0 34
+ind
+chd 3
+add
+ixa 1
+sli
+lda 0 35
+ind
+sto
+lda 0 35
+lda 0 35
+ind
+ldc 1
+add
+sto
+lda 0 34
+lda 0 34
+ind
+ldc 1
+add
+sto
+ujp 44
+pop
+lda 0 33
+lda 0 33
+ind
+ldc 1
+add
+sto
+ujp 35
+pop
+lda 0 32
+lda 0 32
+ind
+ldc 1
+add
+sto
+ujp 24
+pop
+lda 0 5
+dpl
+ind
+ldc 0
+ldc 2
+chd 1
+add
+ldd 9
+mul
+ldc 1
+neg
+chd 2
+add
+ldd 10
+mul
+ldc 3
+chd 3
+add
+ixa 1
+sli
+ind
+wrt
+stp

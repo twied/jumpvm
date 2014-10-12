@@ -88,6 +88,18 @@ public class IfStatement extends Statement {
         return elseStatementList;
     }
 
+    @Override
+    public final int getMaxStackSize() {
+        int size = condition.getMaxStackSize();
+        for (final Statement statement : thenStatementList) {
+            size = Math.max(size, statement.getMaxStackSize());
+        }
+        for (final Statement statement : elseStatementList) {
+            size = Math.max(size, statement.getMaxStackSize());
+        }
+        return size;
+    }
+
     /**
      * Returns the list of statements for "then".
      *

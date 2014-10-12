@@ -1,0 +1,15 @@
+ssp 5
+sep 0
+ujp 14
+ssp 6
+sep 6
+ujp 10
+ssp 6
+sep 0
+ujp 9
+retp
+mst 0
+ldc 3
+cup 1 6
+retp
+stp

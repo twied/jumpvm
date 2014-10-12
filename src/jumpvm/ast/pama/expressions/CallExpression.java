@@ -21,9 +21,14 @@ package jumpvm.ast.pama.expressions;
 import java.util.ArrayList;
 
 import jumpvm.ast.pama.Expression;
+import jumpvm.ast.pama.Type;
+import jumpvm.ast.pama.types.ArrayType;
+import jumpvm.ast.pama.types.FunctionType;
+import jumpvm.ast.pama.types.RecordType;
 import jumpvm.compiler.Location;
 import jumpvm.compiler.pama.PaMaAstWalker;
 import jumpvm.exception.CompileException;
+import jumpvm.vm.PaMa;
 
 /** Call {@link Expression}. */
 public class CallExpression extends Expression {
@@ -70,6 +75,31 @@ public class CallExpression extends Expression {
      */
     public final String getIdentifier() {
         return identifier;
+    }
+
+    @Override
+    public final int getMaxStackSize() {
+        int offset = PaMa.FRAME_SIZE;
+        int size = 0;
+        for (int i = 0; i < expressionList.size(); ++i) {
+            final Expression expression = expressionList.get(i);
+            final Type type = expression.getType().getResolvedType();
+            size = Math.max(size, offset + expression.getMaxStackSize());
+            if (expression.isReference()) {
+                offset += 1;
+            } else if (type instanceof RecordType) {
+                offset += type.getSize();
+            } else if (type instanceof ArrayType) {
+                final int descriptorSize = ((ArrayType) type).getDescriptorSize();
+                size = Math.max(size, offset + descriptorSize);
+                offset += descriptorSize;
+            } else if (type instanceof FunctionType) {
+                offset += type.getSize();
+            } else {
+                offset += 1;
+            }
+        }
+        return size;
     }
 
     @Override

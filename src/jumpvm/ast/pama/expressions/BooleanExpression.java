@@ -45,6 +45,11 @@ public class BooleanExpression extends Expression {
         setType(new BooleanType(begin, end));
     }
 
+    @Override
+    public final int getMaxStackSize() {
+        return 1;
+    }
+
     /**
      * Returns the value.
      *

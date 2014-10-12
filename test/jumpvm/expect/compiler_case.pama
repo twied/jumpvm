@@ -1,0 +1,34 @@
+ssp 6
+sep 2
+ujp 3
+lda 0 5
+ldc 2
+sto
+lda 0 5
+ind
+neg
+ixj 29
+lda 0 5
+ldc 23
+sto
+ujp 30
+lda 0 5
+ldc 42
+sto
+ujp 30
+lda 0 5
+ldc 1337
+sto
+ujp 30
+lda 0 5
+ldc 666
+sto
+ujp 30
+ujp 22
+ujp 18
+ujp 14
+ujp 10
+lda 0 5
+ind
+wrt
+stp

@@ -70,6 +70,11 @@ public class HighExpression extends Expression {
     }
 
     @Override
+    public final int getMaxStackSize() {
+        return Math.max(designator.getMaxStackSize(), 2);
+    }
+
+    @Override
     public final void process(final PaMaAstWalker treewalker) throws CompileException {
         treewalker.process(this);
     }

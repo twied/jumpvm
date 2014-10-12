@@ -39,6 +39,13 @@ public abstract class DesignatorPart extends PaMaAstNode {
     }
 
     /**
+     * Returns the maximum stack usage on execution.
+     *
+     * @return the maximum stack usage on execution
+     */
+    public abstract int getMaxStackSize();
+
+    /**
      * Returns the type of this subexpression.
      *
      * @return the type of this subexpression

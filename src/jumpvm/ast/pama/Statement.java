@@ -34,4 +34,11 @@ public abstract class Statement extends PaMaAstNode {
     public Statement(final Location begin, final Location end) {
         super(begin, end);
     }
+
+    /**
+     * Returns the maximum stack usage on execution.
+     *
+     * @return the maximum stack usage on execution
+     */
+    public abstract int getMaxStackSize();
 }

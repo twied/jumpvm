@@ -25,10 +25,13 @@ import java.util.List;
 import jumpvm.JumpVMTest;
 import jumpvm.Main.VmType;
 import jumpvm.compiler.Token;
+import jumpvm.compiler.pama.PaMaCompiler;
 import jumpvm.compiler.pama.PaMaDotBackend;
 import jumpvm.compiler.pama.PaMaLexer;
 import jumpvm.compiler.pama.PaMaParser;
 import jumpvm.compiler.pama.PaMaToken;
+import jumpvm.exception.CompileException;
+import jumpvm.exception.ParseException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -61,6 +64,21 @@ public class PaMaTest {
     }
 
     /**
+     * Create a compiler for the given source file and compile.
+     *
+     * @return the compiler
+     * @throws CompileException on failure
+     * @throws ParseException on failure
+     */
+    private PaMaCompiler createCompiler() throws CompileException, ParseException {
+        final PaMaCompiler compiler = new PaMaCompiler();
+        final PaMaParser parser = createParser();
+        compiler.processProgram(parser.parse());
+
+        return compiler;
+    }
+
+    /**
      * Create a lexer for the given source file.
      *
      * @return the lexer
@@ -86,6 +104,18 @@ public class PaMaTest {
      */
     private File getExpectFile(final String testName) {
         return JumpVMTest.getExpectFile(testName, sourceFile);
+    }
+
+    /**
+     * Test compiler.
+     *
+     * @throws Exception on failure
+     */
+    @Test(timeout = JumpVMTest.TIMEOUT)
+    public final void testCompiler() throws Exception {
+        final PaMaCompiler compiler = createCompiler();
+
+        JumpVMTest.compare(getExpectFile("compiler"), JumpVMTest.toStrings(compiler));
     }
 
     /**

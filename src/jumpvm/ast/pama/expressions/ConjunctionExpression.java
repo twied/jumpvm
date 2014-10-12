@@ -97,6 +97,11 @@ public class ConjunctionExpression extends Expression {
         return lhs;
     }
 
+    @Override
+    public final int getMaxStackSize() {
+        return Math.max(lhs.getMaxStackSize(), rhs.getMaxStackSize() + 1);
+    }
+
     /**
      * Returns the operator.
      *

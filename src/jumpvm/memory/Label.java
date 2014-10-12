@@ -39,6 +39,17 @@ public class Label {
     }
 
     /**
+     * Create a new Label.
+     *
+     * @param name name
+     * @param address adress
+     */
+    public Label(final String name, final int address) {
+        this.name = name;
+        this.address = address;
+    }
+
+    /**
      * Returns the address.
      * 
      * @return the address

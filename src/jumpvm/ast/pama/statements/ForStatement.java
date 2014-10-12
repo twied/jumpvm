@@ -91,6 +91,18 @@ public class ForStatement extends Statement {
         return fromExpression;
     }
 
+    @Override
+    public final int getMaxStackSize() {
+        int size = 0;
+        size = Math.max(designator.getMaxStackSize(), fromExpression.getMaxStackSize() + 1);
+        size = Math.max(size, toExpression.getMaxStackSize());
+        size = Math.max(size, 2 + designator.getMaxStackSize());
+        for (final Statement statement : statementList) {
+            size = Math.max(size, 1 + statement.getMaxStackSize());
+        }
+        return size;
+    }
+
     /**
      * Returns the list of statements.
      *

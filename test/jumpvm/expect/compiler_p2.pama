@@ -1,0 +1,16 @@
+ssp 6
+sep 2
+ujp 3
+ldc 1
+fjp 9
+lda 0 5
+ldc 5
+sto
+ujp 12
+lda 0 5
+ldc 6
+sto
+lda 0 5
+ind
+wrt
+stp

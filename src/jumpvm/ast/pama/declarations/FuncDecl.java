@@ -117,6 +117,20 @@ public class FuncDecl extends PaMaAstNode implements NamedNode {
     }
 
     /**
+     * Returns the maximum stack usage on execution.
+     *
+     * @return the maximum stack usage on execution
+     */
+    public final int getMaxStackSize() {
+        int max = 0;
+        for (final Statement statement : statementList) {
+            max = Math.max(max, statement.getMaxStackSize());
+        }
+
+        return max;
+    }
+
+    /**
      * Returns the type of the result value.
      *
      * @return the type of the result value or {@code null} if this is a procedure

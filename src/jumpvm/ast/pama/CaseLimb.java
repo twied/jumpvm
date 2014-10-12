@@ -54,6 +54,19 @@ public class CaseLimb extends PaMaAstNode {
     }
 
     /**
+     * Returns the maximum stack usage on execution.
+     *
+     * @return the maximum stack usage on execution
+     */
+    public final int getMaxStackSize() {
+        int size = 0;
+        for (final Statement statement : statementList) {
+            size = Math.max(size, statement.getMaxStackSize());
+        }
+        return size;
+    }
+
+    /**
      * Returns the list of statements.
      *
      * @return the list of statements
