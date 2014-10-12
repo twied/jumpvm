@@ -86,10 +86,7 @@ public class JumpMemoryPanel extends JPanel implements ListCellRenderer<MemoryOb
     @Override
     public final Component getListCellRendererComponent(final JList<? extends MemoryObject> jlist, final MemoryObject object, final int index, final boolean isSelected, final boolean cellHasFocus) {
         if (object == null) {
-            final JLabel l = new JLabel("JumpMemoryPanel.getListCellRendererComponent() value = null!");
-            l.setBackground(Color.RED);
-            l.setOpaque(true);
-            return l;
+            return Box.createVerticalGlue();
         }
 
         final String displayType = object.getDisplayType();

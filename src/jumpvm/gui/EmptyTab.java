@@ -85,9 +85,6 @@ public class EmptyTab extends JPanel implements ActionListener {
         this.newMaMaButton = button("MaMachine", "A functional", "Haskell", "accessories-calculator");
         this.newWiMaButton = button("WiMachine", "A logical", "Prolog", "internet-group-chat");
         this.newBfMaButton = button("BfMachine", "An esoteric", "Brainfuck", "weather-storm");
-
-        // TODO enable PaMa
-        newPaMaButton.setEnabled(false);
     }
 
     @Override

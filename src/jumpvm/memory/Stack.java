@@ -116,8 +116,15 @@ public class Stack extends Memory<StackObject> implements Observer {
 
     @Override
     public final void update(final Observable o, final Object arg) {
+        boolean removed = false;
         while (stackPointer.getValue() < (getSize() - 1)) {
             removeElementAt(getSize() - 1);
+            removed = true;
+        }
+        for (final Integer key : new ArrayList<Integer>(frames.keySet())) {
+            if ((key > stackPointer.getValue()) || (removed && (key == stackPointer.getValue()))) {
+                frames.remove(key);
+            }
         }
     }
 }

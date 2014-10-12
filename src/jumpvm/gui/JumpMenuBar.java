@@ -228,8 +228,7 @@ public class JumpMenuBar extends JMenuBar implements ActionListener {
         fileExampleMenu.add(fileExampleWiMaMenu);
         fileExampleMenu.add(fileExampleBfMaMenu);
 
-        // TODO enable PaMa
-        // example(fileExamplePaMaMenu, VmType.PAMA);
+        example(fileExamplePaMaMenu, VmType.PAMA);
         example(fileExampleMaMaMenu, VmType.MAMA);
         example(fileExampleWiMaMenu, VmType.WIMA);
         example(fileExampleBfMaMenu, VmType.BFMA);
@@ -265,11 +264,6 @@ public class JumpMenuBar extends JMenuBar implements ActionListener {
         add(editMenu);
         add(runMenu);
         add(helpMenu);
-
-        // TODO enable PaMa
-        fileNewPaMaItem.setEnabled(false);
-        fileOpenPaMaItem.setEnabled(false);
-        fileExamplePaMaMenu.setEnabled(false);
     }
 
     @Override

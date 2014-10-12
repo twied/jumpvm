@@ -102,8 +102,13 @@ public class JumpModifyMemoryPanel extends JTabbedPane {
             for (int i = 0; i < memory.getSize(); ++i) {
                 final MemoryObject object = memory.getElementAt(i);
                 data[i][0] = String.valueOf(i);
-                data[i][1] = object.getDisplayType();
-                data[i][2] = object.getDisplayValue();
+                if (object != null) {
+                    data[i][1] = object.getDisplayType();
+                    data[i][2] = object.getDisplayValue();
+                } else {
+                    data[i][1] = "NOTHING";
+                    data[i][2] = "";
+                }
             }
 
             /* Append two empty rows. */
@@ -145,6 +150,8 @@ public class JumpModifyMemoryPanel extends JTabbedPane {
         /* List of MemoryObjects to remove. */
         final ArrayList<MemoryObject> remove = new ArrayList<MemoryObject>();
 
+        boolean changed = false;
+
         for (int i = 0; i < data.length; ++i) {
             /* these contain the possibly changed values. */
             final String typeString = data[i][1];
@@ -158,8 +165,13 @@ public class JumpModifyMemoryPanel extends JTabbedPane {
                 memoryValue = "";
             } else {
                 final MemoryObject object = memory.getElementAt(i);
-                memoryType = object.getDisplayType();
-                memoryValue = object.getDisplayValue();
+                if (object == null) {
+                    memoryType = "NOTHING";
+                    memoryValue = "";
+                } else {
+                    memoryType = object.getDisplayType();
+                    memoryValue = object.getDisplayValue();
+                }
             }
 
             /* Ignore unchanged rows. */
@@ -167,6 +179,7 @@ public class JumpModifyMemoryPanel extends JTabbedPane {
                 continue;
             }
 
+            changed = true;
             if ("NOTHING".equals(typeString)) {
                 remove.add(memory.getElementAt(i));
             } else if ("→P ".equals(typeString)) {
@@ -212,6 +225,10 @@ public class JumpModifyMemoryPanel extends JTabbedPane {
             } else {
                 throw new IllegalArgumentException("Unknown type \"" + typeString + "\" in element " + i + " in " + memory.getName());
             }
+        }
+
+        if (!changed) {
+            return;
         }
 
         final ArrayList<MemoryObject> newMemory = memory.getContent();

@@ -118,7 +118,7 @@ public class JumpGui extends JFrame {
             return new MaMaTab();
 
         case PAMA:
-            throw new RuntimeException();
+            return new PaMaTab();
 
         case WIMA:
             return new WiMaTab();
