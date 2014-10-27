@@ -41,7 +41,14 @@ public class InputInstruction extends BfMaInstruction {
 
     @Override
     protected final void execute(final BfMa vm) throws ExecutionException {
-        throw new ExecutionException(this, "BfMa INPUT not implemented yet");
+        while (true) {
+            try {
+                setValue(vm, Integer.parseInt(vm.getInput()));
+                break;
+            } catch (final NumberFormatException e) {
+                continue;
+            }
+        }
     }
 
     @Override

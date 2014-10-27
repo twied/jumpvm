@@ -20,6 +20,7 @@ package jumpvm.code.pama;
 
 import jumpvm.ast.pama.PaMaAstNode;
 import jumpvm.exception.ExecutionException;
+import jumpvm.memory.objects.BasicValueObject;
 import jumpvm.vm.PaMa;
 
 /**
@@ -41,7 +42,15 @@ public class ReadlnInstruction extends PaMaInstruction {
     }
 
     @Override
-    public void execute(final PaMa vm) throws ExecutionException {
+    public final void execute(final PaMa vm) throws ExecutionException {
+        while (true) {
+            try {
+                vm.push(new BasicValueObject(Integer.parseInt(vm.getInput()), "input", null));
+                break;
+            } catch (final NumberFormatException e) {
+                continue;
+            }
+        }
     }
 
     @Override

@@ -76,7 +76,6 @@ Limits
 * ![PaMa](res/icon16/preferences-desktop-multimedia.png "PaMa") PaMa
 	* The PaMa doesn't do static arrays. All arrays are considered dynamic.
 	* Case values must start at 0 and be continuous.
-	* Input (`readln`) is not supported and does nothing.
 * ![MaMa](res/icon16/accessories-calculator.png "MaMa") MaMa
     * The MaMa doesn't do variable reordering in letrec expressions which makes it fail on certain valid programs. See `example2.mama`.
 * ![WiMa](res/icon16/internet-group-chat.png "WiMa") WiMa
@@ -84,7 +83,6 @@ Limits
     * The WiMa doesn't do arithmetic evaluates, especially the predicate `is/2` is missing.
 * ![BfMa](res/icon16/weather-storm.png "BfMa") BfMa
     * Only the positive half of the infinite band is accessible.
-    * Input (character `,`) is not supported yet and does nothing.
 
 
 License

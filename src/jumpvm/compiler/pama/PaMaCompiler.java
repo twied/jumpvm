@@ -1380,6 +1380,7 @@ public class PaMaCompiler extends Compiler {
         public void process(final ReadlnStatement node) throws CompileException {
             codeL(node.getDesignator());
             emit(new ReadlnInstruction(node));
+            emit(new StoInstruction(node, node.getDesignator().getFullIdentifier()));
         }
 
         @Override

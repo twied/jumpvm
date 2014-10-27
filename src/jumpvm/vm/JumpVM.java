@@ -18,10 +18,14 @@
 
 package jumpvm.vm;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.swing.JOptionPane;
 
 import jumpvm.code.Instruction;
 import jumpvm.exception.ExecutionException;
@@ -60,6 +64,9 @@ public abstract class JumpVM {
     /** Output writer. */
     private PrintWriter writer;
 
+    /** Input reader. */
+    private BufferedReader reader;
+
     /**
      * Create a new JumpVM.
      */
@@ -75,6 +82,7 @@ public abstract class JumpVM {
         this.displayRegisters = new ArrayList<Register>();
         this.displayMemories = new ArrayList<Memory<?>>();
         this.writer = new PrintWriter(System.out);
+        this.reader = null;
 
         displayRegisters.add(stepCounter);
         displayRegisters.add(status);
@@ -116,6 +124,23 @@ public abstract class JumpVM {
      */
     public final ArrayList<Register> getDisplayRegisters() {
         return displayRegisters;
+    }
+
+    /**
+     * Returns a line of user input.
+     *
+     * @return a line of user input
+     */
+    public final String getInput() {
+        if (reader != null) {
+            try {
+                return reader.readLine();
+            } catch (final IOException e) {
+                return null;
+            }
+        }
+
+        return JOptionPane.showInputDialog("Please enter value:");
     }
 
     /**
@@ -188,6 +213,15 @@ public abstract class JumpVM {
     public final void reset(final ArrayList<Instruction> instructions) {
         reset();
         program.reset(instructions);
+    }
+
+    /**
+     * Set the input reader.
+     *
+     * @param reader the reader that is used for all VM input
+     */
+    public final void setReader(final BufferedReader reader) {
+        this.reader = reader;
     }
 
     /**
