@@ -37,6 +37,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.tree.TreeNode;
+import javax.xml.stream.XMLStreamException;
 
 import jumpvm.ast.AstNode;
 import jumpvm.code.Instruction;
@@ -258,6 +259,23 @@ public abstract class JumpTab extends JPanel {
             writer.flush();
             writer.close();
         } catch (final IOException e) {
+            JumpGui.showExceptionDialog(this, e, "File could not be written.", "JumpVM error");
+        }
+    }
+
+    /**
+     * Action "export state".
+     *
+     * @param fileChooser file chooser
+     */
+    public final void actionExportState(final JFileChooser fileChooser) {
+        if (fileChooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+
+        try {
+            vm.exportState(fileChooser.getSelectedFile());
+        } catch (final IOException | XMLStreamException e) {
             JumpGui.showExceptionDialog(this, e, "File could not be written.", "JumpVM error");
         }
     }

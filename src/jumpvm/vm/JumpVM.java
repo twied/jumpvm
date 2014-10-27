@@ -19,6 +19,8 @@
 package jumpvm.vm;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -26,12 +28,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 
 import jumpvm.code.Instruction;
 import jumpvm.exception.ExecutionException;
 import jumpvm.memory.Memory;
 import jumpvm.memory.Program;
 import jumpvm.memory.Register;
+import jumpvm.memory.objects.MemoryObject;
 
 /**
  * JumpVM base VM.
@@ -109,8 +115,58 @@ public abstract class JumpVM {
     }
 
     /**
-     * Returns the list of displayed memories with theyr associated register, if any.
+     * Export the current vm state.
      * 
+     * @param file output file
+     * @throws IOException on failure
+     * @throws XMLStreamException on failure
+     */
+    public final void exportState(final File file) throws IOException, XMLStreamException {
+        final XMLStreamWriter xmlWriter = XMLOutputFactory.newFactory().createXMLStreamWriter(new FileOutputStream(file));
+
+        xmlWriter.writeStartDocument();
+        xmlWriter.writeStartElement("jumpvm");
+        xmlWriter.writeAttribute("type", this.getClass().getSimpleName());
+        xmlWriter.writeStartElement("registers");
+        for (final Register register : displayRegisters) {
+            xmlWriter.writeStartElement("register");
+            xmlWriter.writeAttribute("name", String.valueOf(register.getShortName()));
+            xmlWriter.writeAttribute("value", String.valueOf(register.getValue()));
+            xmlWriter.writeEndElement();
+        }
+        xmlWriter.writeEndElement();
+
+        xmlWriter.writeStartElement("memories");
+        for (final Memory<? extends MemoryObject> memory : displayMemories) {
+            xmlWriter.writeStartElement("memory");
+            xmlWriter.writeAttribute("name", String.valueOf(memory.getName()));
+
+            for (int i = 0; i < memory.getContent().size(); ++i) {
+                final MemoryObject object = memory.getContent().get(i);
+                if (object == null) {
+                    continue;
+                }
+
+                xmlWriter.writeStartElement("object");
+                xmlWriter.writeAttribute("addr", String.valueOf(i));
+                xmlWriter.writeAttribute("val", String.valueOf(object.getDisplayValue()).replaceAll("</?b>", "").replaceAll("&gt;", ">").replaceAll("&lt;", "<"));
+                xmlWriter.writeAttribute("type", String.valueOf(object.getDisplayType()));
+                xmlWriter.writeAttribute("desc", String.valueOf(object.getDisplayDescription()));
+                xmlWriter.writeAttribute("text", String.valueOf(object.getDisplayHoverText()));
+                xmlWriter.writeEndElement();
+            }
+            xmlWriter.writeEndElement();
+        }
+        xmlWriter.writeEndElement();
+
+        xmlWriter.writeEndElement();
+        xmlWriter.writeEndDocument();
+        xmlWriter.close();
+    }
+
+    /**
+     * Returns the list of displayed memories with theyr associated register, if any.
+     *
      * @return the list of displayed memories
      */
     public final ArrayList<Memory<?>> getDisplayMemories() {

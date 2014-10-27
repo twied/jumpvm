@@ -235,6 +235,18 @@ public class JumpGui extends JFrame {
     }
 
     /**
+     * Action "export state".
+     */
+    public final void actionExportState() {
+        final JumpTab tab = getCurrentTab();
+        if (tab == null) {
+            return;
+        }
+
+        tab.actionExportState(fileChooser);
+    }
+
+    /**
      * Action "help".
      */
     public final void actionHelp() {
