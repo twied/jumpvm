@@ -111,7 +111,7 @@ public class PaMaParser extends Parser<PaMaLexer, PaMaToken> {
      * @return next AST node
      * @throws ParseException on failure
      */
-    private Statement parseAssignmentStatment(final Location begin, final String identifier) throws ParseException {
+    private Statement parseAssignmentStatement(final Location begin, final String identifier) throws ParseException {
         final Designator designator = parseDesignator(begin, identifier);
         eat(PaMaToken.TOKEN_ASSIGNMENT);
         final Expression expression = parseExpression();
@@ -469,7 +469,7 @@ public class PaMaParser extends Parser<PaMaLexer, PaMaToken> {
      *     ;
      * </pre>
      *
-     * @param hasIdentifier if this formal_parameter must have an indentifer. Parameter declarations in type declarations for instance don't have names.
+     * @param hasIdentifier if this formal_parameter must have an identifer. Parameter declarations in type declarations for instance don't have names.
      * @return next AST node
      * @throws ParseException on failure
      */
@@ -503,7 +503,7 @@ public class PaMaParser extends Parser<PaMaLexer, PaMaToken> {
      *     ;
      * </pre>
      *
-     * @param hasIdentifier if this formal_parameter must have an indentifer. Parameter declarations in type declarations for instance don't have names.
+     * @param hasIdentifier if this formal_parameter must have an identifer. Parameter declarations in type declarations for instance don't have names.
      * @return next AST node
      * @throws ParseException on failure
      */
@@ -966,7 +966,7 @@ public class PaMaParser extends Parser<PaMaLexer, PaMaToken> {
      *     | new_statement
      *     | readln_statement
      *     | writeln_statement
-     *     | assignment_statment
+     *     | assignment_statement
      *     | call_statement
      *     ;
      * </pre>
@@ -998,7 +998,7 @@ public class PaMaParser extends Parser<PaMaLexer, PaMaToken> {
         if (isToken(PaMaToken.BRACKET_ROUND_LEFT)) {
             return parseCallStatement(begin, identifier);
         } else {
-            return parseAssignmentStatment(begin, identifier);
+            return parseAssignmentStatement(begin, identifier);
         }
     }
 

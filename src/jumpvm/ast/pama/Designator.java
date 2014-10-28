@@ -40,7 +40,7 @@ public class Designator extends Expression {
     private final ArrayList<DesignatorPart> designatorPartList;
 
     /**
-     * Createa a new Designator.
+     * Create a new Designator.
      *
      * @param begin begin
      * @param end end

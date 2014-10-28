@@ -42,7 +42,7 @@ public class Label {
      * Create a new Label.
      *
      * @param name name
-     * @param address adress
+     * @param address address
      */
     public Label(final String name, final int address) {
         this.name = name;

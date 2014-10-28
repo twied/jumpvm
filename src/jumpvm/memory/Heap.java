@@ -37,7 +37,7 @@ public class Heap extends Memory<MemoryObject> {
     /**
      * Create a new Heap.
      * 
-     * @param name This memorys name
+     * @param name This memory's name
      */
     public Heap(final String name) {
         super(name);

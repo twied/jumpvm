@@ -25,7 +25,7 @@ import jumpvm.vm.PaMa;
 /** Halts the PaMachine. */
 public class StpInstruction extends PaMaInstruction {
     /**
-     * Createa a new StpInstruction.
+     * Create a new StpInstruction.
      *
      * @param sourceNode AstNode that is responsible for this instruction's creation
      */

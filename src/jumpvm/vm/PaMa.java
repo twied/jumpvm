@@ -33,10 +33,10 @@ public class PaMa extends JumpVM {
     /** Offset of the return value in a frame. */
     public static final int OFFSET_RETVAL = 0;
 
-    /** Offset of the static precedessor in a frame. */
+    /** Offset of the static predecessor in a frame. */
     public static final int OFFSET_SPD = 1;
 
-    /** Offset of the dynamic precedessor in a frame. */
+    /** Offset of the dynamic predecessor in a frame. */
     public static final int OFFSET_DPD = 2;
 
     /** Offset of the old extreme pointer value in a frame. */

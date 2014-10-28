@@ -404,9 +404,9 @@ public class WiMaCompiler extends Compiler {
 
             final String identifier = clause.getHead().getIdentifier();
             final ArrayList<Clause> currentClauseList = new ArrayList<Clause>();
-            for (final Clause curretClause : clauseList) {
-                if (curretClause.getHead().getIdentifier().equals(identifier)) {
-                    currentClauseList.add(curretClause);
+            for (final Clause currentClause : clauseList) {
+                if (currentClause.getHead().getIdentifier().equals(identifier)) {
+                    currentClauseList.add(currentClause);
                 }
             }
 

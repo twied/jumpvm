@@ -165,7 +165,7 @@ public abstract class JumpVM {
     }
 
     /**
-     * Returns the list of displayed memories with theyr associated register, if any.
+     * Returns the list of displayed memories with their associated register, if any.
      *
      * @return the list of displayed memories
      */

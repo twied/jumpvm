@@ -333,7 +333,7 @@ public class JumpMenuBar extends JMenuBar implements ActionListener {
     }
 
     /**
-     * Create the example entries in the "File -> Example -> *" menues.
+     * Create the example entries in the "File -> Example -> *" menus.
      * 
      * @param menu parent menu
      * @param type VM type

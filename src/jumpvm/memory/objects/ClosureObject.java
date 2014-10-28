@@ -61,7 +61,7 @@ public class ClosureObject implements MemoryObject {
 
     @Override
     public final String getDisplayHoverText() {
-        return "Deffered calculation to create the object " + name;
+        return "Deferred calculation to create the object " + name;
     }
 
     @Override

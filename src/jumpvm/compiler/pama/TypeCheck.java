@@ -184,7 +184,7 @@ public class TypeCheck implements PaMaAstWalker {
      *
      * @param expression expression 1
      * @param type type
-     * @return {@code true} if the expression evaulates to a type that is considered equal to the given type
+     * @return {@code true} if the expression evaluates to a type that is considered equal to the given type
      * @throws CompileException on failure
      */
     private boolean isSameType(final Expression expression, final Type type) throws CompileException {

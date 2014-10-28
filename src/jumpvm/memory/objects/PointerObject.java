@@ -57,7 +57,7 @@ public class PointerObject extends StackObject {
      * @param intValue address
      * @param type pointer type
      * @param descriptionShort short description of this pointer's meaning
-     * @param descriptionLong long descriptino of this pointer's meaning
+     * @param descriptionLong long description of this pointer's meaning
      */
     public PointerObject(final int intValue, final Type type, final String descriptionShort, final String descriptionLong) {
         this.intValue = intValue;

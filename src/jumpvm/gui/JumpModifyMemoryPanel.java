@@ -128,7 +128,7 @@ public class JumpModifyMemoryPanel extends JTabbedPane {
     }
 
     /**
-     * Apply the changes to the temporary copy of the memorys.
+     * Apply the changes to the temporary copy of the memories.
      */
     public final void apply() {
         for (final Entry<Memory<MemoryObject>, String[][]> entry : dataMap.entrySet()) {

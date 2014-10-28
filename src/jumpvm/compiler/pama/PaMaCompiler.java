@@ -216,7 +216,7 @@ public class PaMaCompiler extends Compiler {
         }
 
         /**
-         * Include the procedure / function declarations in the address environement. Translate them as well.
+         * Include the procedure / function declarations in the address environment. Translate them as well.
          *
          * @param procDeclList list of procedure declarations
          * @throws CompileException on failure
@@ -497,7 +497,7 @@ public class PaMaCompiler extends Compiler {
         /**
          * Create a new CodeL instance.
          *
-         * @param code address environement etc. to inherit
+         * @param code address environment etc. to inherit
          */
         public CodeL(final Code code) {
             super(code);
@@ -769,7 +769,7 @@ public class PaMaCompiler extends Compiler {
         /**
          * Create a new CodeR instance.
          *
-         * @param code address environement etc. to inherit
+         * @param code address environment etc. to inherit
          */
         public CodeR(final Code code) {
             super(code);

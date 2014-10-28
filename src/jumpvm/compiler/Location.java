@@ -86,7 +86,7 @@ public class Location {
     /**
      * Returns the location formatted as e.g. gcc does in its error messages.
      * 
-     * @return the location formattet as "filename:line:column"
+     * @return the location formatted as "filename:line:column"
      */
     @Override
     public final String toString() {

@@ -41,7 +41,7 @@ public abstract class PaMaInstruction extends Instruction {
      * @param vm PaMachine
      * @param p stacking depth
      * @param a relative address
-     * @return absolut address of the object
+     * @return absolute address of the object
      */
     protected final int base(final PaMa vm, final int p, final int a) {
         if (p == 0) {

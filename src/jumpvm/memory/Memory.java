@@ -105,7 +105,7 @@ public class Memory<E extends MemoryObject> extends AbstractListModel<MemoryObje
     /**
      * Removes the object at the given index.
      * 
-     * @param index Adress
+     * @param index Address
      * @return the removed object
      */
     @SuppressWarnings("unchecked")
@@ -140,7 +140,7 @@ public class Memory<E extends MemoryObject> extends AbstractListModel<MemoryObje
     /**
      * Sets the object at a given index.
      * 
-     * @param index Adress
+     * @param index Address
      * @param object Value
      */
     public final void setElementAt(final int index, final E object) {
@@ -154,7 +154,7 @@ public class Memory<E extends MemoryObject> extends AbstractListModel<MemoryObje
     /**
      * Alias for {@link #setElementAt(int, E)}.
      * 
-     * @param index Adress
+     * @param index Address
      * @param object Value
      */
     public final void setElementAt(final Register index, final E object) {
@@ -164,7 +164,7 @@ public class Memory<E extends MemoryObject> extends AbstractListModel<MemoryObje
     /**
      * Alias for {@link #setElementAt(int, E)}.
      * 
-     * @param index Adress
+     * @param index Address
      * @param object Value
      */
     public final void setElementAt(final StackObject index, final E object) {
