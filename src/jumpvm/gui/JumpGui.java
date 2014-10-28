@@ -48,6 +48,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JToggleButton.ToggleButtonModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
@@ -129,6 +131,12 @@ public class JumpGui extends JFrame {
         }
     }
 
+    /** GUI element: Menu bar. */
+    private final JumpMenuBar menuBar;
+
+    /** GUI element: Tool bar. */
+    private final JumpToolBar toolBar;
+
     /** GUI element: JumpTab container. */
     private final JTabbedPane tabbedPane;
 
@@ -146,18 +154,28 @@ public class JumpGui extends JFrame {
         fileChooser = new JFileChooser();
         runningToggle = new ToggleButtonModel();
         tabbedPane = new JTabbedPane();
+        menuBar = new JumpMenuBar(this);
+        toolBar = new JumpToolBar(this);
 
         /* Initial empty tab. */
         actionNewTab();
 
-        add(new JumpToolBar(this), BorderLayout.NORTH);
+        add(toolBar, BorderLayout.NORTH);
         add(tabbedPane, BorderLayout.CENTER);
-        setJMenuBar(new JumpMenuBar(this));
+        setJMenuBar(menuBar);
         setSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setIconImage(Main.getImageIconResource("/icon16/icon.png").getImage());
+        tabbedPane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(final ChangeEvent e) {
+                runningToggle.setSelected(false);
+                update();
+            }
+        });
+        update();
     }
 
     /**
@@ -172,6 +190,7 @@ public class JumpGui extends JFrame {
      */
     public final void actionCloseTab() {
         tabbedPane.remove(tabbedPane.getSelectedComponent());
+        update();
     }
 
     /**
@@ -184,6 +203,7 @@ public class JumpGui extends JFrame {
         }
 
         tab.actionCompile();
+        update();
     }
 
     /**
@@ -262,6 +282,7 @@ public class JumpGui extends JFrame {
         final Component tab = new EmptyTab(this);
         tabbedPane.addTab(tab.getName(), EmptyTab.getIconSmall(), tab);
         tabbedPane.setSelectedComponent(tab);
+        update();
         return tab;
     }
 
@@ -275,6 +296,7 @@ public class JumpGui extends JFrame {
         final JumpTab tab = tabFromVmType(type);
         tabbedPane.addTab(tab.getName(), tab.getIconSmall(), tab);
         tabbedPane.setSelectedComponent(tab);
+        update();
         return tab;
     }
 
@@ -307,6 +329,7 @@ public class JumpGui extends JFrame {
             tab.setSource(new FileInputStream(file));
             tab.setAssociatedFile(file);
             setTitle(tab, file.getName());
+            update();
         } catch (final FileNotFoundException e) {
             showExceptionDialog(this, e, "File could not be read.", "JumpVM error");
         }
@@ -330,6 +353,7 @@ public class JumpGui extends JFrame {
         }
 
         tab.actionReset();
+        update();
     }
 
     /**
@@ -407,7 +431,7 @@ public class JumpGui extends JFrame {
      * 
      * @return current JumpTab
      */
-    private JumpTab getCurrentTab() {
+    public final JumpTab getCurrentTab() {
         final Component component = tabbedPane.getSelectedComponent();
         if (component instanceof JumpTab) {
             return (JumpTab) component;
@@ -423,6 +447,15 @@ public class JumpGui extends JFrame {
      */
     public final ToggleButtonModel getRunningToggle() {
         return runningToggle;
+    }
+
+    /**
+     * Returns the number of tabs.
+     *
+     * @return the number of tabs
+     */
+    public final int getTabCount() {
+        return tabbedPane.getTabCount();
     }
 
     /**
@@ -509,5 +542,11 @@ public class JumpGui extends JFrame {
         dialog.setSize(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
+    }
+
+    /** Update GUI elements. */
+    public final void update() {
+        toolBar.update();
+        menuBar.update();
     }
 }

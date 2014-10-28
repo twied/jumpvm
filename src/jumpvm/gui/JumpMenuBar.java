@@ -395,4 +395,54 @@ public class JumpMenuBar extends JMenuBar implements ActionListener {
         menu.setIcon(Main.getImageIconResource("/icon16/" + icon + ".png"));
         return menu;
     }
+
+    /** Update GUI elements. */
+    public final void update() {
+        if (gui.getTabCount() == 0) {
+            fileCloseItem.setEnabled(false);
+        } else {
+            fileCloseItem.setEnabled(true);
+        }
+
+        final JumpTab currentTab = gui.getCurrentTab();
+        if (currentTab == null) {
+            fileSaveItem.setEnabled(false);
+            fileSaveAsItem.setEnabled(false);
+            fileExportAsmItem.setEnabled(false);
+            fileExportDotItem.setEnabled(false);
+            editMemoriesItem.setEnabled(false);
+            editRegistersItem.setEnabled(false);
+            editExportStateItem.setEnabled(false);
+            runCompileItem.setEnabled(false);
+            runStepForwardItem.setEnabled(false);
+            runStepBackwardItem.setEnabled(false);
+            runRunItem.setEnabled(false);
+            runResetItem.setEnabled(false);
+        } else {
+            fileSaveItem.setEnabled(true);
+            fileSaveAsItem.setEnabled(true);
+            runCompileItem.setEnabled(true);
+            if (currentTab.getVm().getProgram().getSize() == 0) {
+                fileExportAsmItem.setEnabled(false);
+                fileExportDotItem.setEnabled(false);
+                editMemoriesItem.setEnabled(false);
+                editRegistersItem.setEnabled(false);
+                editExportStateItem.setEnabled(false);
+                runStepForwardItem.setEnabled(false);
+                runStepBackwardItem.setEnabled(false);
+                runRunItem.setEnabled(false);
+                runResetItem.setEnabled(false);
+            } else {
+                fileExportAsmItem.setEnabled(true);
+                fileExportDotItem.setEnabled(true);
+                editMemoriesItem.setEnabled(true);
+                editRegistersItem.setEnabled(true);
+                editExportStateItem.setEnabled(true);
+                runStepForwardItem.setEnabled(true);
+                runStepBackwardItem.setEnabled(true);
+                runRunItem.setEnabled(true);
+                runResetItem.setEnabled(true);
+            }
+        }
+    }
 }

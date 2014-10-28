@@ -170,4 +170,39 @@ public class JumpToolBar extends JToolBar implements ActionListener {
         add(button);
         return button;
     }
+
+    /** Update GUI elements. */
+    public final void update() {
+        if (gui.getTabCount() == 0) {
+            fileCloseButton.setEnabled(false);
+        } else {
+            fileCloseButton.setEnabled(true);
+        }
+
+        final JumpTab currentTab = gui.getCurrentTab();
+        if (currentTab == null) {
+            fileSaveButton.setEnabled(false);
+            fileSaveAsButton.setEnabled(false);
+            runCompileButton.setEnabled(false);
+            runStepBackwardButton.setEnabled(false);
+            runStepForwardButton.setEnabled(false);
+            runRunButton.setEnabled(false);
+            runResetButton.setEnabled(false);
+        } else {
+            fileSaveButton.setEnabled(true);
+            fileSaveAsButton.setEnabled(true);
+            runCompileButton.setEnabled(true);
+            if (currentTab.getVm().getProgram().getSize() == 0) {
+                runStepBackwardButton.setEnabled(false);
+                runStepForwardButton.setEnabled(false);
+                runRunButton.setEnabled(false);
+                runResetButton.setEnabled(false);
+            } else {
+                runStepBackwardButton.setEnabled(true);
+                runStepForwardButton.setEnabled(true);
+                runRunButton.setEnabled(true);
+                runResetButton.setEnabled(true);
+            }
+        }
+    }
 }
