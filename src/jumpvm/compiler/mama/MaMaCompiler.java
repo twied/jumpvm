@@ -20,6 +20,7 @@ package jumpvm.compiler.mama;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import jumpvm.ast.AstNode;
@@ -492,6 +493,25 @@ public class MaMaCompiler extends Compiler {
 
         @Override
         public void process(final LetrecExpression node) throws CompileException {
+            Collections.sort(node.getVariableDeclarations(), new Comparator<VariableDeclaration>() {
+                @Override
+                public int compare(final VariableDeclaration o1, final VariableDeclaration o2) {
+                    final FreeVar freeVar = new FreeVar();
+
+                    try {
+                        o2.getExpression().process(freeVar);
+                    } catch (final CompileException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (freeVar.getVariables().contains(o1.getIdentifier())) {
+                        return -1;
+                    }
+
+                    return 0;
+                }
+            });
+
             final int n = node.getVariableDeclarations().size();
             for (int i = 0; i < n; ++i) {
                 emit(new AllocInstruction(node, node.getVariableDeclarations().get(i).getIdentifier()));

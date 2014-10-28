@@ -1,11 +1,11 @@
 alloc
 alloc
-pushloc 1
-rewrite 2
 ldb 3
 mkbasic
-rewrite 1
+rewrite 2
 pushloc 2
+rewrite 1
+pushloc 1
 eval
 slide 2
 halt

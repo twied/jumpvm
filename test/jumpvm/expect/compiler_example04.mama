@@ -1,11 +1,14 @@
 alloc
 alloc
-pushloc 1
+ldb 1
+mkbasic
+rewrite 2
+pushloc 2
 mkvec 1
 mkvec 0
-ldl 8
+ldl 11
 mkfunval
-ujmp 18
+ujmp 21
 targ 1
 pushloc 1
 eval
@@ -16,14 +19,11 @@ getbasic
 opbin ADD
 mkbasic
 return 1
-rewrite 2
-ldb 1
-mkbasic
 rewrite 1
 mark 28
 ldb 7
 mkbasic
-pushloc 6
+pushloc 5
 eval
 apply
 slide 2

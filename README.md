@@ -76,8 +76,6 @@ Limits
 * ![PaMa](res/icon16/preferences-desktop-multimedia.png "PaMa") PaMa
 	* The PaMa doesn't do static arrays. All arrays are considered dynamic.
 	* Case values must start at 0 and be continuous.
-* ![MaMa](res/icon16/accessories-calculator.png "MaMa") MaMa
-    * The MaMa doesn't do variable reordering in letrec expressions which makes it fail on certain valid programs. See `example2.mama`.
 * ![WiMa](res/icon16/internet-group-chat.png "WiMa") WiMa
     * The WiMa doesn't do lists, see `sublist.wima` for an example of explicit lists.
     * The WiMa doesn't do arithmetic evaluates, especially the predicate `is/2` is missing.

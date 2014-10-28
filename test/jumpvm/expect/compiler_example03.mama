@@ -7,10 +7,12 @@ alloc
 alloc
 alloc
 pushloc 2
+rewrite 3
+pushloc 3
 mkvec 1
-ldl 13
+ldl 15
 mkclos
-ujmp 20
+ujmp 22
 ldb 1
 pushglob 1
 eval
@@ -18,8 +20,6 @@ getbasic
 opbin DIV
 mkbasic
 update
-rewrite 3
-pushloc 3
 rewrite 2
 mkvec 0
 mkvec 0
@@ -32,7 +32,7 @@ mkbasic
 return 1
 rewrite 1
 mark 38
-pushloc 6
+pushloc 5
 pushloc 5
 eval
 apply

@@ -182,13 +182,6 @@ public class MaMaTest {
      */
     @Test(timeout = JumpVMTest.TIMEOUT)
     public final void testRun() throws Exception {
-        if ("example02.mama".equals(sourceFile)) {
-            /*
-             * "example02.mama" crashes the vm. The reason is an invalid optimization, explained in "Übersetzerbau - Theorie, Konstruktion, Generierung" by R. Wilhelm and D. Maurer, pages 104 and 105. The requested reordering of variables is NOT implemented in this compiler.
-             */
-            return;
-        }
-
         final MaMa vm = createVM();
 
         final StringWriter stringWriter = new StringWriter();
