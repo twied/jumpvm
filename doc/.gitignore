@@ -1,9 +1,11 @@
 *.aux
 *.bbl
 *.blg
+*-blx.bib
 *.log
 *.nav
 *.out
+*.run.xml
 *.snm
 *.toc
 *.vrb
